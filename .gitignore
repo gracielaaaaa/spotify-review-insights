@@ -1,0 +1,20 @@
+.env
+.env.*
+!.env.example
+
+# raw course data (large); see README for download + checksum
+Final Assignment - Spotify Reviews Dataset/
+data/
+*.zip
+
+# local state / caches
+.venv/
+__pycache__/
+*.pyc
+state/
+local-reference.json
+self-check.json
+.DS_Store
+dashboard/node_modules/
+dashboard/.next/
+dashboard/.vercel/
