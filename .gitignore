@@ -18,3 +18,8 @@ self-check.json
 dashboard/node_modules/
 dashboard/.next/
 dashboard/.vercel/
+
+# large per-run exports (final run is published compressed in grading/ + release asset)
+runs/**/records.jsonl
+runs/**/quarantine.jsonl
+runs/**/enriched.jsonl

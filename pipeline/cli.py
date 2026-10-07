@@ -28,7 +28,10 @@ class RunLog:
         e = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "t": round(time.time(), 3), "run_id": self.run_id, **e}
         with open(self.path, "a", encoding="utf-8") as f:
             f.write(json.dumps(e, ensure_ascii=False) + "\n")
-        print(json.dumps(e, ensure_ascii=False)[:300], flush=True)
+        try:
+            print(json.dumps(e, ensure_ascii=False)[:300], flush=True)
+        except (BrokenPipeError, OSError):
+            pass  # console gone (e.g. Ctrl-C killed a pipe); the log file still has the event
 
 
 def completed_ids(con, ids, lc):
