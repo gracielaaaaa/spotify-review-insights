@@ -10,24 +10,16 @@ from concurrent.futures import ThreadPoolExecutor
 
 from . import config, llm, store
 
-ITEM_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "i": {"type": "integer"},
-        "topic": {"type": "string", "enum": list(config.TOPICS)},
-        "subtopic": {"type": "string", "enum": config.ALL_SUBTOPICS},
-        "intent": {"type": "string", "enum": list(config.INTENTS)},
-        "sentiment": {"type": "number"},
-        "severity": {"type": "integer", "enum": [1, 2, 3, 4, 5]},
-        "entities": {"type": "array", "items": {"type": "string"}},
-        "quote": {"type": "string"},
-        "needs_review": {"type": "boolean"},
-    },
-    "required": ["i", "topic", "subtopic", "intent", "sentiment", "severity", "entities", "quote", "needs_review"],
-    "additionalProperties": False,
-}
-SCHEMA = {"type": "object", "properties": {"items": {"type": "array", "items": ITEM_SCHEMA}},
-          "required": ["items"], "additionalProperties": False}
+def entities(text: str) -> list[str]:
+    """Explicit feature terms (word-boundary, case-insensitive), returned as they appear in the source."""
+    found, low = [], text.lower()
+    for term in config.ENTITY_TERMS:
+        m = re.search(r"(?<![a-z])" + re.escape(term) + r"(?:s|es)?(?![a-z])", low)
+        if m:
+            span = text[m.start():m.end()]
+            if not any(term in f.lower() for f in found):
+                found.append(span)
+    return found[:5]
 
 
 def is_short(text: str) -> bool:
@@ -35,7 +27,7 @@ def is_short(text: str) -> bool:
 
 
 def build_user(texts: list[str]) -> str:
-    lines = [f"Label these {len(texts)} reviews. Return items with i = 1..{len(texts)}.", ""]
+    lines = [f"Label these {len(texts)} reviews. Return exactly {len(texts)} lines, i = 1..{len(texts)}.", ""]
     for i, t in enumerate(texts, 1):
         body = t.replace("\r", " ").replace("\n", " ⏎ ")  # keep one review per line; quotes still validated on source
         lines.append(f"[{i}] ({'S' if is_short(t) else 'L'}) {body}")
@@ -88,31 +80,29 @@ def fallback_quote(text: str) -> str:
 def validate(item: dict, text: str, allow_fallback: bool = False):
     """Returns (record, None) or (None, error). Contract checks + topic/subtopic consistency."""
     try:
-        topic, sub, intent = item["topic"], item["subtopic"], item["intent"]
-        sev, sent = item["severity"], item["sentiment"]
-        if topic not in config.TOPICS or intent not in config.INTENTS:
+        sub, intent = item["k"], item["n"]
+        sev, sent = item["v"], item["s"]
+        topic = config.SUBTOPIC_TO_TOPIC.get(sub)
+        if topic is None or intent not in config.INTENTS:
             return None, "label_not_allowed"
         if type(sev) is not int or not 1 <= sev <= 5:
             return None, "severity_out_of_range"
         if type(sent) not in (int, float) or not -1 <= sent <= 1:
             return None, "sentiment_out_of_range"
         reasons = []
-        if sub not in config.SUBTOPICS[topic]:
-            reasons.append(f"subtopic_{sub}_not_in_{topic}")
-            sub = config.SUBTOPICS[topic][-1]
-        ents = [e.strip() for e in item.get("entities", []) if isinstance(e, str) and e.strip()][:5]
+        ents = entities(text)
         if is_short(text):
             quote = text.strip()
         else:
-            quote, why = locate_quote(item.get("quote", ""), text)
+            quote, why = locate_quote(item.get("q", ""), text)
             if quote is None:
                 if not allow_fallback:
                     return None, why
                 quote, why = fallback_quote(text), "quote_fallback_first_sentence"
             if why:
                 reasons.append(why)
-        needs = bool(item["needs_review"]) or any(r.startswith("subtopic_") for r in reasons)
-        if item["needs_review"]:
+        needs = bool(item["r"]) or any(r.startswith("quote_fallback") for r in reasons)
+        if item["r"]:
             reasons.insert(0, "model_flagged")
         return dict(topic=topic, subtopic=sub, intent=intent, sentiment=round(float(sent), 2), severity=sev,
                     entities=ents, evidence_quote=quote, needs_review=needs,
@@ -122,16 +112,25 @@ def validate(item: dict, text: str, allow_fallback: bool = False):
 
 
 def parse_items(raw: str, n: int):
-    """Map model output back to positions 1..n. Unknown/duplicate positions are ignored."""
-    try:
-        items = json.loads(raw)["items"]
-    except (json.JSONDecodeError, KeyError, TypeError):
-        return {}, "invalid_json"
+    """schema_v3 line format 'i|k|n|s|v|r|q' -> {i: item}. Malformed lines are skipped (that item
+    then counts as missing and goes to the single retry). Quote = everything after the 6th '|'."""
     got = {}
-    for it in items if isinstance(items, list) else []:
-        if isinstance(it, dict) and type(it.get("i")) is int and 1 <= it["i"] <= n and it["i"] not in got:
-            got[it["i"]] = it
-    return got, None
+    for line in raw.strip().splitlines():
+        parts = line.strip().split("|", 6)
+        if len(parts) < 6:
+            continue
+        try:
+            i = int(parts[0].strip().strip("[]"))
+            item = {"i": i, "k": parts[1].strip(), "n": parts[2].strip(), "s": float(parts[3]),
+                    "v": int(parts[4]), "r": parts[5].strip() in ("1", "true"),
+                    "q": parts[6] if len(parts) > 6 else ""}
+        except ValueError:
+            continue
+        if parts[5].strip() not in ("0", "1", "true", "false"):
+            continue
+        if 1 <= i <= n and i not in got:
+            got[i] = item
+    return got, (None if got else "unparseable_output")
 
 
 def pending_work(con, review_ids, lc):
@@ -158,8 +157,8 @@ def _request(chunk, system, rates, ledger, attempts_log, tier="standard"):
     def on_attempt(a):
         attempts_log.append(a)
     msg, usage = llm.call(role="enrich", model=config.MODELS["enrich"], system=system, user=build_user(texts),
-                          max_tokens=config.ENRICH_MAX_TOKENS, ledger=ledger, rates=rates, schema=SCHEMA,
-                          on_attempt=on_attempt, tier=tier)
+                          max_tokens=config.ENRICH_MAX_TOKENS, ledger=ledger, rates=rates, schema=None,
+                          on_attempt=on_attempt, tier=tier, cache_system=True)
     return msg, usage
 
 
@@ -190,7 +189,8 @@ def save_response(con, chunk, raw, usage, *, lc, run_id, phase, stage, attempt_n
                        input_tokens=usage["input_tokens"], output_tokens=usage["output_tokens"],
                        cache_read_tokens=usage["cache_read_tokens"], cache_write_tokens=usage["cache_write_tokens"],
                        tier=tier, attempt=attempt_no, started=usage["started"], ended=now,
-                       error=(f"{len(bad)} invalid items" if bad else None), cost_usd=usage["cost_usd"],
+                       error=(f"{len(bad)} invalid items: " + ";".join(sorted({w for _, w in bad})) if bad else None),
+                       cost_usd=usage["cost_usd"],
                        request_id=usage["request_id"])
         for (rid, tsha, _), rec in ok:
             con.execute("INSERT OR IGNORE INTO results VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",

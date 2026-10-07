@@ -1,0 +1,110 @@
+{
+  "planted": 13,
+  "flagged": 13,
+  "cases": [
+    {
+      "review_id": "0658feaa-5bec-416e-b6b0-3de2a4c14580",
+      "synthetic": true,
+      "original_topic": "catalog",
+      "planted_topic": "downloads",
+      "verifier_topic": "catalog",
+      "flagged": true
+    },
+    {
+      "review_id": "21915fcd-9a35-48ba-b277-6296c4154603",
+      "synthetic": true,
+      "original_topic": "billing",
+      "planted_topic": "playback",
+      "verifier_topic": "billing",
+      "flagged": true
+    },
+    {
+      "review_id": "2b57a12b-bbbe-457c-83a8-1bec297a5f63",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "billing",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "42f0c9d1-088c-437b-bfc8-c1c36114a8f0",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "support",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "4ab2089a-ffa8-49e7-a8a3-aeb583a96796",
+      "synthetic": true,
+      "original_topic": "playback",
+      "planted_topic": "usability",
+      "verifier_topic": "playback",
+      "flagged": true
+    },
+    {
+      "review_id": "5bc203df-dac3-41ae-8b8d-ee0e8b9d9f50",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "downloads",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "8b6e028a-5f63-4011-9841-cbbade4830eb",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "billing",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "8decb2ac-5860-49e3-8dce-9ca198ad061e",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "playback",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "9d851b7f-a738-449b-a841-de8076f13276",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "support",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "9f3794ed-4f4b-4430-a548-9cfd2d0c0084",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "downloads",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "c1ab120a-f91f-4ee3-87f5-66f352e2d47f",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "support",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "dc73ecd9-3293-4ede-90d5-dd6cd1e8d087",
+      "synthetic": true,
+      "original_topic": "other",
+      "planted_topic": "billing",
+      "verifier_topic": "other",
+      "flagged": true
+    },
+    {
+      "review_id": "dcff57c6-abd6-413b-b255-aec3dc34fcbd",
+      "synthetic": true,
+      "original_topic": "downloads",
+      "planted_topic": "playback",
+      "verifier_topic": "downloads",
+      "flagged": true
+    }
+  ]
+}

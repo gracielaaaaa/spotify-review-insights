@@ -1,0 +1,70 @@
+{
+  "run_id": "pilot-cold",
+  "input": "cost_100.csv",
+  "input_sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+  "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3",
+  "models": {
+    "enrich": "claude-haiku-4-5",
+    "verify": "claude-haiku-4-5",
+    "group": "claude-haiku-4-5",
+    "memo": "claude-sonnet-5-5",
+    "fallback": "claude-sonnet-5-5"
+  },
+  "prompt_versions": {
+    "enrich_v3": "6bacf3e4",
+    "verify_v1": "85ca7ece",
+    "group_v1": "ba7c57be",
+    "memo_v1": "029a524a"
+  },
+  "settings": {
+    "batch_size": 50,
+    "workers": 1,
+    "enrich_max_tokens": 2000,
+    "spend_cap_usd": 9.0,
+    "fallback_max_fraction": 0.02,
+    "thinking": "off (Haiku 4.5 default)",
+    "memo_effort": "low",
+    "tier": "standard (synchronous Messages API)"
+  },
+  "coverage": {
+    "source_rows": 100,
+    "in_scope_nonempty": 100,
+    "completed": 100,
+    "completed_in_scope": 100,
+    "completed_via_exact_text_reuse": 0,
+    "quarantined": 0,
+    "quarantine_reasons": {},
+    "needs_review": 13
+  },
+  "verify": {
+    "n": 20,
+    "topic_agreement": 0.65,
+    "intent_agreement": 0.85,
+    "severity_agreement": 0.75,
+    "severity_mae": 0.25,
+    "full_agreement": 0.45,
+    "disagreements": 11
+  },
+  "stage_seconds": {
+    "ingest": 0.009,
+    "enrich": 20.371,
+    "verify": 4.089,
+    "group": 45.704,
+    "rank": 0.002,
+    "memo": 13.899
+  },
+  "wall_clock_seconds": 84.099,
+  "this_run_calls": {
+    "enrich": 3,
+    "verify": 1,
+    "group": 18,
+    "memo": 1
+  },
+  "this_run_failed_attempts": 0,
+  "this_run_usage": {
+    "input_tokens": 22933,
+    "output_tokens": 5624,
+    "cost_usd": 0.066814
+  },
+  "ledger_spent_total_usd": 0.066814
+}

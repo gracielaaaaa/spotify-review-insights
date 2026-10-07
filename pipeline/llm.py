@@ -82,15 +82,16 @@ def estimate_tokens(text: str) -> int:
 
 
 def call(*, role, model, system, user, max_tokens, ledger, rates, schema=None, tier="standard",
-         on_attempt=None, extra=None):
+         on_attempt=None, extra=None, cache_system=False):
     """Synchronous call with bounded transient retries. Returns (message, usage, attempts).
     on_attempt(dict) is invoked for every attempt (failed ones too) so the caller logs it."""
     import anthropic
     if model not in config.ALLOWLIST:
         raise ValueError(f"model {model} not in allowlist")
-    worst = (estimate_tokens(system + user) * rates[(model, tier, "input")]
+    worst = (estimate_tokens(system + user) * rates[(model, tier, "cache_write" if cache_system else "input")]
              + max_tokens * rates[(model, tier, "output")])
-    params = dict(model=model, max_tokens=max_tokens, system=system,
+    sys_param = [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}] if cache_system else system
+    params = dict(model=model, max_tokens=max_tokens, system=sys_param,
                   messages=[{"role": "user", "content": user}])
     if schema:
         params["output_config"] = {"format": {"type": "json_schema", "schema": schema}}

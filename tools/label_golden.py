@@ -2,6 +2,8 @@
 
   .venv/bin/python tools/label_golden.py
 
+  .venv/bin/python tools/label_golden.py --quick   (one line per review: "topic intent severity sentiment")
+
 Saves after every review to evals/golden_50_labeled.csv; rerun to resume. Press Enter to
 accept a [default]. 'b' goes back one review, 'q' quits (progress is kept)."""
 
@@ -41,6 +43,9 @@ def ask(prompt, default="", choices=None):
         print("   choose a number or one of:", ", ".join(choices))
 
 
+QUICK = "--quick" in sys.argv
+
+
 def main():
     rows = list(csv.DictReader(open(SRC, encoding="utf-8", newline="")))
     fields = list(rows[0].keys()) + EXTRA
@@ -63,6 +68,34 @@ def main():
                  ("accepted_severities", "other acceptable severities (optional)", None),
                  ("notes", "notes (optional)", None)]
         back = False
+        if QUICK:
+            while True:
+                v = input("  topic intent severity sentiment [+a if ambiguous]  e.g. '8 2 2 -0.8': ").strip()
+                if v in ("q", "b"):
+                    break
+                parts = v.split()
+                amb = parts[-1] == "a" if parts else False
+                parts = parts[:-1] if amb else parts
+                try:
+                    t, n, sv, se = int(parts[0]), int(parts[1]), int(parts[2]), float(parts[3])
+                    assert 1 <= t <= 8 and 1 <= n <= 5 and 1 <= sv <= 5 and -1 <= se <= 1
+                    break
+                except (AssertionError, ValueError, IndexError):
+                    print("   need 4 values: topic 1-8, intent 1-5, severity 1-5, sentiment -1..1")
+            if v == "q":
+                return
+            if v == "b":
+                i = max(0, i - 1)
+                continue
+            r.update(topic=TOPICS[t - 1], intent=INTENTS[n - 1], severity=str(sv), sentiment=str(se),
+                     entities=r.get("entities", ""), evidence_quote=r["review_text"].strip(),
+                     needs_review="true" if amb else "false", ambiguous="y" if amb else "n")
+            if amb:
+                r["accepted_topics"] = input("  other acceptable topics (names, ; separated): ").strip()
+                r["accepted_intents"] = input("  other acceptable intents: ").strip()
+                r["accepted_severities"] = input("  other acceptable severities: ").strip()
+            r["notes"] = input("  note (optional, Enter to skip): ").strip()
+            steps = []
         for key, prompt, choices in steps:
             d = r.get(key, "")
             if key == "needs_review" and d in ("true", "false"):

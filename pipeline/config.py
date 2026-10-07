@@ -30,6 +30,17 @@ SUBTOPICS = {
     "other": ["general_criticism", "general_praise", "unrelated_or_unclear", "other"],
 }
 ALL_SUBTOPICS = sorted({s for v in SUBTOPICS.values() for s in v})
+SUBTOPIC_TO_TOPIC = {s: t for t, v in SUBTOPICS.items() for s in v}
+assert len(SUBTOPIC_TO_TOPIC) == len(ALL_SUBTOPICS), "subtopic keys must be unique across topics"
+
+# Deterministic entity extraction (code, not model): explicit feature terms found in the text.
+ENTITY_TERMS = ["premium", "free version", "ads", "shuffle", "smart shuffle", "repeat", "skip", "queue", "playlist",
+                "liked songs", "lyrics", "podcast", "download", "offline", "login", "log in", "password", "account",
+                "email", "subscription", "family plan", "student", "refund", "charge", "price", "wrapped",
+                "discover weekly", "daylist", "dj", "search", "recommendations", "home screen", "widget",
+                "android auto", "car", "bluetooth", "chromecast", "alexa", "smart tv", "wear os", "watch",
+                "audio quality", "volume", "equalizer", "battery", "storage", "data", "crash", "update",
+                "customer service", "support", "audiobook", "video", "canvas", "sleep timer", "dark mode"]
 
 # Model allowlist (exact IDs). Only these may be called.
 MODELS = {
@@ -41,16 +52,16 @@ MODELS = {
 }
 ALLOWLIST = set(MODELS.values())
 
-ENRICH_PROMPT_VERSION = "enrich_v1"
+ENRICH_PROMPT_VERSION = "enrich_v3"
 VERIFY_PROMPT_VERSION = "verify_v1"
 GROUP_PROMPT_VERSION = "group_v1"
 MEMO_PROMPT_VERSION = "memo_v1"
-SCHEMA_VERSION = "schema_v1"
+SCHEMA_VERSION = "schema_v3"
 
 # Limits / controls
 MAX_REVIEWS_PER_REQUEST = 50          # contract maximum
 ENRICH_BATCH_SIZE = 50
-ENRICH_MAX_TOKENS = 3000              # output cap per enrich request (50 items)
+ENRICH_MAX_TOKENS = 2000              # output cap per enrich request (50 lines, ~12-30 tokens each)
 VERIFY_MAX_TOKENS = 2000
 SHORT_TEXT_CHARS = 160                # <= this: evidence_quote = full stripped text (code, not model)
 SPEND_CAP_USD = 9.00                  # hard cap across the whole project ledger

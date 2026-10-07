@@ -1,0 +1,15 @@
+{
+  "verifier_config": "claude-haiku-4-5+verify_v1@85ca7ece",
+  "sample_rule": "seeded random 1% of in-scope origin records, min 20, max 1000",
+  "n": 20,
+  "topic_agreement": 0.65,
+  "intent_agreement": 0.85,
+  "severity_agreement": 0.75,
+  "severity_mae": 0.25,
+  "full_agreement": 0.45,
+  "disagreements": 11,
+  "planted_error_copy": {
+    "planted": 13,
+    "flagged": 13
+  }
+}
