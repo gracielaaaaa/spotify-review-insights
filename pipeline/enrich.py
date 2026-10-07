@@ -267,3 +267,124 @@ def run(con, review_ids, *, run_id, phase, stage="enrich", max_requests=None, wo
         quarantine(con, still_bad, lc, attempts=2)
     return {"label_config": lc, "pending_texts": len(work), "requests": n_req, "retried_items": len(retry_items),
             "quarantined_texts": len(still_bad), "spent_total_usd": ledger.spent}
+
+
+def run_batch(con, review_ids, *, run_id, phase, stage="enrich", requests_per_job=400, max_jobs=None,
+              poll_seconds=30, log=print):
+    """Provider Message Batches API (50% price, async). Each job holds <=requests_per_job
+    requests of <=50 reviews. Job IDs + their chunk mapping are saved BEFORE waiting, so a
+    restart reconciles in-flight jobs instead of resubmitting (no double charge). Each
+    returned request is validated and committed atomically like sync mode; invalid items
+    get the single retry in small synchronous requests."""
+    from anthropic.types.message_create_params import MessageCreateParamsNonStreaming
+    from anthropic.types.messages.batch_create_params import Request
+    lc = config.label_config()
+    system = config.prompt_text(config.ENRICH_PROMPT_VERSION)
+    rates = llm.load_rates()
+    ledger = llm.Ledger(spent=store.spent_usd(con), cap=config.SPEND_CAP_USD)
+    model = config.MODELS["enrich"]
+    retry_items = []
+
+    def process(job_id, mapping, job_phase):
+        """Fetch results of an ended job and save every request."""
+        n_ok = n_err = 0
+        seen = set()
+        for res in llm.client().messages.batches.results(job_id):
+            chunk = [tuple(c) for c in mapping[res.custom_id]]
+            seen.add(res.custom_id)
+            if res.result.type == "succeeded":
+                msg = res.result.message
+                u = msg.usage
+                usage = dict(input_tokens=u.input_tokens, output_tokens=u.output_tokens,
+                             cache_read_tokens=u.cache_read_input_tokens or 0,
+                             cache_write_tokens=u.cache_creation_input_tokens or 0)
+                usage.update(cost_usd=llm.cost_of(usage, model, "batch", rates), request_id=msg.id,
+                             started=job_started, stop_reason=msg.stop_reason)
+                if con.execute("SELECT 1 FROM calls WHERE request_id=?", (msg.id,)).fetchone():
+                    continue  # already saved before an interruption
+                retry_items.extend(save_response(con, chunk, llm.text_of(msg), usage, lc=lc, run_id=run_id,
+                                                 phase=job_phase, stage=stage, attempt_no=1, tier="batch",
+                                                 prior_failures=[]))
+                n_ok += 1
+            else:
+                rid = f"{job_id}:{res.custom_id}"
+                if not con.execute("SELECT 1 FROM calls WHERE request_id=?", (rid,)).fetchone():
+                    with store.tx(con):
+                        store.log_call(con, request_id=rid, run_id=run_id, stage=stage, role="enrich", model=model,
+                                       effort="thinking_off", phase=job_phase, outcome="failed", label_config=lc,
+                                       prompt_version=config.ENRICH_PROMPT_VERSION,
+                                       review_ids=[c[0] for c in chunk], input_tokens=0, output_tokens=0,
+                                       cache_read_tokens=0, cache_write_tokens=0, tier="batch", attempt=1,
+                                       started=job_started, error=f"batch_result_{res.result.type}", cost_usd=0.0)
+                retry_items.extend((c, f"batch_{res.result.type}") for c in chunk)
+                n_err += 1
+        with store.tx(con):
+            con.execute("UPDATE batch_jobs SET status='processed' WHERE batch_id=?", (job_id,))
+        log(f"[enrich-batch] job {job_id} processed: ok={n_ok} errored={n_err} spent=${store.spent_usd(con):.4f}")
+
+    def wait(job_id):
+        while True:
+            b = llm.client().messages.batches.retrieve(job_id)
+            if b.processing_status == "ended":
+                return b
+            c = b.request_counts
+            log(f"[enrich-batch] {job_id} {b.processing_status} processing={c.processing} "
+                f"succeeded={c.succeeded} errored={c.errored}")
+            time.sleep(poll_seconds)
+
+    # 1. reconcile jobs submitted earlier (interrupted while in flight)
+    for j in con.execute("SELECT * FROM batch_jobs WHERE status!='processed'").fetchall():
+        job_started = j["created"]
+        log(f"[enrich-batch] reconciling in-flight job {j['batch_id']} (no resubmission)")
+        wait(j["batch_id"])
+        process(j["batch_id"], json.loads(j["requests"]), j["phase"])
+
+    jobs = 0
+    while True:
+        work = pending_work(con, review_ids, lc)
+        if not work or (max_jobs is not None and jobs >= max_jobs):
+            break
+        chunks = [work[k:k + config.ENRICH_BATCH_SIZE] for k in range(0, len(work), config.ENRICH_BATCH_SIZE)]
+        chunks = chunks[:requests_per_job]
+        # reserve worst case for the whole job before submitting
+        worst = sum(llm.estimate_tokens(system + build_user([t for _, _, t in ch])) * rates[(model, "batch", "cache_write")]
+                    + config.ENRICH_MAX_TOKENS * rates[(model, "batch", "output")] for ch in chunks)
+        ledger.spent = store.spent_usd(con)
+        ledger.reserve(worst)
+        mapping, reqs = {}, []
+        for n, ch in enumerate(chunks):
+            cid = f"r{n:04d}"
+            mapping[cid] = [list(c) for c in ch]
+            reqs.append(Request(custom_id=cid, params=MessageCreateParamsNonStreaming(
+                model=model, max_tokens=config.ENRICH_MAX_TOKENS,
+                system=[{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
+                messages=[{"role": "user", "content": build_user([t for _, _, t in ch])}])))
+        job_started = time.time()
+        b = llm.client().messages.batches.create(requests=reqs)
+        with store.tx(con):
+            con.execute("INSERT INTO batch_jobs VALUES (?,?,?,?,?,?)",
+                        (b.id, run_id, phase, job_started, "submitted", json.dumps(mapping)))
+        log(f"[enrich-batch] submitted {b.id}: {len(reqs)} requests, {sum(len(c) for c in chunks)} texts, "
+            f"reserved ${worst:.4f}")
+        wait(b.id)
+        ledger.settle(worst, 0.0)
+        process(b.id, mapping, phase)
+        jobs += 1
+
+    # single retry for invalid/errored items (small synchronous requests), then quarantine
+    still_bad = []
+    for k in range(0, len(retry_items), 10):
+        sub = [c for c, _ in retry_items[k:k + 10]]
+        attempts = []
+        try:
+            msg, usage = _request(sub, system, rates, ledger, attempts)
+            still_bad.extend(save_response(con, sub, llm.text_of(msg), usage, lc=lc, run_id=run_id, phase=phase,
+                                           stage=stage, attempt_no=2, tier="standard", prior_failures=attempts))
+        except llm.BudgetExceeded:
+            raise
+        except Exception as e:
+            still_bad.extend((c, f"api_error:{type(e).__name__}") for c in sub)
+    if still_bad:
+        quarantine(con, still_bad, lc, attempts=2)
+    return {"label_config": lc, "jobs": jobs, "retried_items": len(retry_items),
+            "quarantined_texts": len(still_bad), "spent_total_usd": store.spent_usd(con)}

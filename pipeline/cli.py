@@ -90,8 +90,12 @@ def cmd_run(a):
         state_key = f"enrich_state:{run_id}"
         phase = "resume" if store.kv_get(con, state_key) == "interrupted" else "initial"
         try:
-            s = enrich.run(con, scope, run_id=run_id, phase=phase, max_requests=a.max_requests,
-                           workers=a.workers, log=lambda m: log.event(stage="enrich", msg=m))
+            if a.batch_api:
+                s = enrich.run_batch(con, scope, run_id=run_id, phase=phase, requests_per_job=a.requests_per_job,
+                                     max_jobs=a.max_jobs, log=lambda m: log.event(stage="enrich", msg=m))
+            else:
+                s = enrich.run(con, scope, run_id=run_id, phase=phase, max_requests=a.max_requests,
+                               workers=a.workers, log=lambda m: log.event(stage="enrich", msg=m))
             with store.tx(con):
                 store.kv_set(con, state_key, "completed")
             if phase == "resume":
@@ -218,7 +222,8 @@ def cmd_run(a):
                "settings": {"batch_size": config.ENRICH_BATCH_SIZE, "workers": a.workers,
                             "enrich_max_tokens": config.ENRICH_MAX_TOKENS, "spend_cap_usd": config.SPEND_CAP_USD,
                             "fallback_max_fraction": config.FALLBACK_MAX_FRACTION, "thinking": "off (Haiku 4.5 default)",
-                            "memo_effort": "low", "tier": "standard (synchronous Messages API)"},
+                            "memo_effort": "low",
+                            "enrich_tier": "batch (Message Batches API)" if getattr(a, "batch_api", False) else "standard (synchronous)"},
                "coverage": coverage, "verify": vsummary, "stage_seconds": timings,
                "wall_clock_seconds": round(time.time() - t_start, 3),
                "this_run_calls": {role: sum(1 for c in calls if c["role"] == role) for role in
@@ -288,6 +293,9 @@ def main(argv=None):
     r.add_argument("--stages", help=f"comma list from {STAGES}")
     r.add_argument("--max-requests", type=int, help="stop enrich after N requests (testing)")
     r.add_argument("--workers", type=int, default=config.MAX_WORKERS)
+    r.add_argument("--batch-api", action="store_true", help="enrich via provider Message Batches API (50%% price)")
+    r.add_argument("--requests-per-job", type=int, default=400)
+    r.add_argument("--max-jobs", type=int)
     r.add_argument("--verify-min", type=int, default=50)
     r.add_argument("--verify-max", type=int, default=1000)
     r.add_argument("--force", default="")

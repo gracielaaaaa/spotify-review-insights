@@ -9,6 +9,25 @@ RULES = [("crash", "playback", "crash_wont_open", 4), ("ads", "usability", "ads"
 class Messages:
     def create(self, **kw):
         user = kw["messages"][0]["content"]
+        system = kw["system"][0]["text"] if isinstance(kw["system"], list) else kw["system"]
+        if "output_config" not in kw or "format" not in kw.get("output_config", {}):  # enrich v3 line format
+            lines = []
+            for m in re.finditer(r"^\[(\d+)\] \((S|L)\) (.*)$", user, re.M):
+                i, text = int(m.group(1)), m.group(3)
+                sub, sev = "general_criticism", 2
+                for kwd, t, s_, v in RULES:
+                    if kwd in text.lower():
+                        sub, sev = s_, v; break
+                praise = re.search(r"good|great|love|best|nice", text, re.I)
+                intent = "praise" if praise else "complaint"
+                if praise:
+                    sub, sev = ("general_praise" if sub == "general_criticism" else sub), 1
+                q = " ".join(text.split()[:6]) if m.group(2) == "L" else ""
+                lines.append(f"{i}|{sub}|{intent}|{0.5 if praise else -0.5}|{sev}|0|{q}")
+            text = "\n".join(lines)
+            return NS(id=f"fake_{uuid.uuid4().hex[:10]}", content=[NS(type="text", text=text)], stop_reason="end_turn",
+                      usage=NS(input_tokens=len(user) // 4, output_tokens=len(text) // 4,
+                               cache_read_input_tokens=len(system) // 4, cache_creation_input_tokens=0))
         props = kw["output_config"]["format"]["schema"]["properties"]
         if "items" in props:
             items = []
