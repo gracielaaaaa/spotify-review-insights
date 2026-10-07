@@ -1,0 +1,4 @@
+anthropic==1.11.0
+httpx2==2.13.1
+pydantic==2.13.5
+python-dotenv==1.2.4

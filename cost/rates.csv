@@ -1,0 +1,17 @@
+model,tier,item,usd_per_unit,unit_size,unit,currency,source,checked
+claude-haiku-4-5,standard,input,1.00,1000000,token,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-07
+claude-haiku-4-5,standard,cache_write,1.25,1000000,token,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-07
+claude-haiku-4-5,standard,cache_read,0.10,1000000,token,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-07
+claude-haiku-4-5,standard,output,5.00,1000000,token,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-07
+claude-haiku-4-5,batch,input,0.50,1000000,token,USD,https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing,2026-10-07
+claude-haiku-4-5,batch,cache_write,0.625,1000000,token,USD,https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing,2026-10-07
+claude-haiku-4-5,batch,cache_read,0.05,1000000,token,USD,https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing,2026-10-07
+claude-haiku-4-5,batch,output,2.50,1000000,token,USD,https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing,2026-10-07
+claude-sonnet-5-5,standard,input,2.00,1000000,token,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-07
+claude-sonnet-5-5,standard,cache_write,2.50,1000000,token,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-07
+claude-sonnet-5-5,standard,cache_read,0.20,1000000,token,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-07
+claude-sonnet-5-5,standard,output,10.00,1000000,token,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-07
+claude-sonnet-5-5,batch,input,1.00,1000000,token,USD,https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing,2026-10-07
+claude-sonnet-5-5,batch,cache_write,1.25,1000000,token,USD,https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing,2026-10-07
+claude-sonnet-5-5,batch,cache_read,0.10,1000000,token,USD,https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing,2026-10-07
+claude-sonnet-5-5,batch,output,5.00,1000000,token,USD,https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing,2026-10-07

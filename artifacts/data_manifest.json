@@ -1,0 +1,10 @@
+{
+  "source_file": "spotify_reviews_18months.csv",
+  "sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+  "bytes": 97400616,
+  "records": 660622,
+  "course_manifest_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+  "row_hash": "check_submission.row_sha: sha256(canonical JSON of 6 source fields)",
+  "sample_key": "sha256('berkeley-fall-2026-assignment-5-v1:' + review_id)",
+  "created": "2026-10-07T00:00:57-0700"
+}
