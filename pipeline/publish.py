@@ -9,6 +9,7 @@ applied; db/loader_close.sql removes them again (tables are otherwise read-only)
 import csv
 import json
 import os
+import ssl
 import time
 import urllib.error
 import urllib.request
@@ -16,6 +17,8 @@ from collections import Counter
 from pathlib import Path
 
 from . import config, store
+
+_CTX = ssl.create_default_context(cafile="/etc/ssl/cert.pem") if Path("/etc/ssl/cert.pem").exists() else None
 
 TABLES = ["reviews", "issues", "topic_rollup", "claims", "memo", "metrics", "runs", "monthly"]
 
@@ -30,7 +33,7 @@ def _req(method, url, key, body=None, prefer=None):
         r.add_header("Prefer", prefer)
     for attempt in range(5):
         try:
-            with urllib.request.urlopen(r, timeout=120) as resp:
+            with urllib.request.urlopen(r, timeout=120, context=_CTX) as resp:
                 return resp.status
         except urllib.error.HTTPError as e:
             if e.code < 500 or attempt == 4:
@@ -99,7 +102,7 @@ def build(run_dir: Path, con):
                                           / max(1, intents["complaint"] + intents["cancellation"]), 6),
         "verify": verify, "usage": summary.get("this_run_usage"), "ledger_spent_total_usd": summary.get("ledger_spent_total_usd"),
         "label_config": summary["label_config"], "models": summary["models"],
-    }.items()]
+    }.items() if v is not None]
     memo_rows = [{"id": 1, "run_id": summary["run_id"], "model": config.MODELS["memo"],
                   "recommendation": memo["memo"]["recommendation"], "memo_markdown": memo["memo"]["memo_markdown"],
                   "checks": memo["checks"], "cited_claim_ids": memo["memo"]["cited_claim_ids"],
