@@ -274,7 +274,10 @@ def cmd_grading(a):
     else:
         shutil.copy(run_dir / "records.jsonl", g / "records.jsonl")
     for f in ("membership.csv", "ranking.csv", "claims.csv"):
-        shutil.copy(run_dir / f, g / f)
+        if (run_dir / f).exists():
+            shutil.copy(run_dir / f, g / f)
+        else:
+            print(f"warning: {run_dir / f} missing (stage not run?)")
     ckpt = Path(a.checkpoints) if a.checkpoints else run_dir
     for f in ("checkpoint_before.json", "checkpoint_after.json"):
         if (ckpt / f).exists():
