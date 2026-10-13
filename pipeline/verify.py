@@ -51,7 +51,7 @@ def run(con, sample_ids, texts, *, run_id, log=print, cache_key="verify"):
             items = {it["i"]: it for it in json.loads(llm.text_of(msg)).get("items", [])
                      if isinstance(it, dict) and type(it.get("i")) is int}
             outcome, err = "succeeded", None
-        except llm.BudgetExceeded:
+        except (llm.BudgetExceeded, llm.FatalAPIError):
             raise
         except Exception as e:
             usage, items, outcome, err = None, {}, "failed", f"{type(e).__name__}: {e}"[:200]

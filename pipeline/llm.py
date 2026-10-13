@@ -128,10 +128,13 @@ def call(*, role, model, system, user, max_tokens, ledger, rates, schema=None, t
             continue
         except anthropic.APIStatusError as e:
             ledger.settle(worst, 0.0)
+            fatal = e.status_code in (401, 403) or "credit balance" in str(e)
             if on_attempt:
                 on_attempt(dict(request_id=f"local-{uuid.uuid4().hex[:12]}", outcome="failed", attempt=attempt,
                                 started=started, input_tokens=0, output_tokens=0, cache_read_tokens=0,
                                 cache_write_tokens=0, cost_usd=0.0, error=f"HTTP {e.status_code}: {str(e)[:200]}"))
+            if fatal:
+                raise FatalAPIError(f"HTTP {e.status_code}: {str(e)[:200]}") from e
             raise
         u = msg.usage
         usage = dict(input_tokens=u.input_tokens, output_tokens=u.output_tokens,

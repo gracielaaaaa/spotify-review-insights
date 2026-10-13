@@ -228,7 +228,7 @@ def run(con, review_ids, *, run_id, phase, stage="enrich", max_requests=None, wo
         try:
             msg, usage = _request(chunk, system, rates, ledger, attempts)
             return chunk, msg, usage, attempts, None
-        except llm.BudgetExceeded:
+        except (llm.BudgetExceeded, llm.FatalAPIError):
             raise
         except Exception as e:  # exhausted transient retries or non-retryable error
             return chunk, None, None, attempts, e
@@ -387,7 +387,7 @@ def run_batch(con, review_ids, *, run_id, phase, stage="enrich", requests_per_jo
             msg, usage = _request(sub, system, rates, ledger, attempts)
             still_bad.extend(save_response(con, sub, llm.text_of(msg), usage, lc=lc, run_id=run_id, phase=phase,
                                            stage=stage, attempt_no=2, tier="standard", prior_failures=attempts))
-        except llm.BudgetExceeded:
+        except (llm.BudgetExceeded, llm.FatalAPIError):
             raise
         except Exception as e:
             still_bad.extend((c, f"api_error:{type(e).__name__}") for c in sub)

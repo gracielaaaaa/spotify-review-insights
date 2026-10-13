@@ -68,7 +68,7 @@ def name_issues(con, pairs, records_by_id, *, run_id, min_members=1, log=print, 
             msg, usage = llm.call(role="group", model=config.MODELS["group"], system=system, user=user,
                                   max_tokens=400, ledger=ledger, rates=rates, schema=SCHEMA,
                                   on_attempt=fails.append)
-        except llm.BudgetExceeded:
+        except (llm.BudgetExceeded, llm.FatalAPIError):
             raise
         except Exception as e:
             log(f"[group] {iid} naming failed: {e}")
