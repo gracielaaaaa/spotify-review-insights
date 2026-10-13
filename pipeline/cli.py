@@ -125,6 +125,7 @@ def cmd_run(a):
     export.write_jsonl(completed, out / "enriched.jsonl")
     export.write_jsonl([r for r in recs if r["status"] == "quarantined"], out / "quarantine.jsonl")
     scope_set = set(scope)
+    (out / "scope_ids.json").write_text(json.dumps(scope) + "\n")
     coverage = {"source_rows": len(recs), "in_scope_nonempty": len(scope),
                 "completed": len(completed), "completed_in_scope": sum(r["review_id"] in scope_set for r in completed),
                 "completed_via_exact_text_reuse": sum("cache_source_id" in r for r in completed),
@@ -284,6 +285,9 @@ def cmd_grading(a):
 
 
 def main(argv=None):
+    # Restore Ctrl-C even if a non-interactive parent shell started us with SIGINT ignored
+    # (background jobs); otherwise an interrupt could be silently ignored.
+    signal.signal(signal.SIGINT, signal.default_int_handler)
     p = argparse.ArgumentParser(prog="pipeline")
     sub = p.add_subparsers(dest="cmd", required=True)
     r = sub.add_parser("run", help="run stages on an input CSV (makes paid model calls)")
@@ -313,7 +317,14 @@ def main(argv=None):
     gx.add_argument("--checkpoints")
     gx.add_argument("--scope-note", default="")
     gx.add_argument("--gzip", action="store_true")
+    pb = sub.add_parser("publish", help="load saved outputs into the Supabase DB (no model calls)")
+    pb.add_argument("--run-dir", required=True)
+    pb.add_argument("--db", required=True)
     a = p.parse_args(argv)
+    if a.cmd == "publish":
+        from . import publish
+        print(publish.run(a.run_dir, a.db))
+        return
     {"run": cmd_run, "rank": cmd_rank, "grading": cmd_grading}[a.cmd](a)
 
 

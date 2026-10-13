@@ -1,0 +1,24 @@
+{"ts": "2026-10-10T12:58:30", "t": 1791662310.855, "run_id": "checkpoint500", "stage": "run", "status": "start", "input": "spotify_reviews_18months.csv", "db": "pipeline.db", "stages": ["ingest", "enrich", "verify", "group", "rank", "memo"], "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schem
+{"ts": "2026-10-10T12:58:30", "t": 1791662310.977, "run_id": "checkpoint500", "stage": "ingest", "status": "cached", "file_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6"}
+{"ts": "2026-10-10T12:58:31", "t": 1791662311.166, "run_id": "checkpoint500", "stage": "scope", "in_scope_nonempty": 500, "scope_rule": "subset:checkpoint_500.csv"}
+{"ts": "2026-10-10T12:58:31", "t": 1791662311.177, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] label_config=claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3 input_ids=500 pending_texts=479 requests=10 phase=initial"}
+{"ts": "2026-10-10T12:58:43", "t": 1791662323.407, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 1/10 saved; texts_done=50 spent=$0.0126 retry_queue=0"}
+{"ts": "2026-10-10T12:58:49", "t": 1791662329.931, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 2/10 saved; texts_done=96 spent=$0.0189 retry_queue=4"}
+{"ts": "2026-10-10T12:58:57", "t": 1791662337.994, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 3/10 saved; texts_done=145 spent=$0.0254 retry_queue=5"}
+{"ts": "2026-10-10T12:59:05", "t": 1791662345.01, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 4/10 saved; texts_done=195 spent=$0.0320 retry_queue=5"}
+{"ts": "2026-10-10T12:59:13", "t": 1791662353.13, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 5/10 saved; texts_done=241 spent=$0.0386 retry_queue=9"}
+{"ts": "2026-10-10T12:59:22", "t": 1791662362.243, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 6/10 saved; texts_done=288 spent=$0.0459 retry_queue=12"}
+{"ts": "2026-10-10T12:59:30", "t": 1791662370.282, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 7/10 saved; texts_done=334 spent=$0.0522 retry_queue=16"}
+{"ts": "2026-10-10T12:59:39", "t": 1791662379.961, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 8/10 saved; texts_done=383 spent=$0.0595 retry_queue=17"}
+{"ts": "2026-10-10T12:59:49", "t": 1791662389.227, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 9/10 saved; texts_done=431 spent=$0.0667 retry_queue=19"}
+{"ts": "2026-10-10T12:59:54", "t": 1791662394.737, "run_id": "checkpoint500", "stage": "enrich", "msg": "[enrich] request 10/10 saved; texts_done=460 spent=$0.0712 retry_queue=19"}
+{"ts": "2026-10-10T13:00:00", "t": 1791662400.675, "run_id": "checkpoint500", "stage": "enrich", "status": "done", "phase": "initial", "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3", "pending_texts": 479, "requests": 12, "retried_items": 19, "quarantined_texts": 0, "spent_total_usd"
+{"ts": "2026-10-10T13:00:15", "t": 1791662415.611, "run_id": "checkpoint500", "stage": "records", "source_rows": 660622, "in_scope_nonempty": 500, "completed": 66577, "completed_in_scope": 500, "completed_via_exact_text_reuse": 66098, "quarantined": 594045, "quarantine_reasons": {"not_in_declared_cl
+{"ts": "2026-10-10T13:00:15", "t": 1791662415.637, "run_id": "checkpoint500", "stage": "verify", "msg": "[verify] sample=50 cached=0 todo=50 cfg=claude-haiku-4-5+verify_v1@85ca7ece"}
+{"ts": "2026-10-10T13:00:20", "t": 1791662420.326, "run_id": "checkpoint500", "stage": "verify", "msg": "[verify] 25/50 spent=$0.0802"}
+{"ts": "2026-10-10T13:00:24", "t": 1791662424.56, "run_id": "checkpoint500", "stage": "verify", "msg": "[verify] 50/50 spent=$0.0838"}
+{"ts": "2026-10-10T13:00:24", "t": 1791662424.565, "run_id": "checkpoint500", "stage": "verify", "status": "done", "n": 50, "topic_agreement": 0.82, "intent_agreement": 0.94, "severity_agreement": 0.84, "severity_mae": 0.16, "full_agreement": 0.68, "disagreements": 16, "seconds": 8.95}
+{"ts": "2026-10-10T13:01:30", "t": 1791662490.401, "run_id": "checkpoint500", "stage": "group", "status": "done", "issues": 27, "memberships": 9212}
+{"ts": "2026-10-10T13:01:30", "t": 1791662490.446, "run_id": "checkpoint500", "stage": "rank", "status": "done", "top": ["other.general_criticism", "usability.ads", "billing.premium_paywall", "playback.crash_wont_open", "usability.shuffle_controls"]}
+{"ts": "2026-10-10T13:01:42", "t": 1791662502.961, "run_id": "checkpoint500", "stage": "memo", "msg": "[memo] attempt 1: 0 problems []"}
+{"ts": "2026-10-10T13:01:42", "t": 1791662502.971, "run_id": "checkpoint500", "stage": "run", "status": "done", "wall_clock_seconds": 192.125, "calls": {"enrich": 12, "verify": 2, "group": 27, "memo": 1}, "cost_usd": 0.150511}

@@ -1,0 +1,41 @@
+rank,issue_id,name,complaint_count,severity_sum,mean_severity,priority_score
+1,other.general_criticism,General dissatisfaction with application quality,24053,48110,2.000166,48110
+2,usability.ads,Too many ads interrupt listening experience,2842,5892,2.073188,5892
+3,billing.premium_paywall,Premium paywall blocks basic music app features,854,2515,2.944965,2515
+4,playback.crash_wont_open,App crashes during playback or opening,216,786,3.638889,786
+5,playback.playback_other,Playback stops and skips unexpectedly,228,646,2.833333,646
+6,usability.shuffle_controls,Shuffle controls difficult to find or use,231,634,2.744589,634
+7,playback.stops_skips,Playback stops or skips to wrong song,192,609,3.171875,609
+8,access.login_failure,Users unable to log in to account,152,594,3.907895,594
+9,usability.playlist_queue,Playlist playback and queue functionality broken,124,352,2.838710,352
+10,usability.redesign_layout,New layout design is confusing and worse,135,350,2.592593,350
+11,billing.price,Premium subscription price too expensive,167,335,2.005988,335
+12,catalog.lyrics,Lyrics feature unavailable or missing for songs,105,269,2.561905,269
+13,usability.ui_navigation,Like button interface changes confuse users,103,249,2.417476,249
+14,playback.connectivity,App reports no internet despite active connection,66,230,3.484848,230
+15,playback.device_integration,Bluetooth and device switching connectivity issues,66,216,3.272727,216
+16,catalog.missing_content,Favorite songs unavailable in user region,85,196,2.305882,196
+17,playback.lag_slow,App is slow and laggy during loading,54,160,2.962963,160
+18,billing.subscription_activation,Premium subscription activation fails or delays,41,159,3.878049,159
+19,playback.audio_quality,Audio quality is low or unavailable,53,127,2.396226,127
+20,downloads.offline_not_working,Downloaded songs won't play offline,30,110,3.666667,110
+21,catalog.recommendations,Recommendations are repetitive and low quality,39,83,2.128205,83
+22,downloads.downloads_other,Downloads fail or get stuck frequently,35,81,2.314286,81
+23,usability.usability_other,App removes or hides frequently used features,32,69,2.156250,69
+24,billing.billing_other,Premium subscribers still receive podcast ads,22,64,2.909091,64
+25,access.account_hacked_or_locked,Account hacked or locked out permanently,14,62,4.428571,62
+26,catalog.search,Search results not displaying songs or artists,22,62,2.818182,62
+27,downloads.downloads_disappear,Downloaded songs disappear unexpectedly,18,62,3.444444,62
+28,billing.unwanted_charges,Charged after cancellation or trial ends,9,42,4.666667,42
+29,playback.battery_resources,App consumes excessive battery and data resources,15,33,2.200000,33
+30,access.signup,Account signup process not working,8,27,3.375000,27
+31,access.access_other,App unavailable in certain countries,7,22,3.142857,22
+32,catalog.catalog_other,Spotify Wrapped unavailable in certain countries,10,22,2.200000,22
+33,catalog.podcasts,Podcast discovery and navigation problems,10,21,2.100000,21
+34,support.unhelpful_support,Support ignores messages and lacks responsiveness,5,17,3.400000,17
+35,downloads.download_limits,Download restrictions require premium subscription,6,15,2.500000,15
+36,support.support_other,Customer support difficult to reach and slow,4,11,2.750000,11
+37,access.password_reset,Password reset functionality not working,2,8,4.000000,8
+38,other.unrelated_or_unclear,Unrelated or unclear customer concerns,4,7,1.750000,7
+39,billing.refunds,No refund for non-working paid service,1,5,5.000000,5
+40,other.general_praise,General praise for Spotify features,2,4,2.000000,4

@@ -1,0 +1,1080 @@
+{
+  "memo": {
+    "recommendation": "Prioritize usability next quarter, led by excessive free-tier ad frequency, with the update-related app crashes as a smaller but more severe second item.",
+    "memo_markdown": "## Recommendation\n\nPut next quarter's effort into usability, starting with free-tier ad frequency. It is the largest specific issue in the classified data, with 850 complaints [C005] and a priority score of 1,713 [C008]. Mean severity is 2.015294 [C007], so it is high-volume and moderate-pain. The only larger bucket, general negative sentiment (8,200 complaints [C001]), is not actionable as a product issue.\n\n## Evidence\n\nCoverage figures: 66,577 of 660,622 source rows were classified (about 10.08%). Unclassified rows are excluded from all counts. Roll-up figures: usability has 879 complaints across 6 issues, and ads account for nearly all of them.\n\nAd complaints describe interruption frequency, for example \"10 minutes of music and 4 of ads, this is ridiculous\" (review 3bfefa06-133c-419b-a435-1fea919d6a44) and \"1 minute of add after every 2 songs\" (review 7f057d48-0855-4325-950b-44f9e6fc2ee1).\n\nOther usability items are much smaller: shuffle controls have 12 complaints [C017] and a priority score of 33 [C020]. The redesigned layout has 9 complaints [C029] and a score of 24 [C032].\n\n## Alternatives considered\n\n- **Billing (premium paywall):** 45 complaints [C009], score 131 [C012], mean severity 2.911111 [C011]. It ranks second by score and is closely related to ads, since both concern free-tier limits. Reviews describe features moving behind premium (review 21915fcd-9a35-48ba-b277-6296c4154603). It could be paired with the ads work.\n- **Playback:** App crashes after updates have 12 complaints [C013], score 46 [C016], and mean severity 3.833333 [C015]. Volume is low but severity is high, so this is the best candidate for a parallel stability fix (review 55cc3abf-c295-4591-8c3a-78085cfdefaa).\n- **Access:** Login failure has 7 complaints [C021] with the highest mean severity, 4.000000 [C023], and a score of 28 [C024]. It is too small to lead, but one review states intent to unsubscribe (review 686fa8a8-f220-4ddd-b283-d61dd242051a). That is stated intent, not observed churn.\n\n## Risks and limitations\n\nOnly about 10.08% of rows were classified (coverage figure), and unclassified rows are excluded, so counts may not represent all reviews. Reviews are self-selected public app-store text from May 2022 to Nov 2023. Complaint volume is not revenue or churn impact. Ad complaints may reflect free users who would not be affected by premium-side changes. The priority score multiplies volume by severity, which favors common moderate issues over rare severe ones. The general-criticism bucket is large but undiagnosed.\n\n## Next steps\n\n1. Have product and ads teams review ad frequency and pacing for free users, and define a test.\n2. Assess whether the paywall and ad issues can be addressed together.\n3. Assign a small engineering effort to update-related crashes and login failures.\n4. Expand classification coverage and re-run the ranking before committing the full quarter.",
+    "cited_claim_ids": [
+      "C005",
+      "C008",
+      "C007",
+      "C001",
+      "C017",
+      "C020",
+      "C029",
+      "C032",
+      "C009",
+      "C012",
+      "C011",
+      "C013",
+      "C016",
+      "C015",
+      "C021",
+      "C023",
+      "C024"
+    ],
+    "cited_review_ids": [
+      "3bfefa06-133c-419b-a435-1fea919d6a44",
+      "7f057d48-0855-4325-950b-44f9e6fc2ee1",
+      "21915fcd-9a35-48ba-b277-6296c4154603",
+      "55cc3abf-c295-4591-8c3a-78085cfdefaa",
+      "686fa8a8-f220-4ddd-b283-d61dd242051a"
+    ]
+  },
+  "claims": [
+    {
+      "claim_id": "C001",
+      "issue_id": "other.general_criticism",
+      "metric": "complaint_count",
+      "value": "8200"
+    },
+    {
+      "claim_id": "C002",
+      "issue_id": "other.general_criticism",
+      "metric": "severity_sum",
+      "value": "16400"
+    },
+    {
+      "claim_id": "C003",
+      "issue_id": "other.general_criticism",
+      "metric": "mean_severity",
+      "value": "2.000000"
+    },
+    {
+      "claim_id": "C004",
+      "issue_id": "other.general_criticism",
+      "metric": "priority_score",
+      "value": "16400"
+    },
+    {
+      "claim_id": "C005",
+      "issue_id": "usability.ads",
+      "metric": "complaint_count",
+      "value": "850"
+    },
+    {
+      "claim_id": "C006",
+      "issue_id": "usability.ads",
+      "metric": "severity_sum",
+      "value": "1713"
+    },
+    {
+      "claim_id": "C007",
+      "issue_id": "usability.ads",
+      "metric": "mean_severity",
+      "value": "2.015294"
+    },
+    {
+      "claim_id": "C008",
+      "issue_id": "usability.ads",
+      "metric": "priority_score",
+      "value": "1713"
+    },
+    {
+      "claim_id": "C009",
+      "issue_id": "billing.premium_paywall",
+      "metric": "complaint_count",
+      "value": "45"
+    },
+    {
+      "claim_id": "C010",
+      "issue_id": "billing.premium_paywall",
+      "metric": "severity_sum",
+      "value": "131"
+    },
+    {
+      "claim_id": "C011",
+      "issue_id": "billing.premium_paywall",
+      "metric": "mean_severity",
+      "value": "2.911111"
+    },
+    {
+      "claim_id": "C012",
+      "issue_id": "billing.premium_paywall",
+      "metric": "priority_score",
+      "value": "131"
+    },
+    {
+      "claim_id": "C013",
+      "issue_id": "playback.crash_wont_open",
+      "metric": "complaint_count",
+      "value": "12"
+    },
+    {
+      "claim_id": "C014",
+      "issue_id": "playback.crash_wont_open",
+      "metric": "severity_sum",
+      "value": "46"
+    },
+    {
+      "claim_id": "C015",
+      "issue_id": "playback.crash_wont_open",
+      "metric": "mean_severity",
+      "value": "3.833333"
+    },
+    {
+      "claim_id": "C016",
+      "issue_id": "playback.crash_wont_open",
+      "metric": "priority_score",
+      "value": "46"
+    },
+    {
+      "claim_id": "C017",
+      "issue_id": "usability.shuffle_controls",
+      "metric": "complaint_count",
+      "value": "12"
+    },
+    {
+      "claim_id": "C018",
+      "issue_id": "usability.shuffle_controls",
+      "metric": "severity_sum",
+      "value": "33"
+    },
+    {
+      "claim_id": "C019",
+      "issue_id": "usability.shuffle_controls",
+      "metric": "mean_severity",
+      "value": "2.750000"
+    },
+    {
+      "claim_id": "C020",
+      "issue_id": "usability.shuffle_controls",
+      "metric": "priority_score",
+      "value": "33"
+    },
+    {
+      "claim_id": "C021",
+      "issue_id": "access.login_failure",
+      "metric": "complaint_count",
+      "value": "7"
+    },
+    {
+      "claim_id": "C022",
+      "issue_id": "access.login_failure",
+      "metric": "severity_sum",
+      "value": "28"
+    },
+    {
+      "claim_id": "C023",
+      "issue_id": "access.login_failure",
+      "metric": "mean_severity",
+      "value": "4.000000"
+    },
+    {
+      "claim_id": "C024",
+      "issue_id": "access.login_failure",
+      "metric": "priority_score",
+      "value": "28"
+    },
+    {
+      "claim_id": "C025",
+      "issue_id": "playback.stops_skips",
+      "metric": "complaint_count",
+      "value": "8"
+    },
+    {
+      "claim_id": "C026",
+      "issue_id": "playback.stops_skips",
+      "metric": "severity_sum",
+      "value": "27"
+    },
+    {
+      "claim_id": "C027",
+      "issue_id": "playback.stops_skips",
+      "metric": "mean_severity",
+      "value": "3.375000"
+    },
+    {
+      "claim_id": "C028",
+      "issue_id": "playback.stops_skips",
+      "metric": "priority_score",
+      "value": "27"
+    },
+    {
+      "claim_id": "C029",
+      "issue_id": "usability.redesign_layout",
+      "metric": "complaint_count",
+      "value": "9"
+    },
+    {
+      "claim_id": "C030",
+      "issue_id": "usability.redesign_layout",
+      "metric": "severity_sum",
+      "value": "24"
+    },
+    {
+      "claim_id": "C031",
+      "issue_id": "usability.redesign_layout",
+      "metric": "mean_severity",
+      "value": "2.666667"
+    },
+    {
+      "claim_id": "C032",
+      "issue_id": "usability.redesign_layout",
+      "metric": "priority_score",
+      "value": "24"
+    },
+    {
+      "claim_id": "C033",
+      "issue_id": "playback.connectivity",
+      "metric": "complaint_count",
+      "value": "6"
+    },
+    {
+      "claim_id": "C034",
+      "issue_id": "playback.connectivity",
+      "metric": "severity_sum",
+      "value": "22"
+    },
+    {
+      "claim_id": "C035",
+      "issue_id": "playback.connectivity",
+      "metric": "mean_severity",
+      "value": "3.666667"
+    },
+    {
+      "claim_id": "C036",
+      "issue_id": "playback.connectivity",
+      "metric": "priority_score",
+      "value": "22"
+    },
+    {
+      "claim_id": "C037",
+      "issue_id": "downloads.downloads_other",
+      "metric": "complaint_count",
+      "value": "10"
+    },
+    {
+      "claim_id": "C038",
+      "issue_id": "downloads.downloads_other",
+      "metric": "severity_sum",
+      "value": "21"
+    },
+    {
+      "claim_id": "C039",
+      "issue_id": "downloads.downloads_other",
+      "metric": "mean_severity",
+      "value": "2.100000"
+    },
+    {
+      "claim_id": "C040",
+      "issue_id": "downloads.downloads_other",
+      "metric": "priority_score",
+      "value": "21"
+    },
+    {
+      "claim_id": "C041",
+      "issue_id": "catalog.lyrics",
+      "metric": "complaint_count",
+      "value": "8"
+    },
+    {
+      "claim_id": "C042",
+      "issue_id": "catalog.lyrics",
+      "metric": "severity_sum",
+      "value": "20"
+    },
+    {
+      "claim_id": "C043",
+      "issue_id": "catalog.lyrics",
+      "metric": "mean_severity",
+      "value": "2.500000"
+    },
+    {
+      "claim_id": "C044",
+      "issue_id": "catalog.lyrics",
+      "metric": "priority_score",
+      "value": "20"
+    },
+    {
+      "claim_id": "C045",
+      "issue_id": "playback.device_integration",
+      "metric": "complaint_count",
+      "value": "5"
+    },
+    {
+      "claim_id": "C046",
+      "issue_id": "playback.device_integration",
+      "metric": "severity_sum",
+      "value": "17"
+    },
+    {
+      "claim_id": "C047",
+      "issue_id": "playback.device_integration",
+      "metric": "mean_severity",
+      "value": "3.400000"
+    },
+    {
+      "claim_id": "C048",
+      "issue_id": "playback.device_integration",
+      "metric": "priority_score",
+      "value": "17"
+    }
+  ],
+  "evidence_pack": [
+    {
+      "issue_id": "other.general_criticism",
+      "name": "Overwhelmingly negative app experience",
+      "quotes": [
+        {
+          "review_id": "19f35edf-05f8-410c-b592-7a49d5a5dc3b",
+          "quote": "Hate this application"
+        },
+        {
+          "review_id": "f994bbea-6cba-4326-b56f-c1ee2980c3f1",
+          "quote": "Worst app"
+        },
+        {
+          "review_id": "f169adf0-1824-4f76-9a87-92bcac32dce2",
+          "quote": "Useless app"
+        }
+      ]
+    },
+    {
+      "issue_id": "usability.ads",
+      "name": "Free tier has excessive ad frequency",
+      "quotes": [
+        {
+          "review_id": "3bfefa06-133c-419b-a435-1fea919d6a44",
+          "quote": "10 minutes of music and 4 of ads, this is ridiculous"
+        },
+        {
+          "review_id": "7f057d48-0855-4325-950b-44f9e6fc2ee1",
+          "quote": "1 minute of add after every 2 songs i am buying amazon prime music"
+        },
+        {
+          "review_id": "c2738a4f-e57c-46bc-a4ad-8ec5a4b5d5cd",
+          "quote": "Soo trash wayy to many ads I don't want premium but too much ads"
+        }
+      ]
+    },
+    {
+      "issue_id": "billing.premium_paywall",
+      "name": "Free tier features moved behind premium paywall",
+      "quotes": [
+        {
+          "review_id": "21915fcd-9a35-48ba-b277-6296c4154603",
+          "quote": "the new update has made everthing premium"
+        },
+        {
+          "review_id": "f66a61ed-c4f6-4e7f-8f3b-a4c0d9fbf6af",
+          "quote": "Playing music from playlist in a queue is now a premium feature. What a joke."
+        },
+        {
+          "review_id": "2313bd8e-43bd-4777-bff9-3ae753288f0e",
+          "quote": "It is absolutely useless after the latest update. There's nothing I can do without the \"try premium\" option popping up every damn time."
+        }
+      ]
+    },
+    {
+      "issue_id": "playback.crash_wont_open",
+      "name": "App crashes and won't open after updates",
+      "quotes": [
+        {
+          "review_id": "89be32ab-664a-4647-a5e3-e4006a67e4e1",
+          "quote": "As I play music app crashes after this new update. Before updating its works good."
+        },
+        {
+          "review_id": "065c418e-7f18-42a3-b241-fe693b7a2b0c",
+          "quote": "Black screen of death. Having to Uninstaller and reinstall after closing and opening app 5x to see if it would work."
+        },
+        {
+          "review_id": "55cc3abf-c295-4591-8c3a-78085cfdefaa",
+          "quote": "The latest update has caused my app to crash I cant open the app please fix."
+        }
+      ]
+    },
+    {
+      "issue_id": "usability.shuffle_controls",
+      "name": "Shuffle behavior unpredictable and hard to control",
+      "quotes": [
+        {
+          "review_id": "d108ae38-c395-4789-9b6b-661d1efb60d7",
+          "quote": "Take off Smart Shuffle Take that off now, it's so annoying"
+        },
+        {
+          "review_id": "e393cec1-67e8-4f58-a484-8d9d76dc8fd6",
+          "quote": "I put my selection on shuffle plays same songs over and over"
+        },
+        {
+          "review_id": "6b55ac9c-8dd2-4170-8782-bd35985ec0d9",
+          "quote": "You need to be a premium user to turn of Shuffle playlist"
+        }
+      ]
+    },
+    {
+      "issue_id": "access.login_failure",
+      "name": "Users unable to log in to account",
+      "quotes": [
+        {
+          "review_id": "0a7f2420-1b49-41fa-8cfc-0b2e178bea6b",
+          "quote": "log me out, and now I'm not able to log in"
+        },
+        {
+          "review_id": "12efd15d-4d4f-4a71-8e71-69d03b6f983a",
+          "quote": "I can't login to the app, it keep saying that there's no internet connection, whereas everything else on my phone is connected to the internet."
+        },
+        {
+          "review_id": "686fa8a8-f220-4ddd-b283-d61dd242051a",
+          "quote": "Getting no token provided message. Don't understand it, can't fix it and it's making me angry enough to unsusubscribe."
+        }
+      ]
+    },
+    {
+      "issue_id": "playback.stops_skips",
+      "name": "Playback randomly stops or skips songs",
+      "quotes": [
+        {
+          "review_id": "a0cbc9d6-51bb-46f0-9ba9-ad4f4593c266",
+          "quote": "it randomly starts playing different music. This is ridiculous"
+        },
+        {
+          "review_id": "f1abd13b-2391-4b04-8109-efa7f3cfed0b",
+          "quote": "Continously pauses songs and podcasts randomly"
+        },
+        {
+          "review_id": "179d79f7-d052-490f-a9d6-f97525b32642",
+          "quote": "Love Spotify, but since I got my new phone, it keeps randomly stopping, like it would with no Internet, but I have full bars."
+        }
+      ]
+    },
+    {
+      "issue_id": "usability.redesign_layout",
+      "name": "New layout makes navigation slow and difficult",
+      "quotes": [
+        {
+          "review_id": "0e71515c-ecf1-4b23-b783-00f58e51d96a",
+          "quote": "The new home screen is terrible, I was listening to a playlist I had found the previous day and now I am unable to find it again because of the new update."
+        },
+        {
+          "review_id": "2e2480c1-7799-4a66-be67-a947a2d99680",
+          "quote": "The new layout is horrible, takes ages tk find things"
+        },
+        {
+          "review_id": "2aae0ce4-ae4a-46ce-b2fe-0d901eb23c06",
+          "quote": "The new layout is awful. I have oversized icons and I have to scroll forever to get to my daily mixes, please go back."
+        }
+      ]
+    }
+  ],
+  "payload": {
+    "coverage": {
+      "source_rows": 660622,
+      "in_scope_nonempty": 500,
+      "completed": 66577,
+      "quarantined": 594045,
+      "completed_via_exact_text_reuse": 66098,
+      "completed_share_of_rows": 0.1008,
+      "window": "2022-05-17 to 2023-11-15"
+    },
+    "topic_rollup": [
+      {
+        "topic": "other",
+        "complaint_count": 8200,
+        "severity_sum": 16400,
+        "issues": 1,
+        "mean_severity": "2.000000"
+      },
+      {
+        "topic": "usability",
+        "complaint_count": 879,
+        "severity_sum": 1791,
+        "issues": 6,
+        "mean_severity": "2.037543"
+      },
+      {
+        "topic": "billing",
+        "complaint_count": 53,
+        "severity_sum": 155,
+        "issues": 3,
+        "mean_severity": "2.924528"
+      },
+      {
+        "topic": "playback",
+        "complaint_count": 40,
+        "severity_sum": 134,
+        "issues": 8,
+        "mean_severity": "3.350000"
+      },
+      {
+        "topic": "catalog",
+        "complaint_count": 19,
+        "severity_sum": 45,
+        "issues": 3,
+        "mean_severity": "2.368421"
+      },
+      {
+        "topic": "access",
+        "complaint_count": 9,
+        "severity_sum": 37,
+        "issues": 3,
+        "mean_severity": "4.111111"
+      },
+      {
+        "topic": "downloads",
+        "complaint_count": 12,
+        "severity_sum": 30,
+        "issues": 3,
+        "mean_severity": "2.500000"
+      }
+    ],
+    "ranking_top12": [
+      {
+        "issue_id": "other.general_criticism",
+        "complaint_count": 8200,
+        "severity_sum": 16400,
+        "mean_severity": "2.000000",
+        "priority_score": 16400,
+        "rank": 1,
+        "name": "Overwhelmingly negative app experience"
+      },
+      {
+        "issue_id": "usability.ads",
+        "complaint_count": 850,
+        "severity_sum": 1713,
+        "mean_severity": "2.015294",
+        "priority_score": 1713,
+        "rank": 2,
+        "name": "Free tier has excessive ad frequency"
+      },
+      {
+        "issue_id": "billing.premium_paywall",
+        "complaint_count": 45,
+        "severity_sum": 131,
+        "mean_severity": "2.911111",
+        "priority_score": 131,
+        "rank": 3,
+        "name": "Free tier features moved behind premium paywall"
+      },
+      {
+        "issue_id": "playback.crash_wont_open",
+        "complaint_count": 12,
+        "severity_sum": 46,
+        "mean_severity": "3.833333",
+        "priority_score": 46,
+        "rank": 4,
+        "name": "App crashes and won't open after updates"
+      },
+      {
+        "issue_id": "usability.shuffle_controls",
+        "complaint_count": 12,
+        "severity_sum": 33,
+        "mean_severity": "2.750000",
+        "priority_score": 33,
+        "rank": 5,
+        "name": "Shuffle behavior unpredictable and hard to control"
+      },
+      {
+        "issue_id": "access.login_failure",
+        "complaint_count": 7,
+        "severity_sum": 28,
+        "mean_severity": "4.000000",
+        "priority_score": 28,
+        "rank": 6,
+        "name": "Users unable to log in to account"
+      },
+      {
+        "issue_id": "playback.stops_skips",
+        "complaint_count": 8,
+        "severity_sum": 27,
+        "mean_severity": "3.375000",
+        "priority_score": 27,
+        "rank": 7,
+        "name": "Playback randomly stops or skips songs"
+      },
+      {
+        "issue_id": "usability.redesign_layout",
+        "complaint_count": 9,
+        "severity_sum": 24,
+        "mean_severity": "2.666667",
+        "priority_score": 24,
+        "rank": 8,
+        "name": "New layout makes navigation slow and difficult"
+      },
+      {
+        "issue_id": "playback.connectivity",
+        "complaint_count": 6,
+        "severity_sum": 22,
+        "mean_severity": "3.666667",
+        "priority_score": 22,
+        "rank": 9,
+        "name": "App falsely reports no internet connection"
+      },
+      {
+        "issue_id": "downloads.downloads_other",
+        "complaint_count": 10,
+        "severity_sum": 21,
+        "mean_severity": "2.100000",
+        "priority_score": 21,
+        "rank": 10,
+        "name": "Download functionality not working properly"
+      },
+      {
+        "issue_id": "catalog.lyrics",
+        "complaint_count": 8,
+        "severity_sum": 20,
+        "mean_severity": "2.500000",
+        "priority_score": 20,
+        "rank": 11,
+        "name": "Lyrics not displaying for some songs"
+      },
+      {
+        "issue_id": "playback.device_integration",
+        "complaint_count": 5,
+        "severity_sum": 17,
+        "mean_severity": "3.400000",
+        "priority_score": 17,
+        "rank": 12,
+        "name": "Difficulty connecting to external devices"
+      }
+    ],
+    "claims": [
+      {
+        "claim_id": "C001",
+        "issue_id": "other.general_criticism",
+        "metric": "complaint_count",
+        "value": "8200"
+      },
+      {
+        "claim_id": "C002",
+        "issue_id": "other.general_criticism",
+        "metric": "severity_sum",
+        "value": "16400"
+      },
+      {
+        "claim_id": "C003",
+        "issue_id": "other.general_criticism",
+        "metric": "mean_severity",
+        "value": "2.000000"
+      },
+      {
+        "claim_id": "C004",
+        "issue_id": "other.general_criticism",
+        "metric": "priority_score",
+        "value": "16400"
+      },
+      {
+        "claim_id": "C005",
+        "issue_id": "usability.ads",
+        "metric": "complaint_count",
+        "value": "850"
+      },
+      {
+        "claim_id": "C006",
+        "issue_id": "usability.ads",
+        "metric": "severity_sum",
+        "value": "1713"
+      },
+      {
+        "claim_id": "C007",
+        "issue_id": "usability.ads",
+        "metric": "mean_severity",
+        "value": "2.015294"
+      },
+      {
+        "claim_id": "C008",
+        "issue_id": "usability.ads",
+        "metric": "priority_score",
+        "value": "1713"
+      },
+      {
+        "claim_id": "C009",
+        "issue_id": "billing.premium_paywall",
+        "metric": "complaint_count",
+        "value": "45"
+      },
+      {
+        "claim_id": "C010",
+        "issue_id": "billing.premium_paywall",
+        "metric": "severity_sum",
+        "value": "131"
+      },
+      {
+        "claim_id": "C011",
+        "issue_id": "billing.premium_paywall",
+        "metric": "mean_severity",
+        "value": "2.911111"
+      },
+      {
+        "claim_id": "C012",
+        "issue_id": "billing.premium_paywall",
+        "metric": "priority_score",
+        "value": "131"
+      },
+      {
+        "claim_id": "C013",
+        "issue_id": "playback.crash_wont_open",
+        "metric": "complaint_count",
+        "value": "12"
+      },
+      {
+        "claim_id": "C014",
+        "issue_id": "playback.crash_wont_open",
+        "metric": "severity_sum",
+        "value": "46"
+      },
+      {
+        "claim_id": "C015",
+        "issue_id": "playback.crash_wont_open",
+        "metric": "mean_severity",
+        "value": "3.833333"
+      },
+      {
+        "claim_id": "C016",
+        "issue_id": "playback.crash_wont_open",
+        "metric": "priority_score",
+        "value": "46"
+      },
+      {
+        "claim_id": "C017",
+        "issue_id": "usability.shuffle_controls",
+        "metric": "complaint_count",
+        "value": "12"
+      },
+      {
+        "claim_id": "C018",
+        "issue_id": "usability.shuffle_controls",
+        "metric": "severity_sum",
+        "value": "33"
+      },
+      {
+        "claim_id": "C019",
+        "issue_id": "usability.shuffle_controls",
+        "metric": "mean_severity",
+        "value": "2.750000"
+      },
+      {
+        "claim_id": "C020",
+        "issue_id": "usability.shuffle_controls",
+        "metric": "priority_score",
+        "value": "33"
+      },
+      {
+        "claim_id": "C021",
+        "issue_id": "access.login_failure",
+        "metric": "complaint_count",
+        "value": "7"
+      },
+      {
+        "claim_id": "C022",
+        "issue_id": "access.login_failure",
+        "metric": "severity_sum",
+        "value": "28"
+      },
+      {
+        "claim_id": "C023",
+        "issue_id": "access.login_failure",
+        "metric": "mean_severity",
+        "value": "4.000000"
+      },
+      {
+        "claim_id": "C024",
+        "issue_id": "access.login_failure",
+        "metric": "priority_score",
+        "value": "28"
+      },
+      {
+        "claim_id": "C025",
+        "issue_id": "playback.stops_skips",
+        "metric": "complaint_count",
+        "value": "8"
+      },
+      {
+        "claim_id": "C026",
+        "issue_id": "playback.stops_skips",
+        "metric": "severity_sum",
+        "value": "27"
+      },
+      {
+        "claim_id": "C027",
+        "issue_id": "playback.stops_skips",
+        "metric": "mean_severity",
+        "value": "3.375000"
+      },
+      {
+        "claim_id": "C028",
+        "issue_id": "playback.stops_skips",
+        "metric": "priority_score",
+        "value": "27"
+      },
+      {
+        "claim_id": "C029",
+        "issue_id": "usability.redesign_layout",
+        "metric": "complaint_count",
+        "value": "9"
+      },
+      {
+        "claim_id": "C030",
+        "issue_id": "usability.redesign_layout",
+        "metric": "severity_sum",
+        "value": "24"
+      },
+      {
+        "claim_id": "C031",
+        "issue_id": "usability.redesign_layout",
+        "metric": "mean_severity",
+        "value": "2.666667"
+      },
+      {
+        "claim_id": "C032",
+        "issue_id": "usability.redesign_layout",
+        "metric": "priority_score",
+        "value": "24"
+      },
+      {
+        "claim_id": "C033",
+        "issue_id": "playback.connectivity",
+        "metric": "complaint_count",
+        "value": "6"
+      },
+      {
+        "claim_id": "C034",
+        "issue_id": "playback.connectivity",
+        "metric": "severity_sum",
+        "value": "22"
+      },
+      {
+        "claim_id": "C035",
+        "issue_id": "playback.connectivity",
+        "metric": "mean_severity",
+        "value": "3.666667"
+      },
+      {
+        "claim_id": "C036",
+        "issue_id": "playback.connectivity",
+        "metric": "priority_score",
+        "value": "22"
+      },
+      {
+        "claim_id": "C037",
+        "issue_id": "downloads.downloads_other",
+        "metric": "complaint_count",
+        "value": "10"
+      },
+      {
+        "claim_id": "C038",
+        "issue_id": "downloads.downloads_other",
+        "metric": "severity_sum",
+        "value": "21"
+      },
+      {
+        "claim_id": "C039",
+        "issue_id": "downloads.downloads_other",
+        "metric": "mean_severity",
+        "value": "2.100000"
+      },
+      {
+        "claim_id": "C040",
+        "issue_id": "downloads.downloads_other",
+        "metric": "priority_score",
+        "value": "21"
+      },
+      {
+        "claim_id": "C041",
+        "issue_id": "catalog.lyrics",
+        "metric": "complaint_count",
+        "value": "8"
+      },
+      {
+        "claim_id": "C042",
+        "issue_id": "catalog.lyrics",
+        "metric": "severity_sum",
+        "value": "20"
+      },
+      {
+        "claim_id": "C043",
+        "issue_id": "catalog.lyrics",
+        "metric": "mean_severity",
+        "value": "2.500000"
+      },
+      {
+        "claim_id": "C044",
+        "issue_id": "catalog.lyrics",
+        "metric": "priority_score",
+        "value": "20"
+      },
+      {
+        "claim_id": "C045",
+        "issue_id": "playback.device_integration",
+        "metric": "complaint_count",
+        "value": "5"
+      },
+      {
+        "claim_id": "C046",
+        "issue_id": "playback.device_integration",
+        "metric": "severity_sum",
+        "value": "17"
+      },
+      {
+        "claim_id": "C047",
+        "issue_id": "playback.device_integration",
+        "metric": "mean_severity",
+        "value": "3.400000"
+      },
+      {
+        "claim_id": "C048",
+        "issue_id": "playback.device_integration",
+        "metric": "priority_score",
+        "value": "17"
+      }
+    ],
+    "evidence_pack": [
+      {
+        "issue_id": "other.general_criticism",
+        "name": "Overwhelmingly negative app experience",
+        "quotes": [
+          {
+            "review_id": "19f35edf-05f8-410c-b592-7a49d5a5dc3b",
+            "quote": "Hate this application"
+          },
+          {
+            "review_id": "f994bbea-6cba-4326-b56f-c1ee2980c3f1",
+            "quote": "Worst app"
+          },
+          {
+            "review_id": "f169adf0-1824-4f76-9a87-92bcac32dce2",
+            "quote": "Useless app"
+          }
+        ]
+      },
+      {
+        "issue_id": "usability.ads",
+        "name": "Free tier has excessive ad frequency",
+        "quotes": [
+          {
+            "review_id": "3bfefa06-133c-419b-a435-1fea919d6a44",
+            "quote": "10 minutes of music and 4 of ads, this is ridiculous"
+          },
+          {
+            "review_id": "7f057d48-0855-4325-950b-44f9e6fc2ee1",
+            "quote": "1 minute of add after every 2 songs i am buying amazon prime music"
+          },
+          {
+            "review_id": "c2738a4f-e57c-46bc-a4ad-8ec5a4b5d5cd",
+            "quote": "Soo trash wayy to many ads I don't want premium but too much ads"
+          }
+        ]
+      },
+      {
+        "issue_id": "billing.premium_paywall",
+        "name": "Free tier features moved behind premium paywall",
+        "quotes": [
+          {
+            "review_id": "21915fcd-9a35-48ba-b277-6296c4154603",
+            "quote": "the new update has made everthing premium"
+          },
+          {
+            "review_id": "f66a61ed-c4f6-4e7f-8f3b-a4c0d9fbf6af",
+            "quote": "Playing music from playlist in a queue is now a premium feature. What a joke."
+          },
+          {
+            "review_id": "2313bd8e-43bd-4777-bff9-3ae753288f0e",
+            "quote": "It is absolutely useless after the latest update. There's nothing I can do without the \"try premium\" option popping up every damn time."
+          }
+        ]
+      },
+      {
+        "issue_id": "playback.crash_wont_open",
+        "name": "App crashes and won't open after updates",
+        "quotes": [
+          {
+            "review_id": "89be32ab-664a-4647-a5e3-e4006a67e4e1",
+            "quote": "As I play music app crashes after this new update. Before updating its works good."
+          },
+          {
+            "review_id": "065c418e-7f18-42a3-b241-fe693b7a2b0c",
+            "quote": "Black screen of death. Having to Uninstaller and reinstall after closing and opening app 5x to see if it would work."
+          },
+          {
+            "review_id": "55cc3abf-c295-4591-8c3a-78085cfdefaa",
+            "quote": "The latest update has caused my app to crash I cant open the app please fix."
+          }
+        ]
+      },
+      {
+        "issue_id": "usability.shuffle_controls",
+        "name": "Shuffle behavior unpredictable and hard to control",
+        "quotes": [
+          {
+            "review_id": "d108ae38-c395-4789-9b6b-661d1efb60d7",
+            "quote": "Take off Smart Shuffle Take that off now, it's so annoying"
+          },
+          {
+            "review_id": "e393cec1-67e8-4f58-a484-8d9d76dc8fd6",
+            "quote": "I put my selection on shuffle plays same songs over and over"
+          },
+          {
+            "review_id": "6b55ac9c-8dd2-4170-8782-bd35985ec0d9",
+            "quote": "You need to be a premium user to turn of Shuffle playlist"
+          }
+        ]
+      },
+      {
+        "issue_id": "access.login_failure",
+        "name": "Users unable to log in to account",
+        "quotes": [
+          {
+            "review_id": "0a7f2420-1b49-41fa-8cfc-0b2e178bea6b",
+            "quote": "log me out, and now I'm not able to log in"
+          },
+          {
+            "review_id": "12efd15d-4d4f-4a71-8e71-69d03b6f983a",
+            "quote": "I can't login to the app, it keep saying that there's no internet connection, whereas everything else on my phone is connected to the internet."
+          },
+          {
+            "review_id": "686fa8a8-f220-4ddd-b283-d61dd242051a",
+            "quote": "Getting no token provided message. Don't understand it, can't fix it and it's making me angry enough to unsusubscribe."
+          }
+        ]
+      },
+      {
+        "issue_id": "playback.stops_skips",
+        "name": "Playback randomly stops or skips songs",
+        "quotes": [
+          {
+            "review_id": "a0cbc9d6-51bb-46f0-9ba9-ad4f4593c266",
+            "quote": "it randomly starts playing different music. This is ridiculous"
+          },
+          {
+            "review_id": "f1abd13b-2391-4b04-8109-efa7f3cfed0b",
+            "quote": "Continously pauses songs and podcasts randomly"
+          },
+          {
+            "review_id": "179d79f7-d052-490f-a9d6-f97525b32642",
+            "quote": "Love Spotify, but since I got my new phone, it keeps randomly stopping, like it would with no Internet, but I have full bars."
+          }
+        ]
+      },
+      {
+        "issue_id": "usability.redesign_layout",
+        "name": "New layout makes navigation slow and difficult",
+        "quotes": [
+          {
+            "review_id": "0e71515c-ecf1-4b23-b783-00f58e51d96a",
+            "quote": "The new home screen is terrible, I was listening to a playlist I had found the previous day and now I am unable to find it again because of the new update."
+          },
+          {
+            "review_id": "2e2480c1-7799-4a66-be67-a947a2d99680",
+            "quote": "The new layout is horrible, takes ages tk find things"
+          },
+          {
+            "review_id": "2aae0ce4-ae4a-46ce-b2fe-0d901eb23c06",
+            "quote": "The new layout is awful. I have oversized icons and I have to scroll forever to get to my daily mixes, please go back."
+          }
+        ]
+      }
+    ]
+  },
+  "checks": {
+    "accepted": true,
+    "attempts": 1
+  }
+}

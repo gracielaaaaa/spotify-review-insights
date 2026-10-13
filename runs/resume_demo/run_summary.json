@@ -1,0 +1,64 @@
+{
+  "run_id": "resume-demo",
+  "input": "spotify_reviews_18months.csv",
+  "input_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+  "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3",
+  "models": {
+    "enrich": "claude-haiku-4-5",
+    "verify": "claude-haiku-4-5",
+    "group": "claude-haiku-4-5",
+    "memo": "claude-sonnet-5-5",
+    "fallback": "claude-sonnet-5-5"
+  },
+  "prompt_versions": {
+    "enrich_v3": "6bacf3e4",
+    "verify_v1": "85ca7ece",
+    "group_v1": "ba7c57be",
+    "memo_v1": "029a524a"
+  },
+  "settings": {
+    "batch_size": 50,
+    "workers": 1,
+    "enrich_max_tokens": 2000,
+    "spend_cap_usd": 9.0,
+    "fallback_max_fraction": 0.02,
+    "thinking": "off (Haiku 4.5 default)",
+    "memo_effort": "low",
+    "enrich_tier": "standard (synchronous)"
+  },
+  "coverage": {
+    "source_rows": 660622,
+    "in_scope_nonempty": 1000,
+    "completed": 92478,
+    "completed_in_scope": 999,
+    "completed_via_exact_text_reuse": 91118,
+    "quarantined": 568144,
+    "quarantine_reasons": {
+      "not_in_declared_classification_scope": 568130,
+      "empty_review_text": 13,
+      "label_not_allowed": 1
+    },
+    "needs_review": 323
+  },
+  "verify": null,
+  "stage_seconds": {
+    "ingest": 0.124,
+    "enrich": 108.473,
+    "group": 0.139,
+    "rank": 0.049
+  },
+  "wall_clock_seconds": 121.75,
+  "this_run_calls": {
+    "enrich": 22,
+    "verify": 0,
+    "group": 0,
+    "memo": 0
+  },
+  "this_run_failed_attempts": 0,
+  "this_run_usage": {
+    "input_tokens": 27789,
+    "output_tokens": 18394,
+    "cost_usd": 0.130062
+  },
+  "ledger_spent_total_usd": 0.280573
+}

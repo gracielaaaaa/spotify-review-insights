@@ -1,0 +1,32 @@
+rank,issue_id,name,complaint_count,severity_sum,mean_severity,priority_score
+1,other.general_criticism,Overwhelmingly negative app experience,16687,33374,2.000000,33374
+2,usability.ads,Free tier has excessive ad frequency,1479,2987,2.019608,2987
+3,billing.premium_paywall,Free tier features moved behind premium paywall,120,353,2.941667,353
+4,playback.crash_wont_open,App crashes and won't open after updates,34,123,3.617647,123
+5,playback.stops_skips,Playback randomly stops or skips songs,34,109,3.205882,109
+6,usability.shuffle_controls,Shuffle behavior unpredictable and hard to control,36,96,2.666667,96
+7,access.login_failure,Users unable to log in to account,18,69,3.833333,69
+8,usability.redesign_layout,New layout makes navigation slow and difficult,23,57,2.478261,57
+9,playback.connectivity,App falsely reports no internet connection,14,50,3.571429,50
+10,playback.playback_other,Playback issues and unexpected app behavior,20,50,2.500000,50
+11,catalog.lyrics,Lyrics not displaying for some songs,19,48,2.526316,48
+12,catalog.missing_content,Many popular songs missing from catalog,17,41,2.411765,41
+13,usability.playlist_queue,Shuffle-only dropdown menu limits playlist control,13,37,2.846154,37
+14,billing.subscription_activation,Premium subscription activation fails or doesn't process,9,36,4.000000,36
+15,playback.device_integration,Difficulty connecting to external devices,11,36,3.272727,36
+16,billing.price,Music listening requires excessive charges,14,28,2.000000,28
+17,usability.ui_navigation,Navigation and UI interaction changes confusing,11,28,2.545455,28
+18,downloads.downloads_other,Download functionality not working properly,11,23,2.090909,23
+19,downloads.downloads_disappear,Downloaded content disappears unexpectedly,4,15,3.750000,15
+20,downloads.offline_not_working,Offline download feature not working,4,14,3.500000,14
+21,access.account_hacked_or_locked,Account hacked and playlists lost,3,13,4.333333,13
+22,catalog.recommendations,Recommendations repeat same songs too often,6,12,2.000000,12
+23,playback.audio_quality,Audio quality concerns and feature requests,5,12,2.400000,12
+24,billing.billing_other,billing.billing_other,4,11,2.750000,11
+25,catalog.search,catalog.search,3,9,3.000000,9
+26,access.password_reset,Password reset not accepting user input,1,4,4.000000,4
+27,playback.battery_resources,Excessive data and storage consumption,2,4,2.000000,4
+28,support.unhelpful_support,support.unhelpful_support,1,4,4.000000,4
+29,usability.usability_other,Cannot switch between video and audio podcast formats,2,4,2.000000,4
+30,playback.lag_slow,App loading and playback is slow,1,3,3.000000,3
+31,catalog.podcasts,catalog.podcasts,1,2,2.000000,2

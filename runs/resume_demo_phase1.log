@@ -1,0 +1,12 @@
+{"ts": "2026-10-10T13:02:44", "t": 1791662564.53, "run_id": "resume-demo", "stage": "run", "status": "start", "input": "spotify_reviews_18months.csv", "db": "pipeline.db", "stages": ["ingest", "enrich"], "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3", "models": {"enrich": "claude-ha
+{"ts": "2026-10-10T13:02:44", "t": 1791662564.636, "run_id": "resume-demo", "stage": "ingest", "status": "cached", "file_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6"}
+{"ts": "2026-10-10T13:02:44", "t": 1791662564.799, "run_id": "resume-demo", "stage": "scope", "in_scope_nonempty": 1000, "scope_rule": "subset:resume_demo_1000.csv"}
+{"ts": "2026-10-10T13:02:44", "t": 1791662564.814, "run_id": "resume-demo", "stage": "enrich", "msg": "[enrich] label_config=claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3 input_ids=1000 pending_texts=882 requests=18 phase=initial"}
+{"ts": "2026-10-10T13:02:56", "t": 1791662576.751, "run_id": "resume-demo", "stage": "enrich", "msg": "[enrich] request 1/18 saved; texts_done=529 spent=$0.1575 retry_queue=0"}
+{"ts": "2026-10-10T13:03:04", "t": 1791662584.697, "run_id": "resume-demo", "stage": "enrich", "msg": "[enrich] request 2/18 saved; texts_done=579 spent=$0.1637 retry_queue=0"}
+{"ts": "2026-10-10T13:03:14", "t": 1791662594.021, "run_id": "resume-demo", "stage": "enrich", "msg": "[enrich] request 3/18 saved; texts_done=629 spent=$0.1707 retry_queue=0"}
+{"ts": "2026-10-10T13:03:22", "t": 1791662602.584, "run_id": "resume-demo", "stage": "enrich", "msg": "[enrich] request 4/18 saved; texts_done=679 spent=$0.1771 retry_queue=0"}
+{"ts": "2026-10-10T13:03:30", "t": 1791662610.769, "run_id": "resume-demo", "stage": "enrich", "msg": "[enrich] request 5/18 saved; texts_done=727 spent=$0.1837 retry_queue=2"}
+{"ts": "2026-10-10T13:03:40", "t": 1791662620.991, "run_id": "resume-demo", "stage": "enrich", "msg": "[enrich] request 6/18 saved; texts_done=776 spent=$0.1912 retry_queue=3"}
+{"ts": "2026-10-10T13:03:48", "t": 1791662628.836, "run_id": "resume-demo", "stage": "enrich", "msg": "[enrich] request 7/18 saved; texts_done=826 spent=$0.1972 retry_queue=3"}
+{"ts": "2026-10-10T13:03:58", "t": 1791662638.186, "run_id": "resume-demo", "stage": "enrich", "status": "interrupted", "reason": "KeyboardInterrupt", "detail": "", "completed_saved": 455, "pending": 545, "phase": "initial", "resume_with": "python -m pipeline run --input spotify_reviews_18months.csv

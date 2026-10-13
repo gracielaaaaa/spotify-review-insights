@@ -1,0 +1,17 @@
+review_id,enrich_topic,verify_topic,topic_agree,enrich_intent,verify_intent,intent_agree,enrich_severity,verify_severity,severity_agree,all_agree
+035213ba-b1b9-411c-b028-70296e5f0e73,usability,billing,False,cancellation,cancellation,True,3,3,True,False
+21915fcd-9a35-48ba-b277-6296c4154603,billing,billing,True,cancellation,complaint,False,3,3,True,False
+2e2480c1-7799-4a66-be67-a947a2d99680,usability,usability,True,complaint,complaint,True,3,2,False,False
+3df77a78-ad9a-4456-8be8-8178ffd43d67,catalog,playback,False,complaint,complaint,True,3,3,True,False
+4966b59e-cf09-4881-b3ea-34fd4118a553,usability,billing,False,complaint,complaint,True,3,3,True,False
+5c581e49-727a-4221-be0a-a59344c78d60,billing,billing,True,complaint,complaint,True,3,2,False,False
+5c9c17d3-9d6a-4fa1-a2a4-ae98eefbbd25,usability,playback,False,complaint,complaint,True,3,3,True,False
+7084ced1-0428-4093-9328-442f74719b4f,billing,usability,False,complaint,complaint,True,3,3,True,False
+82aedd59-debc-4147-9ff4-5a95c3d3a4e4,billing,billing,True,complaint,complaint,True,3,2,False,False
+9f3626e0-1bcb-4788-a412-f812102502d1,other,catalog,False,unclear,complaint,False,1,2,False,False
+a862b037-7542-4a3e-94ef-836b7092f4ef,playback,downloads,False,complaint,complaint,True,2,2,True,False
+dcff57c6-abd6-413b-b255-aec3dc34fcbd,downloads,downloads,True,complaint,complaint,True,4,3,False,False
+dd90623c-dcd8-45a2-bb5b-3ace2b383667,catalog,catalog,True,complaint,request,False,2,1,False,False
+e393cec1-67e8-4f58-a484-8d9d76dc8fd6,usability,usability,True,complaint,complaint,True,3,2,False,False
+ebc64fe2-9553-4528-87d5-cb4bb9783be6,billing,usability,False,complaint,complaint,True,3,3,True,False
+f9cf3b4a-c40e-4578-9f6f-358807450b0f,billing,usability,False,complaint,complaint,True,4,3,False,False

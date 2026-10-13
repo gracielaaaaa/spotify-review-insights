@@ -1,0 +1,9 @@
+topic,issues,complaint_count,severity_sum,mean_severity
+other,1,16687,33374,2.000000
+usability,6,1564,3209,2.051790
+billing,4,147,428,2.911565
+playback,8,121,387,3.198347
+catalog,5,46,112,2.434783
+access,3,22,86,3.909091
+downloads,3,19,52,2.736842
+support,1,1,4,4.000000

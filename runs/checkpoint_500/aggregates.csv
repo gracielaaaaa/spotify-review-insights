@@ -1,0 +1,28 @@
+rank,issue_id,name,complaint_count,severity_sum,mean_severity,priority_score
+1,other.general_criticism,Overwhelmingly negative app experience,8200,16400,2.000000,16400
+2,usability.ads,Free tier has excessive ad frequency,850,1713,2.015294,1713
+3,billing.premium_paywall,Free tier features moved behind premium paywall,45,131,2.911111,131
+4,playback.crash_wont_open,App crashes and won't open after updates,12,46,3.833333,46
+5,usability.shuffle_controls,Shuffle behavior unpredictable and hard to control,12,33,2.750000,33
+6,access.login_failure,Users unable to log in to account,7,28,4.000000,28
+7,playback.stops_skips,Playback randomly stops or skips songs,8,27,3.375000,27
+8,usability.redesign_layout,New layout makes navigation slow and difficult,9,24,2.666667,24
+9,playback.connectivity,App falsely reports no internet connection,6,22,3.666667,22
+10,downloads.downloads_other,Download functionality not working properly,10,21,2.100000,21
+11,catalog.lyrics,Lyrics not displaying for some songs,8,20,2.500000,20
+12,playback.device_integration,Difficulty connecting to external devices,5,17,3.400000,17
+13,billing.subscription_activation,Premium subscription activation fails or doesn't process,4,16,4.000000,16
+14,usability.ui_navigation,Navigation and UI interaction changes confusing,6,16,2.666667,16
+15,catalog.missing_content,Many popular songs missing from catalog,6,15,2.500000,15
+16,playback.playback_other,Playback issues and unexpected app behavior,4,11,2.750000,11
+17,catalog.recommendations,Recommendations repeat same songs too often,5,10,2.000000,10
+18,billing.price,Music listening requires excessive charges,4,8,2.000000,8
+19,playback.audio_quality,Audio quality concerns and feature requests,3,6,2.000000,6
+20,access.account_hacked_or_locked,Account hacked and playlists lost,1,5,5.000000,5
+21,downloads.downloads_disappear,Downloaded content disappears unexpectedly,1,5,5.000000,5
+22,access.password_reset,Password reset not accepting user input,1,4,4.000000,4
+23,downloads.offline_not_working,Offline download feature not working,1,4,4.000000,4
+24,playback.lag_slow,App loading and playback is slow,1,3,3.000000,3
+25,usability.playlist_queue,Shuffle-only dropdown menu limits playlist control,1,3,3.000000,3
+26,playback.battery_resources,Excessive data and storage consumption,1,2,2.000000,2
+27,usability.usability_other,Cannot switch between video and audio podcast formats,1,2,2.000000,2

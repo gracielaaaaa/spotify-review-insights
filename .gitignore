@@ -23,3 +23,4 @@ dashboard/.vercel/
 runs/**/records.jsonl
 runs/**/quarantine.jsonl
 runs/**/enriched.jsonl
+runs/**/scope_ids.json

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spotify Review Insights</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface-0: #f4f3f0; --surface-1: #fcfcfb; --border: #e3e1db;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #7a7974;
+  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a;
+  --accent-soft: #e6effa; --warn-bg: #fff4e0; --warn-ink: #7a4b00; --grid: #ecebe6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface-0: #111110; --surface-1: #1a1a19; --border: #2e2e2c;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+    --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+    --accent-soft: #16263a; --warn-bg: #2d2210; --warn-ink: #f2c46d; --grid: #262624;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0: #111110; --surface-1: #1a1a19; --border: #2e2e2c;
+  --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+  --accent-soft: #16263a; --warn-bg: #2d2210; --warn-ink: #f2c46d; --grid: #262624;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface-0); color: var(--text-primary);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; }
+header { padding: 28px 16px 8px; max-width: 1180px; margin: 0 auto; }
+h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+h2 { font-size: 17px; margin: 0 0 12px; }
+.sub { color: var(--text-secondary); margin: 0; }
+main { max-width: 1180px; margin: 0 auto; padding: 8px 16px 48px; display: grid; gap: 16px; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px; min-width: 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.kpi { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.kpi .v { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--text-secondary); font-size: 13px; }
+.kpi .n { color: var(--text-muted); font-size: 12px; }
+.grid2 { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; }
+@media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+.memo h2, .memo h3 { font-size: 15px; margin: 16px 0 6px; }
+.memo p, .memo li { color: var(--text-primary); }
+.reco { background: var(--accent-soft); border-radius: 10px; padding: 12px 14px; font-weight: 600; }
+.chip { display: inline-block; border: 1px solid var(--series-1); color: var(--text-primary); border-radius: 6px;
+  padding: 0 5px; font-size: 12px; cursor: pointer; background: transparent; font-family: inherit; }
+.rid { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--text-secondary); cursor: pointer;
+  text-decoration: underline dotted; background: none; border: 0; padding: 0; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--grid); font-size: 14px; vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; }
+td.num, th.num { text-align: right; }
+tr.clickable { cursor: pointer; } tr.clickable:hover, tr.sel { background: var(--accent-soft); }
+.bar { height: 10px; background: var(--series-1); border-radius: 0 4px 4px 0; min-width: 2px; }
+.barcell { width: 32%; }
+.scroll { overflow-x: auto; }
+.muted { color: var(--text-muted); font-size: 13px; }
+.warn { background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px; padding: 10px 12px; font-size: 13px; }
+.quote { border-left: 3px solid var(--border); padding: 2px 10px; margin: 8px 0; color: var(--text-primary); }
+.tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.tabs button { border: 1px solid var(--border); background: var(--surface-1); color: var(--text-secondary);
+  border-radius: 8px; padding: 4px 10px; cursor: pointer; font: inherit; font-size: 13px; }
+.tabs button[aria-pressed="true"] { color: var(--text-primary); border-color: var(--series-1); }
+svg text { fill: var(--text-secondary); font-size: 11px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+.sw { display: inline-block; width: 12px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+#tip { position: fixed; pointer-events: none; background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; z-index: 10; max-width: 320px; }
+.toggle { float: right; }
+footer { max-width: 1180px; margin: 0 auto; padding: 0 16px 40px; color: var(--text-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <button class="tabs toggle" id="theme" style="border:1px solid var(--border);background:var(--surface-1);color:var(--text-secondary);border-radius:8px;padding:4px 10px;cursor:pointer">Theme</button>
+  <h1>Spotify Review Insights</h1>
+  <p class="sub">Where should next quarter's product effort go? Google Play reviews, May 2022 to Nov 2023, classified by a multi-agent pipeline and served from a Postgres database through this site's API.</p>
+</header>
+<main>
+  <section class="kpis" id="kpis" aria-label="Overall metrics"></section>
+  <section class="grid2">
+    <div class="card memo" id="memo"><h2>AI recommendation</h2><p class="muted">Loading…</p></div>
+    <div class="card"><h2>Priority by topic <span class="muted">(roll-up of issue severity sums)</span></h2><div id="topics"></div></div>
+  </section>
+  <section class="card">
+    <h2>Issue ranking <span class="muted">baseline: priority = complaint count × mean severity = severity sum; ties by issue ID</span></h2>
+    <div class="scroll"><table id="issues"><thead><tr><th>#</th><th>Issue</th><th class="num">Complaints</th><th class="num">Mean sev.</th><th class="num">Priority</th><th class="barcell"></th></tr></thead><tbody></tbody></table></div>
+  </section>
+  <section class="card" id="evidence"><h2>Evidence</h2><p class="muted">Select an issue, claim ID or review ID to see the saved source reviews.</p></section>
+  <section class="card">
+    <h2>Complaint share over time <span class="muted">top 3 topics; share of that month's completed records</span></h2>
+    <div class="tabs"><button id="vChart" aria-pressed="true">Chart</button><button id="vTable" aria-pressed="false">Table</button></div>
+    <div class="legend" id="legend"></div>
+    <div id="trend"></div>
+    <p class="muted">May 2022 and Nov 2023 are partial months. Denominators are completed classifications in that month (declared 100K scope plus exact-text reuse).</p>
+  </section>
+  <section class="card" id="method"></section>
+</main>
+<footer id="foot"></footer>
+<div id="tip" role="tooltip"></div>
+<script>
+const $ = (s) => document.querySelector(s);
+const fmt = (n) => Number(n).toLocaleString("en-US");
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const api = (p) => fetch(p).then((r) => r.json());
+const tip = $("#tip");
+function showTip(e, html) { tip.innerHTML = html; tip.style.display = "block";
+  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8); tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px"; }
+const hideTip = () => (tip.style.display = "none");
+
+try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+$("#theme").onclick = () => { const cur = document.documentElement.dataset.theme ||
+  (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const nx = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = nx;
+  try { localStorage.setItem("theme", nx); } catch (e) {} };
+
+let CLAIMS = {}, ISSUES = [];
+
+function md(text) {  // tiny markdown: headings, bullets, bold; then link claim + review IDs
+  const lines = esc(text).split("\n"); let out = "", inList = false;
+  for (const l of lines) {
+    if (/^\s*[-*] /.test(l)) { if (!inList) { out += "<ul>"; inList = true; } out += "<li>" + l.replace(/^\s*[-*] /, "") + "</li>"; continue; }
+    if (inList) { out += "</ul>"; inList = false; }
+    if (/^#{1,3} /.test(l)) out += "<h3>" + l.replace(/^#+ /, "") + "</h3>"; else if (l.trim()) out += "<p>" + l + "</p>";
+  }
+  if (inList) out += "</ul>";
+  return out.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\[(C\d{3})\]/g, (m, c) => `<button class="chip" data-claim="${c}">${c}</button>`)
+    .replace(/\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b/g, (m, id) => `<button class="rid" data-review="${id}">${id.slice(0, 8)}…</button>`);
+}
+
+function kpis(m, run) {
+  const c = m.coverage || {}, v = m.verify || {};
+  const tiles = [
+    [fmt(c.source_rows), "source rows accounted for", "every original review ID"],
+    [fmt(c.completed), "completed classifications", `${(100 * c.completed / c.source_rows).toFixed(1)}% of all rows`],
+    [fmt(c.in_scope_nonempty), "declared classification scope", "first 100K nonempty, seeded order"],
+    [fmt(c.completed_via_exact_text_reuse), "completed via exact-text reuse", "same text, same label_config"],
+    [fmt(c.quarantined), "quarantined", "13 empty + out of scope + failures"],
+    [fmt(m.complaint_records), "complaint + cancellation records", `mean severity ${m.mean_severity_complaints}`],
+    [v.n ? (100 * v.topic_agreement).toFixed(0) + "%" : "—", "blind verifier topic agreement", v.n ? `n=${v.n}; intent ${(100 * v.intent_agreement).toFixed(0)}%` : ""],
+    [m.ledger_spent_total_usd != null ? "$" + Number(m.ledger_spent_total_usd).toFixed(2) : "—", "API spend (ledger)", "measured from usage × rates"],
+  ];
+  $("#kpis").innerHTML = tiles.map(([v2, l, n]) => `<div class="kpi"><div class="v">${v2 ?? "—"}</div><div class="l">${l}</div><div class="n">${n}</div></div>`).join("");
+}
+
+function topics(rows) {
+  const max = Math.max(...rows.map((r) => r.severity_sum), 1);
+  $("#topics").innerHTML = `<table><thead><tr><th>Topic</th><th class="num">Complaints</th><th class="num">Sev. sum</th><th class="barcell"></th></tr></thead><tbody>${
+    rows.map((r) => `<tr data-topic="${esc(r.topic)}"><td>${esc(r.topic)}</td><td class="num">${fmt(r.complaint_count)}</td><td class="num">${fmt(r.severity_sum)}</td>
+      <td class="barcell"><div class="bar" style="width:${(100 * r.severity_sum / max).toFixed(1)}%"></div></td></tr>`).join("")}</tbody></table>
+    <p class="muted">Roll-up is supplementary: it sums baseline issues within each of the 8 fixed topics. "other" holds generic criticism with no specific feature.</p>`;
+  document.querySelectorAll("#topics tr[data-topic]").forEach((tr) => {
+    const r = rows.find((x) => x.topic === tr.dataset.topic);
+    tr.onmousemove = (e) => showTip(e, `<b>${esc(r.topic)}</b><br>${fmt(r.complaint_count)} complaints across ${r.issues} issues<br>severity sum ${fmt(r.severity_sum)} · mean ${r.mean_severity}`);
+    tr.onmouseleave = hideTip;
+  });
+}
+
+function issues(rows) {
+  ISSUES = rows; const max = Math.max(...rows.map((r) => r.priority_score), 1);
+  $("#issues tbody").innerHTML = rows.map((r) => `<tr class="clickable" data-issue="${esc(r.issue_id)}">
+    <td>${r.rank}</td><td><b>${esc(r.name || r.issue_id)}</b><br><span class="muted">${esc(r.issue_id)}</span></td>
+    <td class="num">${fmt(r.complaint_count)}</td><td class="num">${Number(r.mean_severity).toFixed(3)}</td><td class="num">${fmt(r.priority_score)}</td>
+    <td class="barcell"><div class="bar" style="width:${(100 * r.priority_score / max).toFixed(1)}%"></div></td></tr>`).join("");
+  document.querySelectorAll("#issues tr[data-issue]").forEach((tr) => {
+    tr.onclick = () => openIssue(tr.dataset.issue);
+    const r = rows.find((x) => x.issue_id === tr.dataset.issue);
+    tr.onmousemove = (e) => showTip(e, `<b>${esc(r.name || r.issue_id)}</b><br>${fmt(r.complaint_count)} × ${Number(r.mean_severity).toFixed(6)} = ${fmt(r.priority_score)}`);
+    tr.onmouseleave = hideTip;
+  });
+}
+
+async function openIssue(id, highlight) {
+  document.querySelectorAll("#issues tr").forEach((t) => t.classList.toggle("sel", t.dataset.issue === id));
+  $("#evidence").innerHTML = `<h2>Evidence</h2><p class="muted">Loading ${esc(id)}…</p>`;
+  const d = await api(`/api/issue?id=${encodeURIComponent(id)}&limit=25`);
+  const i = d.issue; if (!i) { $("#evidence").innerHTML = "<h2>Evidence</h2><p>Issue not found.</p>"; return; }
+  const claims = Object.values(CLAIMS).filter((c) => c.issue_id === id);
+  $("#evidence").innerHTML = `<h2>Evidence: ${esc(i.name || id)} <span class="muted">${esc(id)}</span></h2>
+    <p>${esc(i.description || "")}</p>
+    <p class="muted">Rank ${i.rank} · ${fmt(i.complaint_count)} complaint/cancellation records · severity sum ${fmt(i.severity_sum)} · mean ${i.mean_severity}
+    ${claims.length ? " · memo claims " + claims.map((c) => `<button class="chip" data-claim="${c.claim_id}">${c.claim_id}</button>`).join(" ") : ""}</p>
+    <div class="scroll"><table><thead><tr><th>Review ID</th><th>Intent</th><th class="num">Sev.</th><th>Evidence quote (exact source substring)</th></tr></thead><tbody>${
+      d.members.map((r) => `<tr${r.review_id === highlight ? ' class="sel"' : ""}><td><button class="rid" data-review="${r.review_id}">${r.review_id.slice(0, 8)}…</button></td><td>${esc(r.intent)}</td><td class="num">${r.severity}</td>
+      <td>${esc(r.evidence_quote)}${r.needs_review ? ' <span class="muted">(needs review)</span>' : ""}</td></tr>`).join("")}</tbody></table></div>
+    <p class="muted">Showing up to 25 original (non-reused) members, highest severity first. Full membership: grading/membership.csv in the repository.</p>`;
+  $("#evidence").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function openReview(id) {
+  const r = await api(`/api/review?id=${encodeURIComponent(id)}`);
+  if (!r) { $("#evidence").innerHTML = `<h2>Evidence</h2><p>Review ${esc(id)} is not a completed classification.</p>`; return; }
+  if (r.issue_id) return openIssue(r.issue_id, r.review_id).then(() => showReviewCard(r));
+  showReviewCard(r);
+}
+function showReviewCard(r) {
+  const box = document.createElement("div");
+  box.className = "quote";
+  box.innerHTML = `<b>Review ${esc(r.review_id)}</b> · ${esc(r.topic)}/${esc(r.subtopic)} · ${esc(r.intent)} · severity ${r.severity} · sentiment ${r.sentiment}
+    ${r.cache_source_id ? ` · reused from ${esc(r.cache_source_id)}` : ""}<br>“${esc(r.evidence_quote)}”`;
+  $("#evidence h2").after(box);
+}
+
+function trend(rows, rollup) {
+  const top = rollup.filter((r) => r.topic !== "other").slice(0, 3).map((r) => r.topic);
+  const months = [...new Set(rows.map((r) => r.month))].sort();
+  const denom = {}; rows.forEach((r) => (denom[r.month] = r.completed));
+  const val = {}; rows.forEach((r) => (val[r.month + "|" + r.topic] = r.complaints));
+  const series = top.map((t, k) => ({ t, color: `var(--series-${k + 1})`, pts: months.map((m) => ({ m, v: 100 * (val[m + "|" + t] || 0) / (denom[m] || 1), n: val[m + "|" + t] || 0 })) }));
+  $("#legend").innerHTML = series.map((s) => `<span><span class="sw" style="background:${s.color}"></span>${esc(s.t)}</span>`).join("");
+  const W = Math.max(320, $("#trend").clientWidth || 900), H = 260, L = 40, R = 70, T = 10, B = 28;
+  const ymax = Math.max(1, ...series.flatMap((s) => s.pts.map((p) => p.v))) * 1.1;
+  const x = (i) => L + (i * (W - L - R)) / Math.max(1, months.length - 1), y = (v) => T + (H - T - B) * (1 - v / ymax);
+  let g = "";
+  for (let k = 0; k <= 4; k++) { const v = (ymax * k) / 4; g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(0)}%</text>`; }
+  months.forEach((m, i) => { if (i % 3 === 0 || i === months.length - 1) g += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle">${m}</text>`; });
+  const lines = series.map((s) => `<path d="${s.pts.map((p, i) => (i ? "L" : "M") + x(i).toFixed(1) + " " + y(p.v).toFixed(1)).join("")}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round"/>
+     <text x="${x(months.length - 1) + 6}" y="${y(s.pts[s.pts.length - 1].v) + 4}" style="fill:var(--text-primary)">${esc(s.t)}</text>`).join("");
+  $("#trend").innerHTML = `<svg width="100%" viewBox="0 0 ${W} ${H}" role="img" aria-label="Complaint share by month for ${top.join(", ")}">${g}${lines}
+    <line id="xh" y1="${T}" y2="${H - B}" stroke="var(--text-muted)" stroke-dasharray="3 3" visibility="hidden"/>
+    <rect x="${L}" y="${T}" width="${W - L - R}" height="${H - T - B}" fill="transparent" id="hit"/></svg>`;
+  const svg = $("#trend svg"), hit = $("#hit"), xh = $("#xh");
+  hit.onmousemove = (e) => { const b = svg.getBoundingClientRect(); const px = ((e.clientX - b.left) / b.width) * W;
+    const i = Math.max(0, Math.min(months.length - 1, Math.round(((px - L) / (W - L - R)) * (months.length - 1))));
+    xh.setAttribute("x1", x(i)); xh.setAttribute("x2", x(i)); xh.setAttribute("visibility", "visible");
+    showTip(e, `<b>${months[i]}</b> · ${fmt(denom[months[i]] || 0)} completed records<br>` + series.map((s) => `<span class="sw" style="background:${s.color}"></span>${esc(s.t)}: ${s.pts[i].v.toFixed(1)}% (${fmt(s.pts[i].n)})`).join("<br>")); };
+  hit.onmouseleave = () => { xh.setAttribute("visibility", "hidden"); hideTip(); };
+  const table = `<div class="scroll"><table><thead><tr><th>Month</th><th class="num">Completed</th>${top.map((t) => `<th class="num">${esc(t)} complaints</th><th class="num">share</th>`).join("")}</tr></thead><tbody>${
+    months.map((m) => `<tr><td>${m}</td><td class="num">${fmt(denom[m] || 0)}</td>${top.map((t) => `<td class="num">${fmt(val[m + "|" + t] || 0)}</td><td class="num">${(100 * (val[m + "|" + t] || 0) / (denom[m] || 1)).toFixed(1)}%</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  $("#vChart").onclick = () => { trend(rows, rollup); $("#vChart").setAttribute("aria-pressed", "true"); $("#vTable").setAttribute("aria-pressed", "false"); };
+  $("#vTable").onclick = () => { $("#trend").innerHTML = table; $("#vTable").setAttribute("aria-pressed", "true"); $("#vChart").setAttribute("aria-pressed", "false"); };
+}
+
+function method(s) {
+  const m = s.metrics, run = s.run || {};
+  $("#method").innerHTML = `<h2>How these numbers were made</h2>
+   <p><b>Pipeline:</b> ingest (code) → enrich (<code>${esc((m.models || {}).enrich)}</code>, ≤50 reviews/request, validated by code) → blind verify (separate prompt, seeded sample) → group (code assigns each complaint to one <code>topic.subtopic</code> issue; a small model only names issues) → rank (code only) → memo (<code>${esc((m.models || {}).memo)}</code>, sees only saved aggregates + an evidence pack; code rejects unknown IDs and mismatched numbers).</p>
+   <p><b>Run:</b> <code>${esc(run.run_id)}</code> · label_config <code>${esc(m.label_config)}</code></p>
+   <div class="warn"><b>Limitations.</b> Self-selected public app-store reviews (May 2022 to Nov 2023), not a customer population. Cancellation language is stated intent, not observed churn; no revenue or plan data exist. Classification scope is the first 100,000 nonempty reviews in the course's seeded sample order (instructor-approved), plus every other review with identical text; remaining rows are quarantined and excluded from counts. Blind-verifier agreement is moderate, so labels carry real error.</div>`;
+  $("#foot").innerHTML = `Data served by this site's <code>/api/*</code> backend from Supabase Postgres. Source code, saved outputs and grading export: see the GitHub repository README.`;
+}
+
+document.addEventListener("click", (e) => {
+  const c = e.target.closest("[data-claim]"), r = e.target.closest("[data-review]");
+  if (c) { const cl = CLAIMS[c.dataset.claim]; if (cl) openIssue(cl.issue_id).then(() => {
+    const n = document.createElement("p"); n.className = "reco"; n.textContent = `${cl.claim_id}: ${cl.metric} = ${cl.value} (recomputed by code from saved membership)`; $("#evidence h2").after(n); }); }
+  if (r) openReview(r.dataset.review);
+});
+
+(async () => {
+  try {
+    const [s, iss, mon] = await Promise.all([api("/api/summary"), api("/api/issues"), api("/api/monthly")]);
+    if (s.error) throw new Error(s.error);
+    s.claims.forEach((c) => (CLAIMS[c.claim_id] = c));
+    kpis(s.metrics, s.run); topics(s.topic_rollup); issues(iss); trend(mon, s.topic_rollup); method(s);
+    if (s.memo) $("#memo").innerHTML = `<h2>AI recommendation <span class="muted">${esc(s.memo.model)} · code checks ${s.memo.checks && s.memo.checks.accepted ? "passed" : "FAILED"}</span></h2>
+      <div class="reco">${esc(s.memo.recommendation)}</div>${md(s.memo.memo_markdown)}
+      <p class="muted">Bracketed claim IDs open the issue and the code-computed value; review IDs open the saved source review.</p>`;
+  } catch (e) { $("#memo").innerHTML = `<h2>AI recommendation</h2><p class="warn">Could not load data: ${esc(e.message)}</p>`; }
+})();
+</script>
+</body>
+</html>

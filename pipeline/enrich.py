@@ -341,7 +341,9 @@ def run_batch(con, review_ids, *, run_id, phase, stage="enrich", requests_per_jo
 
     jobs = 0
     while True:
-        work = pending_work(con, review_ids, lc)
+        # texts already attempted in a batch and found invalid go ONLY to the single retry below
+        retrying = {c[1] for c, _ in retry_items}
+        work = [w for w in pending_work(con, review_ids, lc) if w[1] not in retrying]
         if not work or (max_jobs is not None and jobs >= max_jobs):
             break
         chunks = [work[k:k + config.ENRICH_BATCH_SIZE] for k in range(0, len(work), config.ENRICH_BATCH_SIZE)]
