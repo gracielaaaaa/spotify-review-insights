@@ -362,7 +362,12 @@ def run_batch(con, review_ids, *, run_id, phase, stage="enrich", requests_per_jo
                 system=[{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
                 messages=[{"role": "user", "content": build_user([t for _, _, t in ch])}])))
         job_started = time.time()
-        b = llm.client().messages.batches.create(requests=reqs)
+        import anthropic
+        try:
+            b = llm.client().messages.batches.create(requests=reqs)
+        except (anthropic.BadRequestError, anthropic.AuthenticationError, anthropic.PermissionDeniedError) as e:
+            ledger.settle(worst, 0.0)
+            raise llm.FatalAPIError(f"batch submission refused: {str(e)[:200]}") from e
         with store.tx(con):
             con.execute("INSERT INTO batch_jobs VALUES (?,?,?,?,?,?)",
                         (b.id, run_id, phase, job_started, "submitted", json.dumps(mapping)))

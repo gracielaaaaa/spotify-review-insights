@@ -253,6 +253,31 @@ def main():
     L.append("\nBatch-tier rows apply the provider's 50% Batch API price to enrichment as an *estimate*; the pilot itself was billed at the standard tier. "
              "Prompt-cache hit rates in batch mode are best-effort and are measured at the 10K checkpoint (see `../runs/`). "
              "Group and memo are fixed overhead, counted once. Verification is 1% capped at 1,000 reviews, not every review.\n")
+    # ---- refresh at 500 / 10K / final (measured, from saved run logs; offline) ----
+    L.append("## Estimate refresh from later checkpoints (measured)\n")
+    L.append("| Checkpoint | Run | Tier | Enrich requests | Texts sent (attempt 1) | Retry items | Uncached in/text | Output/text | Cache read share | Enrich USD | USD per 1K texts | All-stage USD |")
+    L.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
+    refresh = {}
+    for label, d in (("500", "checkpoint_500"), ("1K resume demo", "resume_demo"), ("10K", "analysis_10000"), ("100K final", "final_100k")):
+        calls = load_calls(ROOT / "runs" / d)
+        en = [c for c in calls if c["role"] == "enrich" and c["outcome"] == "succeeded"]
+        if not en:
+            continue
+        first = [c for c in en if c.get("attempt", 1) == 1]
+        texts = sum(len(c["review_ids"]) for c in first)
+        retry = sum(len(c["review_ids"]) for c in en if c.get("attempt", 1) > 1)
+        usd = sum(cost(c, rates) for c in en)
+        allusd = sum(cost(c, rates) for c in calls)
+        cr = sum(c["cache_read_tokens"] for c in en); cw = sum(c["cache_write_tokens"] for c in en)
+        tiers = "/".join(sorted({c.get("tier") or "standard" for c in en}))
+        refresh[label] = usd / max(1, texts)
+        L.append(f"| {label} | `{d}` | {tiers} | {len(en)} | {texts:,} | {retry:,} | {sum(c['input_tokens'] for c in first) / max(1, texts):.1f} | "
+                 f"{sum(c['output_tokens'] for c in first) / max(1, texts):.1f} | {cr / max(1, cr + cw):.0%} | ${usd:.4f} | ${1000 * usd / max(1, texts):.4f} | ${allusd:.4f} |")
+    if "10K" in refresh:
+        rem = SCOPE_DISTINCT * refresh["10K"]
+        L.append(f"\nRe-projection after the 10K batch checkpoint: {SCOPE_DISTINCT:,} distinct texts x ${refresh['10K'] * 1000:.4f}/1K = **${rem:.2f}** enrich "
+                 f"for the whole 100K scope (before subtracting texts already done in earlier checkpoints); "
+                 f"{'within' if rem < a.budget else 'EXCEEDS'} the ${a.budget:.2f} budget. Full 660K with reuse at the same rate: ${FULL_DISTINCT * refresh['10K']:.2f}.\n")
     L.append("## Rates used\n")
     L.append("| model | tier | item | USD per 1M | source | checked |")
     L.append("|---|---|---|---|---|---|")

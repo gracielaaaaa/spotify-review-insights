@@ -1,0 +1,10 @@
+{
+  "source_file": "synthetic_reviews.csv",
+  "sha256": "d646b5bd8ab2a2ea8b17607c1cc992b154f4ccd98edfcc2b7f9c41f1dd3776a2",
+  "bytes": 1151,
+  "records": 8,
+  "course_manifest_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+  "row_hash": "check_submission.row_sha: sha256(canonical JSON of 6 source fields)",
+  "sample_key": "sha256('berkeley-fall-2026-assignment-5-v1:' + review_id)",
+  "created": "2026-10-12T21:29:09-0700"
+}

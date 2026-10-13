@@ -1,0 +1,6 @@
+topic,issues,complaint_count,severity_sum,mean_severity
+playback,2,2,7,3.500000
+billing,1,1,5,5.000000
+access,1,1,4,4.000000
+downloads,1,1,3,3.000000
+usability,1,1,2,2.000000

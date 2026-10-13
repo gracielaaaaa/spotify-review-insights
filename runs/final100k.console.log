@@ -1,0 +1,58 @@
+{"ts": "2026-10-12T21:27:04", "t": 1791865624.828, "run_id": "final100k", "stage": "run", "status": "start", "input": "spotify_reviews_18months.csv", "db": "pipeline.db", "stages": ["ingest", "enrich", "verify", "group", "rank", "memo"], "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3
+{"ts": "2026-10-12T21:27:04", "t": 1791865624.946, "run_id": "final100k", "stage": "ingest", "status": "cached", "file_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6"}
+{"ts": "2026-10-12T21:27:13", "t": 1791865633.912, "run_id": "final100k", "stage": "scope", "in_scope_nonempty": 100000, "scope_rule": "first 100000 nonempty by sha256(seed:id)"}
+{"ts": "2026-10-12T21:27:27", "t": 1791865647.866, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] submitted msgbatch_01L2zJbtTrbjM7gJEu2VLvDA: 400 requests, 20000 texts, reserved $3.7558"}
+{"ts": "2026-10-12T21:27:28", "t": 1791865648.132, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01L2zJbtTrbjM7gJEu2VLvDA in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:27:58", "t": 1791865678.46, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01L2zJbtTrbjM7gJEu2VLvDA in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:28:28", "t": 1791865708.798, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01L2zJbtTrbjM7gJEu2VLvDA in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:28:59", "t": 1791865739.118, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01L2zJbtTrbjM7gJEu2VLvDA in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:29:29", "t": 1791865769.412, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01L2zJbtTrbjM7gJEu2VLvDA in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:29:59", "t": 1791865799.772, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01L2zJbtTrbjM7gJEu2VLvDA in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:30:30", "t": 1791865830.056, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01L2zJbtTrbjM7gJEu2VLvDA in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:31:05", "t": 1791865865.659, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] job msgbatch_01L2zJbtTrbjM7gJEu2VLvDA processed: ok=400 errored=0 spent=$2.8212"}
+{"ts": "2026-10-12T21:31:15", "t": 1791865875.743, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] submitted msgbatch_01Hog3Kw9cEvQBD9Dcq5ep8K: 400 requests, 20000 texts, reserved $3.7591"}
+{"ts": "2026-10-12T21:31:16", "t": 1791865876.027, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01Hog3Kw9cEvQBD9Dcq5ep8K in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:31:46", "t": 1791865906.38, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01Hog3Kw9cEvQBD9Dcq5ep8K in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:32:16", "t": 1791865936.659, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01Hog3Kw9cEvQBD9Dcq5ep8K in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:32:46", "t": 1791865966.948, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01Hog3Kw9cEvQBD9Dcq5ep8K in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:33:17", "t": 1791865997.381, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01Hog3Kw9cEvQBD9Dcq5ep8K in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:33:47", "t": 1791866027.679, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01Hog3Kw9cEvQBD9Dcq5ep8K in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:34:23", "t": 1791866063.945, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] job msgbatch_01Hog3Kw9cEvQBD9Dcq5ep8K processed: ok=400 errored=0 spent=$4.2277"}
+{"ts": "2026-10-12T21:34:28", "t": 1791866068.993, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] submitted msgbatch_01QingoSQa6KM7ntdd6DARBx: 400 requests, 20000 texts, reserved $3.7631"}
+{"ts": "2026-10-12T21:34:29", "t": 1791866069.206, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01QingoSQa6KM7ntdd6DARBx in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:34:59", "t": 1791866099.522, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01QingoSQa6KM7ntdd6DARBx in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:35:30", "t": 1791866130.128, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01QingoSQa6KM7ntdd6DARBx in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:36:00", "t": 1791866160.433, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01QingoSQa6KM7ntdd6DARBx in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:36:30", "t": 1791866190.746, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01QingoSQa6KM7ntdd6DARBx in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:37:01", "t": 1791866221.034, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01QingoSQa6KM7ntdd6DARBx in_progress processing=400 succeeded=0 errored=0"}
+{"ts": "2026-10-12T21:37:36", "t": 1791866256.944, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] job msgbatch_01QingoSQa6KM7ntdd6DARBx processed: ok=371 errored=29 spent=$5.5381"}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/graciela/assignment 5/pipeline/__main__.py", line 3, in <module>
+    main()
+    ~~~~^^
+  File "/Users/graciela/assignment 5/pipeline/cli.py", line 328, in main
+    {"run": cmd_run, "rank": cmd_rank, "grading": cmd_grading}[a.cmd](a)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/Users/graciela/assignment 5/pipeline/cli.py", line 97, in cmd_run
+    s = enrich.run_batch(con, scope, run_id=run_id, phase=phase, requests_per_job=a.requests_per_job,
+                         max_jobs=a.max_jobs, log=lambda m: log.event(stage="enrich", msg=m))
+  File "/Users/graciela/assignment 5/pipeline/enrich.py", line 365, in run_batch
+    b = llm.client().messages.batches.create(requests=reqs)
+  File "/Users/graciela/assignment 5/.venv/lib/python3.14/site-packages/anthropic/resources/messages/batches.py", line 105, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages/batches",
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        cast_to=MessageBatch,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/graciela/assignment 5/.venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1543, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/graciela/assignment 5/.venv/lib/python3.14/site-packages/anthropic/_base_client.py", line 1208, in request
+    raise self._make_status_error_from_response(response) from None
+anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cfycm5GrwyLZ4CRaBQMj8'}

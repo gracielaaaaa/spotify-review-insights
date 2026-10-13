@@ -106,7 +106,7 @@ def cmd_run(a):
                 (out / "checkpoint_after.json").write_text(json.dumps({"completed_ids": ids}) + "\n")
                 log.event(stage="enrich", status="checkpoint_after", completed=len(ids))
             log.event(stage="enrich", status="done", phase=phase, **s, seconds=round(time.time() - t, 2))
-        except (KeyboardInterrupt, llm.BudgetExceeded) as e:
+        except (KeyboardInterrupt, llm.BudgetExceeded, llm.FatalAPIError) as e:
             ids = completed_ids(con, scope, lc)
             with store.tx(con):
                 store.kv_set(con, state_key, "interrupted")

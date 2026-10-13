@@ -1,0 +1,7 @@
+issue_id,review_id
+access.password_reset,SYN-INJ-005
+billing.unwanted_charges,SYN-INJ-006
+downloads.downloads_disappear,SYN-INJ-007
+playback.crash_wont_open,SYN-INJ-001
+playback.stops_skips,SYN-INJ-008
+usability.ads,SYN-INJ-004

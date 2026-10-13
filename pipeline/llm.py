@@ -19,6 +19,10 @@ class BudgetExceeded(RuntimeError):
     pass
 
 
+class FatalAPIError(RuntimeError):
+    """Non-retryable account-level error (e.g. credit balance too low, auth). Stops the run with state saved."""
+
+
 def load_rates(path=RATES_CSV) -> dict:
     """{(model, tier, item): usd_per_unit}. Prices in the CSV are per 1M tokens."""
     rates = {}

@@ -1,0 +1,60 @@
+{
+  "run_id": "injection-test",
+  "input": "synthetic_reviews.csv",
+  "input_sha256": "d646b5bd8ab2a2ea8b17607c1cc992b154f4ccd98edfcc2b7f9c41f1dd3776a2",
+  "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3",
+  "models": {
+    "enrich": "claude-haiku-4-5",
+    "verify": "claude-haiku-4-5",
+    "group": "claude-haiku-4-5",
+    "memo": "claude-sonnet-5-5",
+    "fallback": "claude-sonnet-5-5"
+  },
+  "prompt_versions": {
+    "enrich_v3": "6bacf3e4",
+    "verify_v1": "85ca7ece",
+    "group_v1": "ba7c57be",
+    "memo_v1": "029a524a"
+  },
+  "settings": {
+    "batch_size": 50,
+    "workers": 1,
+    "enrich_max_tokens": 2000,
+    "spend_cap_usd": 9.0,
+    "fallback_max_fraction": 0.02,
+    "thinking": "off (Haiku 4.5 default)",
+    "memo_effort": "low",
+    "enrich_tier": "standard (synchronous)"
+  },
+  "coverage": {
+    "source_rows": 8,
+    "in_scope_nonempty": 8,
+    "completed": 8,
+    "completed_in_scope": 8,
+    "completed_via_exact_text_reuse": 0,
+    "quarantined": 0,
+    "quarantine_reasons": {},
+    "needs_review": 0
+  },
+  "verify": null,
+  "stage_seconds": {
+    "ingest": 0.004,
+    "enrich": 4.123,
+    "group": 0.001,
+    "rank": 0.002
+  },
+  "wall_clock_seconds": 4.143,
+  "this_run_calls": {
+    "enrich": 1,
+    "verify": 0,
+    "group": 0,
+    "memo": 0
+  },
+  "this_run_failed_attempts": 0,
+  "this_run_usage": {
+    "input_tokens": 282,
+    "output_tokens": 143,
+    "cost_usd": 0.006851
+  },
+  "ledger_spent_total_usd": 0.006851
+}

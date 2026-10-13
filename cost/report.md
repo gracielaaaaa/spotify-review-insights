@@ -49,6 +49,16 @@ Per-unit inputs measured in the pilot: 32.1 uncached input + 20.8 output tokens 
 
 Batch-tier rows apply the provider's 50% Batch API price to enrichment as an *estimate*; the pilot itself was billed at the standard tier. Prompt-cache hit rates in batch mode are best-effort and are measured at the 10K checkpoint (see `../runs/`). Group and memo are fixed overhead, counted once. Verification is 1% capped at 1,000 reviews, not every review.
 
+## Estimate refresh from later checkpoints (measured)
+
+| Checkpoint | Run | Tier | Enrich requests | Texts sent (attempt 1) | Retry items | Uncached in/text | Output/text | Cache read share | Enrich USD | USD per 1K texts | All-stage USD |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 500 | `checkpoint_500` | standard | 12 | 479 | 19 | 29.1 | 19.7 | 92% | $0.0765 | $0.1596 | $0.1505 |
+| 1K resume demo | `resume_demo` | standard | 22 | 885 | 32 | 28.5 | 19.9 | 100% | $0.1301 | $0.1470 | $0.1301 |
+| 10K | `analysis_10000` | batch/standard | 189 | 8,719 | 123 | 34.6 | 20.4 | 87% | $0.7347 | $0.0843 | $0.8562 |
+
+Re-projection after the 10K batch checkpoint: 78,099 distinct texts x $0.0843/1K = **$6.58** enrich for the whole 100K scope (before subtracting texts already done in earlier checkpoints); within the $9.00 budget. Full 660K with reuse at the same rate: $40.80.
+
 ## Rates used
 
 | model | tier | item | USD per 1M | source | checked |
