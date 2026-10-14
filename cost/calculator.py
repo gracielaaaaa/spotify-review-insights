@@ -136,7 +136,9 @@ def main():
     ws = json.loads((warm / "run_summary.json").read_text()) if (warm / "run_summary.json").exists() else None
     recs = [json.loads(l) for l in open(cold / "records.jsonl", encoding="utf-8")]
     ids_ok = [r["review_id"] for r in recs]
-    pilot_ids = [r["review_id"] for r in csv.DictReader(open(DATA / "cost_100.csv", encoding="utf-8", newline=""))]
+    src100 = DATA / "cost_100.csv"
+    pilot_ids = ([r["review_id"] for r in csv.DictReader(open(src100, encoding="utf-8", newline=""))]
+                 if src100.exists() else None)  # dataset not committed; checksum check below still applies
 
     # ---- evidence files (structured, recomputable) ----
     with open(HERE / "pilot_records.jsonl", "w", encoding="utf-8") as f:
@@ -203,7 +205,7 @@ def main():
     L.append("## Measured pilot (real calls on `cost_100.csv`, unchanged)\n")
     L.append(f"- Input checksum: `{cs['input_sha256']}` (matches manifest: "
              f"{cs['input_sha256'] == 'c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e'})")
-    L.append(f"- Pilot IDs saved: {len(ids_ok)}; identical to cost_100.csv IDs: {ids_ok == pilot_ids}")
+    L.append(f"- Pilot IDs saved: {len(ids_ok)}; identical to cost_100.csv IDs: {ids_ok == pilot_ids if pilot_ids is not None else 'cost_100.csv not present (place the course data to check)'}")
     L.append(f"- Completed: {completed}, failed/quarantined: {failed}; unique texts: {cs['coverage']['completed'] - cs['coverage']['completed_via_exact_text_reuse']}; "
              f"result-cache hits (cold): {cs['coverage']['completed_via_exact_text_reuse']}")
     L.append(f"- label_config: `{cs['label_config']}`; batch size {cs['settings']['batch_size']}; workers {cs['settings']['workers']}; "
