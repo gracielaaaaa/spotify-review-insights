@@ -4,7 +4,7 @@
 
   .venv/bin/python tools/label_golden.py --quick   (one line per review: "topic intent severity sentiment")
 
-Saves after every review to evals/golden_50_labeled.csv; rerun to resume. Press Enter to
+Saves after every review to evals/golden_50_human.csv; rerun to resume. Press Enter to
 accept a [default]. 'b' goes back one review, 'q' quits (progress is kept)."""
 
 import csv
@@ -13,10 +13,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "Final Assignment - Spotify Reviews Dataset" / "golden_50_to_label.csv"
-OUT = ROOT / "evals" / "golden_50_labeled.csv"
+# Independent human labels (blind: this tool never shows the assistant drafts or any model output).
+OUT = ROOT / "evals" / "golden_50_human.csv"
 TOPICS = ["access", "usability", "playback", "downloads", "catalog", "billing", "support", "other"]
 INTENTS = ["cancellation", "complaint", "request", "praise", "unclear"]
-EXTRA = ["accepted_topics", "accepted_intents", "accepted_severities", "ambiguous", "notes", "labeler"]
+EXTRA = ["accepted_topics", "accepted_intents", "accepted_severities", "ambiguous", "notes", "labeler", "label_source"]
 
 HELP = """
 TOPIC  1 access(login/account)  2 usability(controls/nav/layout/queue/ads)  3 playback(crash/lag/stops/audio)
@@ -123,6 +124,7 @@ def main():
             i = max(0, i - 1)
             continue
         r["labeler"] = labeler
+        r["label_source"] = "human_blind"
         done[r["review_id"]] = r
         OUT.parent.mkdir(exist_ok=True)
         with open(OUT, "w", encoding="utf-8", newline="") as f:

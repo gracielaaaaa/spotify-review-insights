@@ -85,9 +85,11 @@
         "downloads": 1
       }
     },
+    "golden_source_file": "golden_50_labeled.csv",
     "label_provenance": {
       "assistant_draft_human_accepted": 50
     },
+    "human_vs_assistant_draft": null,
     "caveat": "50 cases is a small diagnostic sample. Golden labels were AI-drafted (claude-opus-5-5) and human-reviewed; the reviewer accepted all drafts unchanged, so agreement partly measures model-vs-model consistency."
   },
   "cases": [

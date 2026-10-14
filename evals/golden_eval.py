@@ -28,7 +28,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--records", required=True)
     a = ap.parse_args()
-    gold = list(csv.DictReader(open(HERE / "golden_50_labeled.csv", encoding="utf-8")))
+    human = HERE / "golden_50_human.csv"
+    hrows = list(csv.DictReader(open(human, encoding="utf-8"))) if human.exists() else []
+    complete = len(hrows) == 50 and all(r.get("topic") and r.get("intent") and r.get("severity") for r in hrows)
+    src = human if complete else HERE / "golden_50_labeled.csv"
+    gold = list(csv.DictReader(open(src, encoding="utf-8")))
+    drafts = {d["review_id"]: d for d in csv.DictReader(open(HERE / "golden_50_draft.csv", encoding="utf-8"))}
     ids = {g["review_id"] for g in gold}
     pred = {}
     for line in open(a.records, encoding="utf-8"):
@@ -91,9 +96,16 @@ def main():
                                       "recall": round(nr_tp / nr_a, 4) if nr_a else None},
         "per_topic": per_topic,
         "confusion_gold_to_pred": {g: dict(v) for g, v in conf.items()},
+        "golden_source_file": src.name,
         "label_provenance": dict(Counter(c["label_source"] for c in cases)),
-        "caveat": "50 cases is a small diagnostic sample. Golden labels were AI-drafted (claude-opus-5-5) and human-reviewed; "
-                  "the reviewer accepted all drafts unchanged, so agreement partly measures model-vs-model consistency.",
+        "human_vs_assistant_draft": ({f: round(sum(g[f] == drafts[g["review_id"]]["draft_" + f] for g in gold) / len(gold), 4)
+                                      for f in ("topic", "intent", "severity")} if complete else None),
+        "caveat": ("50 cases is a small diagnostic sample. Golden labels were assigned blind by the student "
+                   "(tools/label_golden.py shows only the review text; no drafts or model output). The student had seen an "
+                   "earlier AI-drafted version (evals/golden_50_draft.csv) during a previous review pass; agreement with those drafts is reported separately."
+                   if complete else
+                   "50 cases is a small diagnostic sample. Golden labels were AI-drafted (claude-opus-5-5) and human-reviewed; "
+                   "the reviewer accepted all drafts unchanged, so agreement partly measures model-vs-model consistency."),
     }
     (HERE / "golden_eval.json").write_text(json.dumps({"summary": summary, "cases": cases}, indent=2, ensure_ascii=False) + "\n")
     with open(HERE / "golden_cases.csv", "w", newline="", encoding="utf-8") as f:
