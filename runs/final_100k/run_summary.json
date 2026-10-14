@@ -1,0 +1,74 @@
+{
+  "run_id": "final100k",
+  "input": "spotify_reviews_18months.csv",
+  "input_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+  "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3",
+  "models": {
+    "enrich": "claude-haiku-4-5",
+    "verify": "claude-haiku-4-5",
+    "group": "claude-haiku-4-5",
+    "memo": "claude-sonnet-5-5",
+    "fallback": "claude-sonnet-5-5"
+  },
+  "prompt_versions": {
+    "enrich_v3": "6bacf3e4",
+    "verify_v1": "85ca7ece",
+    "group_v1": "ba7c57be",
+    "memo_v1": "029a524a"
+  },
+  "settings": {
+    "batch_size": 50,
+    "workers": 1,
+    "enrich_max_tokens": 2000,
+    "spend_cap_usd": 9.0,
+    "fallback_max_fraction": 0.02,
+    "thinking": "off (Haiku 4.5 default)",
+    "memo_effort": "low",
+    "enrich_tier": "batch (Message Batches API)"
+  },
+  "coverage": {
+    "source_rows": 660622,
+    "in_scope_nonempty": 100000,
+    "completed": 237939,
+    "completed_in_scope": 99997,
+    "completed_via_exact_text_reuse": 159843,
+    "quarantined": 422683,
+    "quarantine_reasons": {
+      "not_in_declared_classification_scope": 422667,
+      "empty_review_text": 13,
+      "label_not_allowed": 3
+    },
+    "needs_review": 16790
+  },
+  "verify": {
+    "n": 781,
+    "topic_agreement": 0.8374,
+    "intent_agreement": 0.8873,
+    "severity_agreement": 0.8284,
+    "severity_mae": 0.178,
+    "full_agreement": 0.6722,
+    "disagreements": 256
+  },
+  "stage_seconds": {
+    "ingest": 0.117,
+    "enrich": 827.681,
+    "verify": 134.483,
+    "group": 115.833,
+    "rank": 0.129,
+    "memo": 12.904
+  },
+  "wall_clock_seconds": 1114.153,
+  "this_run_calls": {
+    "enrich": 1715,
+    "verify": 32,
+    "group": 42,
+    "memo": 1
+  },
+  "this_run_failed_attempts": 29,
+  "this_run_usage": {
+    "input_tokens": 2731167,
+    "output_tokens": 1560954,
+    "cost_usd": 6.373411
+  },
+  "ledger_spent_total_usd": 7.510136
+}

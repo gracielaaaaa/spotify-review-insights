@@ -1,0 +1,51 @@
+{"ts": "2026-10-13T22:06:42", "t": 1791954402.695, "run_id": "final100k", "stage": "run", "status": "start", "input": "spotify_reviews_18months.csv", "db": "pipeline.db", "stages": ["ingest", "enrich", "verify", "group", "rank", "memo"], "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3
+{"ts": "2026-10-13T22:06:42", "t": 1791954402.813, "run_id": "final100k", "stage": "ingest", "status": "cached", "file_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6"}
+{"ts": "2026-10-13T22:06:50", "t": 1791954410.853, "run_id": "final100k", "stage": "scope", "in_scope_nonempty": 100000, "scope_rule": "first 100000 nonempty by sha256(seed:id)"}
+{"ts": "2026-10-13T22:07:00", "t": 1791954420.96, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] submitted msgbatch_01HSeWqAFAyrxFS1pU4tkNhR: 281 requests, 14022 texts, reserved $2.7799"}
+{"ts": "2026-10-13T22:07:01", "t": 1791954421.531, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01HSeWqAFAyrxFS1pU4tkNhR in_progress processing=281 succeeded=0 errored=0"}
+{"ts": "2026-10-13T22:07:31", "t": 1791954451.841, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01HSeWqAFAyrxFS1pU4tkNhR in_progress processing=281 succeeded=0 errored=0"}
+{"ts": "2026-10-13T22:08:02", "t": 1791954482.152, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01HSeWqAFAyrxFS1pU4tkNhR in_progress processing=281 succeeded=0 errored=0"}
+{"ts": "2026-10-13T22:08:32", "t": 1791954512.507, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01HSeWqAFAyrxFS1pU4tkNhR in_progress processing=281 succeeded=0 errored=0"}
+{"ts": "2026-10-13T22:09:02", "t": 1791954542.839, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01HSeWqAFAyrxFS1pU4tkNhR in_progress processing=281 succeeded=0 errored=0"}
+{"ts": "2026-10-13T22:09:33", "t": 1791954573.198, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] msgbatch_01HSeWqAFAyrxFS1pU4tkNhR in_progress processing=281 succeeded=0 errored=0"}
+{"ts": "2026-10-13T22:10:09", "t": 1791954609.287, "run_id": "final100k", "stage": "enrich", "msg": "[enrich-batch] job msgbatch_01HSeWqAFAyrxFS1pU4tkNhR processed: ok=281 errored=0 spent=$6.6750"}
+{"ts": "2026-10-13T22:20:38", "t": 1791955238.532, "run_id": "final100k", "stage": "enrich", "status": "done", "phase": "initial", "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3", "jobs": 1, "retried_items": 2332, "quarantined_texts": 2, "spent_total_usd": 7.276249375000001, "seconds
+{"ts": "2026-10-13T22:20:53", "t": 1791955253.214, "run_id": "final100k", "stage": "records", "source_rows": 660622, "in_scope_nonempty": 100000, "completed": 237939, "completed_in_scope": 99997, "completed_via_exact_text_reuse": 159843, "quarantined": 422683, "quarantine_reasons": {"not_in_declared
+{"ts": "2026-10-13T22:20:53", "t": 1791955253.329, "run_id": "final100k", "stage": "verify", "msg": "[verify] sample=781 cached=2 todo=779 cfg=claude-haiku-4-5+verify_v1@85ca7ece"}
+{"ts": "2026-10-13T22:20:58", "t": 1791955258.027, "run_id": "final100k", "stage": "verify", "msg": "[verify] 25/779 spent=$7.2801"}
+{"ts": "2026-10-13T22:21:02", "t": 1791955262.332, "run_id": "final100k", "stage": "verify", "msg": "[verify] 50/779 spent=$7.2838"}
+{"ts": "2026-10-13T22:21:06", "t": 1791955266.597, "run_id": "final100k", "stage": "verify", "msg": "[verify] 75/779 spent=$7.2874"}
+{"ts": "2026-10-13T22:21:10", "t": 1791955270.74, "run_id": "final100k", "stage": "verify", "msg": "[verify] 100/779 spent=$7.2913"}
+{"ts": "2026-10-13T22:21:14", "t": 1791955274.888, "run_id": "final100k", "stage": "verify", "msg": "[verify] 125/779 spent=$7.2953"}
+{"ts": "2026-10-13T22:21:19", "t": 1791955279.224, "run_id": "final100k", "stage": "verify", "msg": "[verify] 150/779 spent=$7.2989"}
+{"ts": "2026-10-13T22:21:23", "t": 1791955283.505, "run_id": "final100k", "stage": "verify", "msg": "[verify] 175/779 spent=$7.3028"}
+{"ts": "2026-10-13T22:21:27", "t": 1791955287.68, "run_id": "final100k", "stage": "verify", "msg": "[verify] 200/779 spent=$7.3064"}
+{"ts": "2026-10-13T22:21:31", "t": 1791955291.924, "run_id": "final100k", "stage": "verify", "msg": "[verify] 225/779 spent=$7.3099"}
+{"ts": "2026-10-13T22:21:36", "t": 1791955296.148, "run_id": "final100k", "stage": "verify", "msg": "[verify] 250/779 spent=$7.3136"}
+{"ts": "2026-10-13T22:21:41", "t": 1791955301.505, "run_id": "final100k", "stage": "verify", "msg": "[verify] 275/779 spent=$7.3185"}
+{"ts": "2026-10-13T22:21:45", "t": 1791955305.848, "run_id": "final100k", "stage": "verify", "msg": "[verify] 300/779 spent=$7.3224"}
+{"ts": "2026-10-13T22:21:50", "t": 1791955310.134, "run_id": "final100k", "stage": "verify", "msg": "[verify] 325/779 spent=$7.3263"}
+{"ts": "2026-10-13T22:21:54", "t": 1791955314.326, "run_id": "final100k", "stage": "verify", "msg": "[verify] 350/779 spent=$7.3301"}
+{"ts": "2026-10-13T22:21:58", "t": 1791955318.545, "run_id": "final100k", "stage": "verify", "msg": "[verify] 375/779 spent=$7.3337"}
+{"ts": "2026-10-13T22:22:02", "t": 1791955322.744, "run_id": "final100k", "stage": "verify", "msg": "[verify] 400/779 spent=$7.3374"}
+{"ts": "2026-10-13T22:22:07", "t": 1791955327.008, "run_id": "final100k", "stage": "verify", "msg": "[verify] 425/779 spent=$7.3410"}
+{"ts": "2026-10-13T22:22:11", "t": 1791955331.42, "run_id": "final100k", "stage": "verify", "msg": "[verify] 450/779 spent=$7.3448"}
+{"ts": "2026-10-13T22:22:15", "t": 1791955335.492, "run_id": "final100k", "stage": "verify", "msg": "[verify] 475/779 spent=$7.3484"}
+{"ts": "2026-10-13T22:22:19", "t": 1791955339.478, "run_id": "final100k", "stage": "verify", "msg": "[verify] 500/779 spent=$7.3520"}
+{"ts": "2026-10-13T22:22:23", "t": 1791955343.715, "run_id": "final100k", "stage": "verify", "msg": "[verify] 525/779 spent=$7.3557"}
+{"ts": "2026-10-13T22:22:28", "t": 1791955348.035, "run_id": "final100k", "stage": "verify", "msg": "[verify] 550/779 spent=$7.3595"}
+{"ts": "2026-10-13T22:22:32", "t": 1791955352.318, "run_id": "final100k", "stage": "verify", "msg": "[verify] 575/779 spent=$7.3632"}
+{"ts": "2026-10-13T22:22:36", "t": 1791955356.47, "run_id": "final100k", "stage": "verify", "msg": "[verify] 600/779 spent=$7.3668"}
+{"ts": "2026-10-13T22:22:40", "t": 1791955360.735, "run_id": "final100k", "stage": "verify", "msg": "[verify] 625/779 spent=$7.3707"}
+{"ts": "2026-10-13T22:22:44", "t": 1791955364.934, "run_id": "final100k", "stage": "verify", "msg": "[verify] 650/779 spent=$7.3744"}
+{"ts": "2026-10-13T22:22:49", "t": 1791955369.247, "run_id": "final100k", "stage": "verify", "msg": "[verify] 675/779 spent=$7.3783"}
+{"ts": "2026-10-13T22:22:53", "t": 1791955373.243, "run_id": "final100k", "stage": "verify", "msg": "[verify] 700/779 spent=$7.3819"}
+{"ts": "2026-10-13T22:22:57", "t": 1791955377.311, "run_id": "final100k", "stage": "verify", "msg": "[verify] 725/779 spent=$7.3855"}
+{"ts": "2026-10-13T22:23:01", "t": 1791955381.628, "run_id": "final100k", "stage": "verify", "msg": "[verify] 750/779 spent=$7.3891"}
+{"ts": "2026-10-13T22:23:05", "t": 1791955385.826, "run_id": "final100k", "stage": "verify", "msg": "[verify] 775/779 spent=$7.3930"}
+{"ts": "2026-10-13T22:23:07", "t": 1791955387.666, "run_id": "final100k", "stage": "verify", "msg": "[verify] 779/779 spent=$7.3944"}
+{"ts": "2026-10-13T22:23:07", "t": 1791955387.698, "run_id": "final100k", "stage": "verify", "status": "done", "n": 781, "topic_agreement": 0.8374, "intent_agreement": 0.8873, "severity_agreement": 0.8284, "severity_mae": 0.178, "full_agreement": 0.6722, "disagreements": 256, "seconds": 134.48}
+{"ts": "2026-10-13T22:25:03", "t": 1791955503.556, "run_id": "final100k", "stage": "group", "status": "done", "issues": 42, "memberships": 74582}
+{"ts": "2026-10-13T22:25:03", "t": 1791955503.686, "run_id": "final100k", "stage": "rank", "status": "done", "top": ["other.general_criticism", "billing.premium_paywall", "usability.ads", "playback.crash_wont_open", "playback.stops_skips"]}
+{"ts": "2026-10-13T22:25:16", "t": 1791955516.587, "run_id": "final100k", "stage": "memo", "msg": "[memo] attempt 1: 0 problems []"}
+{"ts": "2026-10-13T22:25:16", "t": 1791955516.702, "run_id": "final100k", "stage": "run", "status": "done", "wall_clock_seconds": 1114.153, "calls": {"enrich": 1715, "verify": 32, "group": 42, "memo": 1}, "cost_usd": 6.373411}

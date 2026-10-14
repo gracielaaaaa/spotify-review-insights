@@ -1,0 +1,43 @@
+rank,issue_id,name,complaint_count,severity_sum,mean_severity,priority_score
+1,other.general_criticism,App quality and performance issues,39269,78558,2.000509,78558
+2,billing.premium_paywall,Basic features now require premium paywall,7370,21636,2.935685,21636
+3,usability.ads,Free version shows too many ads,8509,18856,2.216007,18856
+4,playback.crash_wont_open,App crashes or fails to open,1794,6534,3.642140,6534
+5,playback.stops_skips,Playback stops or skips unexpectedly,1790,5731,3.201676,5731
+6,usability.shuffle_controls,Shuffle and loop controls difficult or unavailable,2003,5581,2.786321,5581
+7,access.login_failure,Users unable to login to their accounts,1131,4385,3.877100,4385
+8,usability.playlist_queue,Playlist and queue control not working properly,1272,3754,2.951258,3754
+9,playback.playback_other,Music playback fails or glitches frequently,1291,3598,2.786987,3598
+10,usability.redesign_layout,New layout makes app harder to navigate,1208,3077,2.547185,3077
+11,usability.ui_navigation,UI navigation and layout difficult to use,957,2385,2.492163,2385
+12,catalog.lyrics,Lyrics not displaying on songs,955,2370,2.481675,2370
+13,playback.connectivity,App reports connection errors despite working internet,611,2158,3.531915,2158
+14,playback.device_integration,Spotify fails to connect to external devices,605,1915,3.165289,1915
+15,billing.price,Premium subscription price too high,943,1892,2.006363,1892
+16,catalog.missing_content,Songs disappearing or becoming unavailable,821,1866,2.272838,1866
+17,billing.subscription_activation,Premium subscription fails to activate after purchase,353,1370,3.881020,1370
+18,playback.lag_slow,App playback and loading lag too slow,479,1369,2.858038,1369
+19,downloads.offline_not_working,Downloaded songs won't play offline,371,1340,3.611860,1340
+20,playback.audio_quality,Audio quality and volume issues,388,909,2.342784,909
+21,catalog.recommendations,Recommendations lack variety and repeat same songs,364,786,2.159341,786
+22,billing.billing_other,Payment updates and billing transactions fail,260,779,2.996154,779
+23,downloads.downloads_other,Download feature not working or unreliable,259,689,2.660232,689
+24,billing.unwanted_charges,Unwanted charges after cancellation,144,684,4.750000,684
+25,downloads.downloads_disappear,Downloads disappear unexpectedly after updates,166,584,3.518072,584
+26,access.account_hacked_or_locked,Account hacked or locked out,119,531,4.462185,531
+27,usability.usability_other,Missing or broken app features and controls,244,530,2.172131,530
+28,catalog.search,Search results don't match what users search for,188,508,2.702128,508
+29,playback.battery_resources,App uses excessive battery and data resources,167,423,2.532934,423
+30,access.signup,Sign up process fails with validation errors,70,267,3.814286,267
+31,catalog.catalog_other,Missing or changed catalog content and features,114,243,2.131579,243
+32,access.access_other,Access restrictions based on location or subscription status,61,193,3.163934,193
+33,catalog.podcasts,Podcast discovery and access problems,76,186,2.447368,186
+34,downloads.download_limits,Free users cannot download songs,48,121,2.520833,121
+35,access.password_reset,Password reset not working or not received,29,106,3.655172,106
+36,support.support_other,Spotify support unresponsive and unhelpful,37,96,2.594595,96
+37,support.unhelpful_support,Customer support unresponsive and unhelpful,25,79,3.160000,79
+38,other.unrelated_or_unclear,Customer complaints unrelated to product issues,52,72,1.384615,72
+39,support.no_response,Support team does not respond to customers,14,43,3.071429,43
+40,other.general_praise,Overall satisfaction with Spotify app,22,38,1.727273,38
+41,billing.refunds,Refund requests denied or not credited,2,10,5.000000,10
+42,other.other,App updates lack transparency and details,1,2,2.000000,2

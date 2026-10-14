@@ -1,25 +1,25 @@
 {
   "summary": {
     "n": 50,
-    "valid_predictions": 47,
+    "valid_predictions": 50,
     "ambiguous_cases": 20,
-    "topic_agreement_exact": 0.86,
-    "topic_agreement_accepted": 0.92,
-    "intent_agreement_exact": 0.92,
-    "intent_agreement_accepted": 0.92,
-    "severity_exact": 0.86,
-    "severity_mae": 0.0851,
-    "severity_mae_vs_accepted": 0.0213,
-    "sentiment_mae": 0.117,
-    "sentiment_within_tolerance_0.3": 0.9,
-    "quote_substring_rate": 0.94,
-    "topic_macro_f1_exact": 0.8791,
+    "topic_agreement_exact": 0.9,
+    "topic_agreement_accepted": 0.98,
+    "intent_agreement_exact": 0.96,
+    "intent_agreement_accepted": 0.98,
+    "severity_exact": 0.88,
+    "severity_mae": 0.12,
+    "severity_mae_vs_accepted": 0.02,
+    "sentiment_mae": 0.128,
+    "sentiment_within_tolerance_0.3": 0.94,
+    "quote_substring_rate": 1.0,
+    "topic_macro_f1_exact": 0.9214,
     "needs_review_vs_ambiguous": {
-      "predicted_flags": 9,
-      "gold_ambiguous": 18,
-      "true_positive": 6,
-      "precision": 0.6667,
-      "recall": 0.3333
+      "predicted_flags": 11,
+      "gold_ambiguous": 20,
+      "true_positive": 7,
+      "precision": 0.6364,
+      "recall": 0.35
     },
     "per_topic": {
       "access": {
@@ -34,8 +34,8 @@
       },
       "playback": {
         "gold": 4,
-        "pred": 3,
-        "correct": 3
+        "pred": 4,
+        "correct": 4
       },
       "downloads": {
         "gold": 1,
@@ -44,8 +44,8 @@
       },
       "catalog": {
         "gold": 7,
-        "pred": 3,
-        "correct": 3
+        "pred": 4,
+        "correct": 4
       },
       "billing": {
         "gold": 2,
@@ -59,15 +59,14 @@
       },
       "other": {
         "gold": 26,
-        "pred": 30,
+        "pred": 31,
         "correct": 26
       }
     },
     "confusion_gold_to_pred": {
       "catalog": {
-        "<missing>": 2,
-        "other": 2,
-        "catalog": 3
+        "other": 3,
+        "catalog": 4
       },
       "other": {
         "other": 26
@@ -77,8 +76,7 @@
         "other": 2
       },
       "playback": {
-        "playback": 3,
-        "<missing>": 1
+        "playback": 4
       },
       "billing": {
         "billing": 2
@@ -96,31 +94,31 @@
     {
       "review_id": "292ce26a-815d-4bce-a3b6-93cb6c9e7e2c",
       "text": "Staff must be full of mentally ill kool-aid heads. Banning conservative music that speaks truth. Spotify is doing all they can to protect pedophiles, by banning",
-      "valid_prediction": false,
+      "valid_prediction": true,
       "gold_topic": "catalog",
-      "pred_topic": null,
+      "pred_topic": "other",
       "topic_exact": false,
-      "topic_accepted": false,
+      "topic_accepted": true,
       "gold_intent": "complaint",
-      "pred_intent": null,
+      "pred_intent": "unclear",
       "intent_exact": false,
-      "intent_accepted": false,
+      "intent_accepted": true,
       "gold_severity": 2,
-      "pred_severity": null,
+      "pred_severity": 1,
       "severity_exact": false,
-      "severity_abs_err": null,
-      "severity_accepted_err": null,
+      "severity_abs_err": 1,
+      "severity_accepted_err": 0,
       "gold_sentiment": -0.9,
-      "pred_sentiment": null,
-      "sentiment_abs_err": null,
-      "quote_is_substring": false,
-      "pred_needs_review": null,
+      "pred_sentiment": -0.6,
+      "sentiment_abs_err": 0.3,
+      "quote_is_substring": true,
+      "pred_needs_review": true,
       "gold_ambiguous": true,
-      "pred_entities": null,
+      "pred_entities": [],
       "cache_source_id": null,
       "label_source": "assistant_draft_human_accepted",
       "human_changed": "n",
-      "sentiment_within_tol": false
+      "sentiment_within_tol": true
     },
     {
       "review_id": "a70e8d3e-3f84-46bc-b008-67f476c67963",
@@ -420,27 +418,30 @@
     {
       "review_id": "723f07de-9881-4049-8680-1a9e25652914",
       "text": "Update: I reached out to Spotify Support and with some help from Sarah I was able to get the app working again. Old Post:Normally, the app works great, and I us",
-      "valid_prediction": false,
+      "valid_prediction": true,
       "gold_topic": "playback",
-      "pred_topic": null,
-      "topic_exact": false,
-      "topic_accepted": false,
+      "pred_topic": "playback",
+      "topic_exact": true,
+      "topic_accepted": true,
       "gold_intent": "complaint",
-      "pred_intent": null,
-      "intent_exact": false,
-      "intent_accepted": false,
+      "pred_intent": "complaint",
+      "intent_exact": true,
+      "intent_accepted": true,
       "gold_severity": 4,
-      "pred_severity": null,
+      "pred_severity": 3,
       "severity_exact": false,
-      "severity_abs_err": null,
-      "severity_accepted_err": null,
+      "severity_abs_err": 1,
+      "severity_accepted_err": 0,
       "gold_sentiment": 0.2,
-      "pred_sentiment": null,
-      "sentiment_abs_err": null,
-      "quote_is_substring": false,
-      "pred_needs_review": null,
+      "pred_sentiment": -0.3,
+      "sentiment_abs_err": 0.5,
+      "quote_is_substring": true,
+      "pred_needs_review": false,
       "gold_ambiguous": true,
-      "pred_entities": null,
+      "pred_entities": [
+        "Update",
+        "Support"
+      ],
       "cache_source_id": null,
       "label_source": "assistant_draft_human_accepted",
       "human_changed": "n",
@@ -1371,31 +1372,33 @@
     {
       "review_id": "5fba12ea-4980-4f25-a129-f830a3974fd2",
       "text": "I find Spotify very good, it finds and play whatever music you want and also adds songs that you might like, judging from your playlist if you choose to arrange",
-      "valid_prediction": false,
+      "valid_prediction": true,
       "gold_topic": "catalog",
-      "pred_topic": null,
-      "topic_exact": false,
-      "topic_accepted": false,
+      "pred_topic": "catalog",
+      "topic_exact": true,
+      "topic_accepted": true,
       "gold_intent": "praise",
-      "pred_intent": null,
-      "intent_exact": false,
-      "intent_accepted": false,
+      "pred_intent": "praise",
+      "intent_exact": true,
+      "intent_accepted": true,
       "gold_severity": 1,
-      "pred_severity": null,
-      "severity_exact": false,
-      "severity_abs_err": null,
-      "severity_accepted_err": null,
+      "pred_severity": 1,
+      "severity_exact": true,
+      "severity_abs_err": 0,
+      "severity_accepted_err": 0,
       "gold_sentiment": 0.9,
-      "pred_sentiment": null,
-      "sentiment_abs_err": null,
-      "quote_is_substring": false,
-      "pred_needs_review": null,
+      "pred_sentiment": 0.8,
+      "sentiment_abs_err": 0.1,
+      "quote_is_substring": true,
+      "pred_needs_review": true,
       "gold_ambiguous": false,
-      "pred_entities": null,
+      "pred_entities": [
+        "playlist"
+      ],
       "cache_source_id": null,
       "label_source": "assistant_draft_human_accepted",
       "human_changed": "n",
-      "sentiment_within_tol": false
+      "sentiment_within_tol": true
     },
     {
       "review_id": "ac4e860a-c042-49cc-90f3-189591c336ac",

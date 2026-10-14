@@ -95,6 +95,8 @@ Topics, intents, severity and examples: [`labels/LABELS.md`](labels/LABELS.md) (
 ## Error analysis
 {{ERROR_ANALYSIS}}
 
+**Main error pattern.** The enricher falls back to `other` when a positive or short review names a feature in passing ("very diverse", "very less advertising", "No ads at all"). The golden labels instead use the first praised feature. This affects praise records, which never enter the complaint ranking. Among complaints, the blind verifier's disagreements concentrate on two boundaries: **billing vs usability** for restricted controls (as in the traced review above, billing vs usability) and **cancellation vs complaint**. Both move counts between neighboring top issues, so the memo pairs the paywall and ads issues instead of treating their order as precise.
+
 ## Interruption and resume
 - **Recording:** [`evals/resume/resume_demo.typescript`](evals/resume/resume_demo.typescript), a real terminal session recorded with macOS `script -r`. Replay it with `script -p evals/resume/resume_demo.typescript`.
 - **What happened:** the 1,000-review in-scope slice [`evals/resume/resume_demo_1000.csv`](evals/resume/resume_demo_1000.csv) was started. SIGINT (Ctrl-C) was sent after the 7th saved request. The **identical command** then resumed it.
@@ -108,6 +110,7 @@ Topics, intents, severity and examples: [`labels/LABELS.md`](labels/LABELS.md) (
 - **Bounded retries:** 429/5xx/connection errors get up to 4 retries with exponential backoff and jitter. Every failed attempt is logged with `outcome:"failed"`. Timeouts are flagged as "charge unknown".
 - **Invalid output:** invalid model output gets **exactly one** retry (smaller requests), then a deterministic fallback or quarantine. *Observed failure:* in the 10K batch run, a bug re-batched invalid items more than once (2 extra small jobs, about $0.05). It was fixed before the 100K run (`enrich.run_batch`, the `retrying` set).
 - **Recovery:** the atomic per-batch transaction covers results and the call row together. Provider batch IDs are saved before waiting. On restart, completed texts are skipped under the same `label_config`.
+- **Billing reconciliation:** the Anthropic account reported "credit balance too low" when the local ledger stood at **$5.64**. The ledger is usage × listed rates, so the account bill may differ (provider-side batch accounting, or credit already spent outside this project). The run stopped cleanly, and after credit was added it resumed with **no completed text re-sent**. Treat the ledger total as an estimate until it is checked against the console usage page.
 - **Stronger-model fallback:** the quota was declared at 2% and **0 was used**. The single retry plus the deterministic fallback quote resolved invalid items, so no case justified paying Sonnet rates.
 
 ## Self-check (zero API)
