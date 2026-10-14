@@ -33,15 +33,15 @@
 
 | Rubric item | Evidence |
 |---|---|
-| **D1** Accessible code, setup, artifacts | [Setup](#setup), [`requirements.txt`](requirements.txt), [`.env.example`](.env.example), [`grading/`](grading/), [`runs/`](runs/), release asset with the full records |
+| **D1** Accessible code, setup, artifacts | [Setup](#setup-and-paid-commands), [`requirements.txt`](requirements.txt), [`.env.example`](.env.example), [`grading/`](grading/), [`runs/`](runs/), release asset with the full records |
 | **D2** Architecture, shared schema, provenance | [Architecture](#architecture), [`labels/LABELS.md`](labels/LABELS.md), [`prompts/`](prompts/), `label_config` on every record and call, [`artifacts/data_manifest.json`](artifacts/data_manifest.json), [`grading/run.json`](grading/run.json) |
 | **D3** Memo numbers ↔ calculations ↔ evidence | [`grading/memo.md`](grading/memo.md), [`grading/claims.csv`](grading/claims.csv), [`runs/final_100k/memo.json`](runs/final_100k/memo.json) (code check result), [trace of one review](#one-review-traced-end-to-end) |
-| **D4** Recommendation, alternatives, limitations | memo sections "Alternatives considered" and "Risks and limitations"; [Limitations](#limitations) |
+| **D4** Recommendation, alternatives, limitations | memo sections "Alternatives considered" and "Risks and limitations"; [memo review](#review-of-the-ai-memo-against-saved-data); [Limitations](#limitations) |
 | **T1** 50 labels, per-field comparison, error analysis | [`evals/golden_eval.md`](evals/golden_eval.md), [`evals/golden_cases.csv`](evals/golden_cases.csv), [`evals/golden_50_labeled.csv`](evals/golden_50_labeled.csv), [error analysis](#error-analysis) |
 | **T2** Independent verification, planted errors, injection | [`runs/final_100k/verify/`](runs/final_100k/verify/), [`evals/injection/results.json`](evals/injection/results.json), `verify/planted_errors.json` |
-| **T3** Pilot, calculator, retry/spend/recovery controls | [`cost/report.md`](cost/report.md), [`cost/calculator.py`](cost/calculator.py), [`cost/README.md`](cost/README.md), [controls](#controls-retry-spending-recovery) |
+| **T3** Pilot, calculator, retry/spend/recovery controls | [`cost/report.md`](cost/report.md), [`cost/calculator.py`](cost/calculator.py), [`cost/README.md`](cost/README.md), [controls](#controls-retry-spending-recovery), [`evals/controls/controls_test.json`](evals/controls/controls_test.json) |
 | **W1** Ingestion, coverage, classification | [`artifacts/ingestion_report.json`](artifacts/ingestion_report.json), [`grading/ingestion.json`](grading/ingestion.json), [self-check](#self-check-zero-api) |
-| **W2** Staged program, bounded calls, handoffs, resume | [`pipeline/`](pipeline/), [`grading/calls.jsonl`](grading/calls.jsonl), [resume evidence](#interruption-and-resume) |
+| **W2** Staged program, bounded calls, handoffs, resume | [`pipeline/`](pipeline/), [`grading/calls.jsonl.gz`](grading/calls.jsonl.gz), [resume evidence](#interruption-and-resume) |
 | **W3** Reproducible ranking, deployed dashboard with DB and AI recommendation | `python -m pipeline rank` ([below](#reproduce-without-api-calls)), https://spotify-reviews-gdl.vercel.app, [`db/schema.sql`](db/schema.sql), [`dashboard/`](dashboard/) |
 
 ## Architecture
@@ -95,7 +95,19 @@ Topics, intents, severity and examples: [`labels/LABELS.md`](labels/LABELS.md) (
 ## Error analysis
 {{ERROR_ANALYSIS}}
 
+**Blind-verifier disagreement breakdown** ([`disagreement_breakdown.json`](runs/final_100k/verify/disagreement_breakdown.json), n=781):
+- The largest topic disagreement is **billing → usability (21 cases)**. Of 91 sampled complaints labeled billing, the verifier agreed on 59 (65%). Only 3 of 96 usability complaints moved the other way. Both prompts carry the contract rule that explicitly premium-only controls are billing, but "locked behind premium" is often implied rather than stated, and the two roles read that differently.
+- The next most common intent disagreements are complaint → request (24) and complaint → unclear (14).
+- Severity disagreements are symmetric: the verifier was lower 63 times and higher 71 times. That shows no systematic severity bias.
+
 **Main error pattern.** The enricher falls back to `other` when a positive or short review names a feature in passing ("very diverse", "very less advertising", "No ads at all"). The golden labels instead use the first praised feature. This affects praise records, which never enter the complaint ranking. Among complaints, the blind verifier's disagreements concentrate on two boundaries: **billing vs usability** for restricted controls (as in the traced review above, billing vs usability) and **cancellation vs complaint**. Both move counts between neighboring top issues, so the memo pairs the paywall and ads issues instead of treating their order as precise.
+
+## Review of the AI memo against saved data
+The memo's priority, **billing / premium paywall, scoped together with ads**, follows the saved baseline ranking, and its numbers match `claims.csv`. Read with the verifier breakdown above, the robust finding is the shared theme: **free-tier restrictions (paywalled basic controls plus ad load)** lead whether the boundary cases count as billing or usability:
+- Taking the paywall and ads issues together: 15,879 complaints, priority 40,492 (rank 2 + rank 3 in `grading/ranking.csv`).
+- The next specific issue, playback crashes, has priority 6,534.
+
+The exact billing-vs-usability split is not. If a third of paywall complaints moved to usability, as the verifier sample suggests, usability would lead the roll-up and billing would come second. The product action is unchanged: revisit which controls the free tier locks and how ads interrupt listening. Playback stability is the strongest alternative, with fewer complaints but higher severity (mean 3.64 for crashes). Access is the most severe per complaint (3.88) but small.
 
 ## Interruption and resume
 - **Recording:** [`evals/resume/resume_demo.typescript`](evals/resume/resume_demo.typescript), a real terminal session recorded with macOS `script -r`. Replay it with `script -p evals/resume/resume_demo.typescript`.
@@ -111,6 +123,10 @@ Topics, intents, severity and examples: [`labels/LABELS.md`](labels/LABELS.md) (
 - **Invalid output:** invalid model output gets **exactly one** retry (smaller requests), then a deterministic fallback or quarantine. *Observed failure:* in the 10K batch run, a bug re-batched invalid items more than once (2 extra small jobs, about $0.05). It was fixed before the 100K run (`enrich.run_batch`, the `retrying` set).
 - **Recovery:** the atomic per-batch transaction covers results and the call row together. Provider batch IDs are saved before waiting. On restart, completed texts are skipped under the same `label_config`.
 - **Billing reconciliation:** the Anthropic account reported "credit balance too low" when the local ledger stood at **$5.64**. The ledger is usage × listed rates, so the account bill may differ (provider-side batch accounting, or credit already spent outside this project). The run stopped cleanly, and after credit was added it resumed with **no completed text re-sent**. Treat the ledger total as an estimate until it is checked against the console usage page.
+- **Zero-cost controls test** ([`tests/controls_test.py`](tests/controls_test.py) → [`evals/controls/controls_test.json`](evals/controls/controls_test.json); fake client, synthetic):
+  - With a $0.02 cap, admission stopped after 1 request (spent $0.004 + next worst case $0.018 > cap). Saved work was kept.
+  - Two synthetic 429s were each logged as failed attempts, and the request succeeded on attempt 3.
+  - A disallowed label got exactly one retry, then was quarantined (`label_not_allowed`, attempts=2).
 - **Stronger-model fallback:** the quota was declared at 2% and **0 was used**. The single retry plus the deterministic fallback quote resolved invalid items, so no case justified paying Sonnet rates.
 
 ## Self-check (zero API)

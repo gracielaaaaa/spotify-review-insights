@@ -1,0 +1,70 @@
+{
+  "n": 781,
+  "disagreements": 256,
+  "top_topic_pairs_enrich_to_verify": [
+    [
+      "billing->usability",
+      21
+    ],
+    [
+      "catalog->other",
+      12
+    ],
+    [
+      "other->usability",
+      11
+    ],
+    [
+      "other->catalog",
+      11
+    ],
+    [
+      "playback->other",
+      9
+    ],
+    [
+      "other->playback",
+      7
+    ],
+    [
+      "catalog->usability",
+      7
+    ],
+    [
+      "other->billing",
+      6
+    ]
+  ],
+  "top_intent_pairs": [
+    [
+      "complaint->request",
+      24
+    ],
+    [
+      "complaint->unclear",
+      14
+    ],
+    [
+      "complaint->praise",
+      10
+    ],
+    [
+      "unclear->praise",
+      9
+    ],
+    [
+      "unclear->complaint",
+      8
+    ],
+    [
+      "praise->unclear",
+      6
+    ]
+  ],
+  "severity_delta_verify_minus_enrich": {
+    "-2": 3,
+    "-1": 60,
+    "1": 69,
+    "2": 2
+  }
+}

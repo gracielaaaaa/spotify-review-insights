@@ -1,0 +1,62 @@
+{
+  "spend_cap": {
+    "cap_usd": 0.02,
+    "stopped_with": "spent 0.0040 + reserved 0.0000 + next 0.0179 > cap 0.02",
+    "requests_admitted": 1,
+    "texts_saved_before_stop": 50,
+    "ledger_spent_usd": 0.004048,
+    "ledger_never_exceeds_cap": true,
+    "note": "Each request reserves worst-case cost (input estimate + max_tokens output) before dispatch; admission stops when spent + reserved + next > cap. Saved batches remain for resume."
+  },
+  "transient_retry": {
+    "attempts": [
+      {
+        "outcome": "failed",
+        "attempt": 1,
+        "error": "RateLimitError: rate limited (synthetic)"
+      },
+      {
+        "outcome": "failed",
+        "attempt": 2,
+        "error": "RateLimitError: rate limited (synthetic)"
+      },
+      {
+        "outcome": "succeeded",
+        "attempt": 1,
+        "error": "succeeded on transient attempt 3"
+      }
+    ],
+    "texts_saved": 50,
+    "max_transient_retries": 4
+  },
+  "invalid_output": {
+    "summary": {
+      "label_config": "claude-haiku-4-5+enrich_v3@6bacf3e4+schema_v3",
+      "pending_texts": 50,
+      "requests": 2,
+      "retried_items": 1,
+      "quarantined_texts": 1,
+      "spent_total_usd": 0.0045462
+    },
+    "calls": [
+      {
+        "outcome": "succeeded",
+        "attempt": 1,
+        "error": "1 invalid items: label_not_allowed"
+      },
+      {
+        "outcome": "succeeded",
+        "attempt": 2,
+        "error": "1 invalid items: label_not_allowed"
+      }
+    ],
+    "quarantined": [
+      {
+        "origin_review_id": "c5591598-167e-4bac-af36-4dc698c31f73",
+        "reason": "label_not_allowed",
+        "attempts": 2
+      }
+    ]
+  },
+  "synthetic": true
+}

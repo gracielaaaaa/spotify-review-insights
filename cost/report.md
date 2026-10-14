@@ -64,21 +64,21 @@ Re-projection after the 10K batch checkpoint: 78,099 distinct texts x $0.0843/1K
 
 | model | tier | item | USD per 1M | source | checked |
 |---|---|---|---|---|---|
-| claude-haiku-4-5 | standard | input | 1.000 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-07 |
-| claude-haiku-4-5 | standard | cache_write | 1.250 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-07 |
-| claude-haiku-4-5 | standard | cache_read | 0.100 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-07 |
-| claude-haiku-4-5 | standard | output | 5.000 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-07 |
-| claude-haiku-4-5 | batch | input | 0.500 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-07 |
-| claude-haiku-4-5 | batch | cache_write | 0.625 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-07 |
-| claude-haiku-4-5 | batch | cache_read | 0.050 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-07 |
-| claude-haiku-4-5 | batch | output | 2.500 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-07 |
-| claude-sonnet-5-5 | standard | input | 2.000 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-07 |
-| claude-sonnet-5-5 | standard | cache_write | 2.500 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-07 |
-| claude-sonnet-5-5 | standard | cache_read | 0.200 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-07 |
-| claude-sonnet-5-5 | standard | output | 10.000 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-07 |
-| claude-sonnet-5-5 | batch | input | 1.000 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-07 |
-| claude-sonnet-5-5 | batch | cache_write | 1.250 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-07 |
-| claude-sonnet-5-5 | batch | cache_read | 0.100 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-07 |
-| claude-sonnet-5-5 | batch | output | 5.000 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-07 |
+| claude-haiku-4-5 | standard | input | 1.000 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-14 |
+| claude-haiku-4-5 | standard | cache_write | 1.250 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-14 |
+| claude-haiku-4-5 | standard | cache_read | 0.100 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-14 |
+| claude-haiku-4-5 | standard | output | 5.000 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-14 |
+| claude-haiku-4-5 | batch | input | 0.500 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-14 |
+| claude-haiku-4-5 | batch | cache_write | 0.625 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-14 |
+| claude-haiku-4-5 | batch | cache_read | 0.050 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-14 |
+| claude-haiku-4-5 | batch | output | 2.500 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-14 |
+| claude-sonnet-5-5 | standard | input | 2.000 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-14 |
+| claude-sonnet-5-5 | standard | cache_write | 2.500 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-14 |
+| claude-sonnet-5-5 | standard | cache_read | 0.100 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-14 |
+| claude-sonnet-5-5 | standard | output | 10.000 | https://platform.claude.com/docs/en/about-claude/pricing | 2026-10-14 |
+| claude-sonnet-5-5 | batch | input | 1.000 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-14 |
+| claude-sonnet-5-5 | batch | cache_write | 1.250 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-14 |
+| claude-sonnet-5-5 | batch | cache_read | 0.050 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-14 |
+| claude-sonnet-5-5 | batch | output | 5.000 | https://platform.claude.com/docs/en/build-with-claude/batch-processing#pricing | 2026-10-14 |
 
 Edit `rates.csv` (or pass `--rates`) and rerun; with usage fixed, doubling every rate doubles API spend while measured time is unchanged.

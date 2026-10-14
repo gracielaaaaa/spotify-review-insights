@@ -144,7 +144,7 @@ function kpis(m, run) {
     [fmt(c.quarantined), "quarantined", "13 empty + out of scope + failures"],
     [fmt(m.complaint_records), "complaint + cancellation records", `mean severity ${m.mean_severity_complaints}`],
     [v.n ? (100 * v.topic_agreement).toFixed(0) + "%" : "—", "blind verifier topic agreement", v.n ? `n=${v.n}; intent ${(100 * v.intent_agreement).toFixed(0)}%` : ""],
-    [m.ledger_spent_total_usd != null ? "$" + Number(m.ledger_spent_total_usd).toFixed(2) : "—", "API spend (ledger)", "measured from usage × rates"],
+    [m.ledger_spent_total_usd != null ? "$" + Number(m.ledger_spent_total_usd).toFixed(2) : "—", "API spend, main pipeline ledger", "usage × dated rates; pilot + tests add ~$0.10 (see README)"],
   ];
   $("#kpis").innerHTML = tiles.map(([v2, l, n]) => `<div class="kpi"><div class="v">${v2 ?? "—"}</div><div class="l">${l}</div><div class="n">${n}</div></div>`).join("");
 }
@@ -260,7 +260,7 @@ document.addEventListener("click", (e) => {
     s.claims.forEach((c) => (CLAIMS[c.claim_id] = c));
     kpis(s.metrics, s.run); topics(s.topic_rollup); issues(iss); trend(mon, s.topic_rollup); method(s);
     if (s.memo) $("#memo").innerHTML = `<h2>AI recommendation <span class="muted">${esc(s.memo.model)} · code checks ${s.memo.checks && s.memo.checks.accepted ? "passed" : "FAILED"}</span></h2>
-      <div class="reco">${esc(s.memo.recommendation)}</div>${md(s.memo.memo_markdown)}
+      <div class="reco">${md(s.memo.recommendation).replace(/^<p>|<\/p>$/g, "")}</div>${md(s.memo.memo_markdown)}
       <p class="muted">Bracketed claim IDs open the issue and the code-computed value; review IDs open the saved source review.</p>`;
   } catch (e) { $("#memo").innerHTML = `<h2>AI recommendation</h2><p class="warn">Could not load data: ${esc(e.message)}</p>`; }
 })();

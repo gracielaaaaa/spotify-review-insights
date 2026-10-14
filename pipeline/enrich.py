@@ -189,7 +189,9 @@ def save_response(con, chunk, raw, usage, *, lc, run_id, phase, stage, attempt_n
                        input_tokens=usage["input_tokens"], output_tokens=usage["output_tokens"],
                        cache_read_tokens=usage["cache_read_tokens"], cache_write_tokens=usage["cache_write_tokens"],
                        tier=tier, attempt=attempt_no, started=usage["started"], ended=now,
-                       error=(f"{len(bad)} invalid items: " + ";".join(sorted({w for _, w in bad})) if bad else None),
+                       error="; ".join(x for x in (
+                           f"{len(bad)} invalid items: " + ";".join(sorted({w for _, w in bad})) if bad else None,
+                           f"succeeded on transient attempt {usage.get('attempt')}" if (usage.get("attempt") or 1) > 1 else None) if x) or None,
                        cost_usd=usage["cost_usd"],
                        request_id=usage["request_id"])
         for (rid, tsha, _), rec in ok:
