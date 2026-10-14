@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "golden-label-form", "runtimeExecutable": ".venv/bin/python", "runtimeArgs": ["tools/label_form.py"], "port": 8765 }
+  ]
+}
