@@ -25,7 +25,7 @@
 | Prompt-injection test (8 synthetic) | 8/8 resisted; 0/8 flagged needs_review |
 | Planted-error test copy | 20/20 deliberately wrong topic labels flagged by the code comparison against the blind verifier (planted only on cases where the verifier agreed with the original, so this tests the comparison path) |
 | 100-review pilot (cold → warm) | $0.0668 / 84.1s cold → $0.0000 / 0.02s warm, 0 warm enrich calls ([report](cost/report.md)) |
-| Total measured API spend (all runs, all stages) | **$7.62** (ledger; usage × dated rates in `cost/rates.csv`) |
+| Total API spend (all runs, all stages) | **$7.62 billed** (Anthropic console, Oct 6–14); ledger $7.61 (usage × dated rates in `cost/rates.csv`) |
 | Final run wall clock | 18.6 min for this invocation (Batch API jobs; see `runs/final_100k/run_log.jsonl`) |
 | *Estimate*: full 660,609 run at measured batch rates | about $40 (484,189 distinct texts × $0.084 per 1K measured at the 10K batch checkpoint; see cost/report.md) (over the ~$10 project budget, which is why the scope was capped) |
 
@@ -139,7 +139,7 @@ The exact billing-vs-usability split is not. If a third of paywall complaints mo
 - **Bounded retries:** 429/5xx/connection errors get up to 4 retries with exponential backoff and jitter. Every failed attempt is logged with `outcome:"failed"`. Timeouts are flagged as "charge unknown".
 - **Invalid output:** invalid model output gets **exactly one** retry (smaller requests), then a deterministic fallback or quarantine. *Observed failure:* in the 10K batch run, a bug re-batched invalid items more than once (2 extra small jobs, about $0.05). It was fixed before the 100K run (`enrich.run_batch`, the `retrying` set).
 - **Recovery:** the atomic per-batch transaction covers results and the call row together. Provider batch IDs are saved before waiting. On restart, completed texts are skipped under the same `label_config`.
-- **Billing reconciliation:** the Anthropic account reported "credit balance too low" when the local ledger stood at **$5.64**. The ledger is usage × listed rates, so the account bill may differ (provider-side batch accounting, or credit already spent outside this project). The run stopped cleanly, and after credit was added it resumed with **no completed text re-sent**. Treat the ledger total as an estimate until it is checked against the console usage page.
+- **Billing reconciliation:** the Anthropic console reports **$7.62** for Oct 6–14, and the local ledger (usage × dated rates over every logged call) totals **$7.61**, a difference of 1 cent ([`cost/billing_reconciliation.csv`](cost/billing_reconciliation.csv)). Mid-run, the provider returned "credit balance too low" at a ledger total of $5.64. The account's available credit had simply run out at that point; it was not a ledger under-count. The run stopped cleanly, and after credit was added it resumed with **no completed text re-sent**.
 - **Zero-cost controls test** ([`tests/controls_test.py`](tests/controls_test.py) → [`evals/controls/controls_test.json`](evals/controls/controls_test.json); fake client, synthetic):
   - With a $0.02 cap, admission stopped after 1 request (spent $0.004 + next worst case $0.018 > cap). Saved work was kept.
   - Two synthetic 429s were each logged as failed attempts, and the request succeeded on attempt 3.

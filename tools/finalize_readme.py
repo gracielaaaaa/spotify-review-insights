@@ -36,7 +36,7 @@ def main():
 
     spend = 0.0
     for db in (ROOT / "state").glob("*.db"):
-        if db.name.startswith("fake"):
+        if db.name.startswith(("fake", "controls")):
             continue
         try:
             spend += sqlite3.connect(db).execute("SELECT COALESCE(SUM(cost_usd),0) FROM calls").fetchone()[0]

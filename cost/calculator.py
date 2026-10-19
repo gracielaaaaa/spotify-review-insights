@@ -280,6 +280,19 @@ def main():
         L.append(f"\nRe-projection after the 10K batch checkpoint: {SCOPE_DISTINCT:,} distinct texts x ${refresh['10K'] * 1000:.4f}/1K = **${rem:.2f}** enrich "
                  f"for the whole 100K scope (before subtracting texts already done in earlier checkpoints); "
                  f"{'within' if rem < a.budget else 'EXCEEDS'} the ${a.budget:.2f} budget. Full 660K with reuse at the same rate: ${FULL_DISTINCT * refresh['10K']:.2f}.\n")
+    rec = HERE / "billing_reconciliation.csv"
+    if rec.exists():
+        rows = list(csv.DictReader(open(rec, encoding="utf-8")))
+        L.append("## Billing reconciliation (actual bill vs local ledger)\n")
+        L.append("| Source | Period | USD | Notes |")
+        L.append("|---|---|---|---|")
+        for r in rows:
+            L.append(f"| {r['source']} | {r['period']} | ${float(r['amount_usd']):.2f} | {r['notes']} |")
+        vals = {r["source"]: float(r["amount_usd"]) for r in rows}
+        if {"anthropic_console_usage", "local_ledger"} <= set(vals):
+            d = vals["anthropic_console_usage"] - vals["local_ledger"]
+            L.append(f"\nDifference (console minus ledger): **${d:+.2f}** ({100 * d / vals['anthropic_console_usage']:+.1f}%). "
+                     "The ledger is computed from per-call usage x dated rates; the console figure is the provider's bill.\n")
     L.append("## Rates used\n")
     L.append("| model | tier | item | USD per 1M | source | checked |")
     L.append("|---|---|---|---|---|---|")

@@ -60,6 +60,15 @@ Batch-tier rows apply the provider's 50% Batch API price to enrichment as an *es
 
 Re-projection after the 10K batch checkpoint: 78,099 distinct texts x $0.0843/1K = **$6.58** enrich for the whole 100K scope (before subtracting texts already done in earlier checkpoints); within the $9.00 budget. Full 660K with reuse at the same rate: $40.80.
 
+## Billing reconciliation (actual bill vs local ledger)
+
+| Source | Period | USD | Notes |
+|---|---|---|---|
+| anthropic_console_usage | 2026-10-06..2026-10-14 | $7.62 | Read by the student from console.anthropic.com Usage/Cost for the org that owns the project key; all runs incl. smoke tests, pilot, checkpoints, resume demo, injection test, final run |
+| local_ledger | 2026-10-06..2026-10-14 | $7.61 | Sum of cost_usd over every call in state/*.db (usage x cost/rates.csv), excluding fake/offline test DBs |
+
+Difference (console minus ledger): **$+0.01** (+0.1%). The ledger is computed from per-call usage x dated rates; the console figure is the provider's bill.
+
 ## Rates used
 
 | model | tier | item | USD per 1M | source | checked |
