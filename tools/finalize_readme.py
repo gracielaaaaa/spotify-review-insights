@@ -57,7 +57,7 @@ def main():
         "UNRESOLVED": f"{sum(v for k, v in cov['quarantine_reasons'].items() if k not in ('empty_review_text', 'not_in_declared_classification_scope')):,} "
                       "(model-stage quarantines + any pending in-scope rows; counted as incomplete)",
         "GOLD_LINE": (f"{gold['topic_agreement_exact']:.0%} / {gold['intent_agreement_exact']:.0%} / {gold['severity_exact']:.0%}; "
-                      f"MAE {gold['severity_mae']} (accepted-label topic {gold['topic_agreement_accepted']:.0%}, n=50; AI-drafted, human-reviewed labels)")
+                      f"MAE {gold['severity_mae']} (accepted-label topic {gold['topic_agreement_accepted']:.0%}, n=50; student labels, see provenance)")
         if gold else "_pending_",
         "VERIFY_LINE": (f"n={ver['n']}: topic {ver['topic_agreement']:.1%}, intent {ver['intent_agreement']:.1%}, severity {ver['severity_agreement']:.1%}, "
                         f"severity MAE {ver['severity_mae']}; {ver['disagreements']} disagreements in `verify/disagreements.csv`") if ver else "_pending_",

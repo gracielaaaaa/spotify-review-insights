@@ -2,24 +2,24 @@
   "summary": {
     "n": 50,
     "valid_predictions": 50,
-    "ambiguous_cases": 20,
-    "topic_agreement_exact": 0.9,
-    "topic_agreement_accepted": 0.98,
-    "intent_agreement_exact": 0.96,
+    "ambiguous_cases": 24,
+    "topic_agreement_exact": 0.86,
+    "topic_agreement_accepted": 0.96,
+    "intent_agreement_exact": 0.94,
     "intent_agreement_accepted": 0.98,
-    "severity_exact": 0.88,
-    "severity_mae": 0.12,
-    "severity_mae_vs_accepted": 0.02,
-    "sentiment_mae": 0.128,
-    "sentiment_within_tolerance_0.3": 0.94,
+    "severity_exact": 0.86,
+    "severity_mae": 0.14,
+    "severity_mae_vs_accepted": 0.08,
+    "sentiment_mae": 0.15,
+    "sentiment_within_tolerance_0.3": 0.88,
     "quote_substring_rate": 1.0,
-    "topic_macro_f1_exact": 0.9214,
+    "topic_macro_f1_exact": 0.8427,
     "needs_review_vs_ambiguous": {
       "predicted_flags": 11,
-      "gold_ambiguous": 20,
-      "true_positive": 7,
-      "precision": 0.6364,
-      "recall": 0.35
+      "gold_ambiguous": 24,
+      "true_positive": 9,
+      "precision": 0.8182,
+      "recall": 0.375
     },
     "per_topic": {
       "access": {
@@ -28,9 +28,9 @@
         "correct": 0
       },
       "usability": {
-        "gold": 10,
+        "gold": 8,
         "pred": 8,
-        "correct": 8
+        "correct": 6
       },
       "playback": {
         "gold": 4,
@@ -48,7 +48,7 @@
         "correct": 4
       },
       "billing": {
-        "gold": 2,
+        "gold": 4,
         "pred": 2,
         "correct": 2
       },
@@ -71,26 +71,31 @@
       "other": {
         "other": 26
       },
+      "billing": {
+        "usability": 2,
+        "billing": 2
+      },
       "usability": {
-        "usability": 8,
-        "other": 2
+        "other": 2,
+        "usability": 6
       },
       "playback": {
         "playback": 4
-      },
-      "billing": {
-        "billing": 2
       },
       "downloads": {
         "downloads": 1
       }
     },
-    "golden_source_file": "golden_50_labeled.csv",
+    "golden_source_file": "golden_50_human.csv",
     "label_provenance": {
-      "assistant_draft_human_accepted": 50
+      "human_pdf_worksheet": 50
     },
-    "human_vs_assistant_draft": null,
-    "caveat": "50 cases is a small diagnostic sample. Golden labels were AI-drafted (claude-opus-5-5) and human-reviewed; the reviewer accepted all drafts unchanged, so agreement partly measures model-vs-model consistency."
+    "human_vs_assistant_draft": {
+      "topic": 0.96,
+      "intent": 0.98,
+      "severity": 0.98
+    },
+    "caveat": "50 cases is a small diagnostic sample. Golden labels were assigned by the student on the printed/annotated worksheet evals/golden_labeling_sheet.pdf (review text only; no drafts or model output shown) and transcribed by code from evals/golden_labeling_sheet_completed.pdf. The student had seen an earlier AI-drafted set (evals/golden_50_draft.csv) during a previous review pass; agreement with those drafts is reported in human_vs_assistant_draft."
   },
   "cases": [
     {
@@ -109,18 +114,18 @@
       "pred_severity": 1,
       "severity_exact": false,
       "severity_abs_err": 1,
-      "severity_accepted_err": 0,
-      "gold_sentiment": -0.9,
+      "severity_accepted_err": 1,
+      "gold_sentiment": -1.0,
       "pred_sentiment": -0.6,
-      "sentiment_abs_err": 0.3,
+      "sentiment_abs_err": 0.4,
       "quote_is_substring": true,
       "pred_needs_review": true,
       "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
-      "sentiment_within_tol": true
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
+      "sentiment_within_tol": false
     },
     {
       "review_id": "a70e8d3e-3f84-46bc-b008-67f476c67963",
@@ -147,8 +152,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -168,7 +173,7 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.9,
+      "gold_sentiment": 1.0,
       "pred_sentiment": 0.95,
       "sentiment_abs_err": 0.05,
       "quote_is_substring": true,
@@ -176,17 +181,17 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
       "review_id": "991b6b3a-f511-458a-a5b7-234f78048fb5",
       "text": "Ads were okay, but limited functionality..it's just too much",
       "valid_prediction": true,
-      "gold_topic": "usability",
+      "gold_topic": "billing",
       "pred_topic": "usability",
-      "topic_exact": true,
+      "topic_exact": false,
       "topic_accepted": true,
       "gold_intent": "complaint",
       "pred_intent": "complaint",
@@ -197,9 +202,9 @@
       "severity_exact": false,
       "severity_abs_err": 1,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.4,
+      "gold_sentiment": -0.5,
       "pred_sentiment": -0.5,
-      "sentiment_abs_err": 0.1,
+      "sentiment_abs_err": 0.0,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": true,
@@ -207,8 +212,8 @@
         "Ads"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -228,16 +233,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.8,
+      "gold_sentiment": 1.0,
       "pred_sentiment": 0.8,
-      "sentiment_abs_err": 0.0,
+      "sentiment_abs_err": 0.2,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -257,16 +262,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.9,
+      "gold_sentiment": -1.0,
       "pred_sentiment": -0.9,
-      "sentiment_abs_err": 0.0,
+      "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -286,16 +291,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.9,
+      "gold_sentiment": 1.0,
       "pred_sentiment": 0.9,
-      "sentiment_abs_err": 0.0,
+      "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": "710e1aee-ed80-4753-9c4e-c63bee84fd56",
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -315,16 +320,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.7,
+      "gold_sentiment": 0.6,
       "pred_sentiment": 0.8,
-      "sentiment_abs_err": 0.1,
+      "sentiment_abs_err": 0.2,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -344,7 +349,7 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.8,
+      "gold_sentiment": 0.9,
       "pred_sentiment": 0.85,
       "sentiment_abs_err": 0.05,
       "quote_is_substring": true,
@@ -352,8 +357,8 @@
       "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -373,9 +378,9 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.7,
+      "gold_sentiment": 0.8,
       "pred_sentiment": 0.9,
-      "sentiment_abs_err": 0.2,
+      "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": true,
@@ -384,8 +389,8 @@
         "ads"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -410,11 +415,11 @@
       "sentiment_abs_err": 0.2,
       "quote_is_substring": true,
       "pred_needs_review": false,
-      "gold_ambiguous": false,
+      "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -433,7 +438,7 @@
       "pred_severity": 3,
       "severity_exact": false,
       "severity_abs_err": 1,
-      "severity_accepted_err": 0,
+      "severity_accepted_err": 1,
       "gold_sentiment": 0.2,
       "pred_sentiment": -0.3,
       "sentiment_abs_err": 0.5,
@@ -445,8 +450,8 @@
         "Support"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": false
     },
     {
@@ -466,50 +471,21 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.6,
+      "gold_sentiment": -0.7,
       "pred_sentiment": -0.7,
-      "sentiment_abs_err": 0.1,
-      "quote_is_substring": true,
-      "pred_needs_review": false,
-      "gold_ambiguous": false,
-      "pred_entities": [],
-      "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
-      "sentiment_within_tol": true
-    },
-    {
-      "review_id": "fc344263-308d-48a1-9715-c380d063b6de",
-      "text": "Great...",
-      "valid_prediction": true,
-      "gold_topic": "other",
-      "pred_topic": "other",
-      "topic_exact": true,
-      "topic_accepted": true,
-      "gold_intent": "praise",
-      "pred_intent": "praise",
-      "intent_exact": true,
-      "intent_accepted": true,
-      "gold_severity": 1,
-      "pred_severity": 1,
-      "severity_exact": true,
-      "severity_abs_err": 0,
-      "severity_accepted_err": 0,
-      "gold_sentiment": 0.7,
-      "pred_sentiment": 0.7,
       "sentiment_abs_err": 0.0,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
-      "review_id": "6112667b-3d71-475c-b1a4-159b87f73d2b",
-      "text": "Super",
+      "review_id": "fc344263-308d-48a1-9715-c380d063b6de",
+      "text": "Great...",
       "valid_prediction": true,
       "gold_topic": "other",
       "pred_topic": "other",
@@ -531,9 +507,38 @@
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
+      "cache_source_id": null,
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
+      "sentiment_within_tol": true
+    },
+    {
+      "review_id": "6112667b-3d71-475c-b1a4-159b87f73d2b",
+      "text": "Super",
+      "valid_prediction": true,
+      "gold_topic": "other",
+      "pred_topic": "other",
+      "topic_exact": true,
+      "topic_accepted": true,
+      "gold_intent": "praise",
+      "pred_intent": "praise",
+      "intent_exact": true,
+      "intent_accepted": true,
+      "gold_severity": 1,
+      "pred_severity": 1,
+      "severity_exact": true,
+      "severity_abs_err": 0,
+      "severity_accepted_err": 0,
+      "gold_sentiment": 0.9,
+      "pred_sentiment": 0.7,
+      "sentiment_abs_err": 0.2,
+      "quote_is_substring": true,
+      "pred_needs_review": false,
+      "gold_ambiguous": false,
+      "pred_entities": [],
       "cache_source_id": "8454aa1e-ceb7-4676-adf7-e20f6989f5c9",
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -553,9 +558,9 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.2,
+      "gold_sentiment": 0.0,
       "pred_sentiment": -0.4,
-      "sentiment_abs_err": 0.2,
+      "sentiment_abs_err": 0.4,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": true,
@@ -563,9 +568,9 @@
         "ads"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
-      "sentiment_within_tol": true
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
+      "sentiment_within_tol": false
     },
     {
       "review_id": "ac6cd66d-a9d2-42a4-afb8-2f84beff7fd1",
@@ -592,8 +597,8 @@
       "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": false
     },
     {
@@ -621,8 +626,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -650,8 +655,8 @@
       "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -671,16 +676,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.9,
+      "gold_sentiment": -1.0,
       "pred_sentiment": -0.8,
-      "sentiment_abs_err": 0.1,
+      "sentiment_abs_err": 0.2,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -705,11 +710,11 @@
       "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": true,
-      "gold_ambiguous": false,
+      "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -740,8 +745,8 @@
         "recommendations"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -769,8 +774,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -790,9 +795,9 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.4,
+      "gold_sentiment": -0.5,
       "pred_sentiment": -0.6,
-      "sentiment_abs_err": 0.2,
+      "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": true,
       "gold_ambiguous": true,
@@ -800,8 +805,8 @@
         "ads"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -831,8 +836,8 @@
         "updates"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -852,16 +857,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.9,
+      "gold_sentiment": 1.0,
       "pred_sentiment": 0.9,
-      "sentiment_abs_err": 0.0,
+      "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -889,8 +894,8 @@
       "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": false
     },
     {
@@ -901,26 +906,26 @@
       "pred_topic": "other",
       "topic_exact": true,
       "topic_accepted": true,
-      "gold_intent": "unclear",
+      "gold_intent": "praise",
       "pred_intent": "unclear",
-      "intent_exact": true,
+      "intent_exact": false,
       "intent_accepted": true,
       "gold_severity": 1,
       "pred_severity": 1,
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.3,
+      "gold_sentiment": 0.6,
       "pred_sentiment": 0.0,
-      "sentiment_abs_err": 0.3,
+      "sentiment_abs_err": 0.6,
       "quote_is_substring": true,
       "pred_needs_review": true,
       "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
-      "sentiment_within_tol": true
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
+      "sentiment_within_tol": false
     },
     {
       "review_id": "3ddb3f4e-f7b9-430b-b335-eadc6d321f46",
@@ -952,8 +957,8 @@
         "update"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -973,9 +978,9 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.5,
+      "gold_sentiment": -0.6,
       "pred_sentiment": -0.8,
-      "sentiment_abs_err": 0.3,
+      "sentiment_abs_err": 0.2,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
@@ -983,8 +988,8 @@
         "premium"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1012,8 +1017,8 @@
       "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1041,8 +1046,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1061,10 +1066,10 @@
       "pred_severity": 3,
       "severity_exact": false,
       "severity_abs_err": 1,
-      "severity_accepted_err": 0,
-      "gold_sentiment": -0.9,
+      "severity_accepted_err": 1,
+      "gold_sentiment": -1.0,
       "pred_sentiment": -0.8,
-      "sentiment_abs_err": 0.1,
+      "sentiment_abs_err": 0.2,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": true,
@@ -1072,8 +1077,8 @@
         "volume"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1098,11 +1103,11 @@
       "sentiment_abs_err": 0.0,
       "quote_is_substring": true,
       "pred_needs_review": true,
-      "gold_ambiguous": false,
+      "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1130,8 +1135,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": "4aee0d75-6901-426e-b0f7-11d042ccc73e",
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1159,8 +1164,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": "8f12c0b1-a987-4512-9fe9-a87ad75d3391",
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1188,8 +1193,8 @@
       "gold_ambiguous": true,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1220,8 +1225,8 @@
         "update"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1241,16 +1246,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.9,
+      "gold_sentiment": 1.0,
       "pred_sentiment": 0.9,
-      "sentiment_abs_err": 0.0,
+      "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": "db189674-8ac7-4535-acc2-9f5bc3e605d8",
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1278,8 +1283,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": "4aee0d75-6901-426e-b0f7-11d042ccc73e",
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1299,16 +1304,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.5,
+      "gold_sentiment": 0.4,
       "pred_sentiment": 0.2,
-      "sentiment_abs_err": 0.3,
+      "sentiment_abs_err": 0.2,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1328,16 +1333,16 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.9,
+      "gold_sentiment": -1.0,
       "pred_sentiment": -0.8,
-      "sentiment_abs_err": 0.1,
+      "sentiment_abs_err": 0.2,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1357,9 +1362,9 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.9,
+      "gold_sentiment": -0.8,
       "pred_sentiment": -0.8,
-      "sentiment_abs_err": 0.1,
+      "sentiment_abs_err": 0.0,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": true,
@@ -1367,8 +1372,8 @@
         "update"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1388,9 +1393,9 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.9,
+      "gold_sentiment": 0.8,
       "pred_sentiment": 0.8,
-      "sentiment_abs_err": 0.1,
+      "sentiment_abs_err": 0.0,
       "quote_is_substring": true,
       "pred_needs_review": true,
       "gold_ambiguous": false,
@@ -1398,8 +1403,8 @@
         "playlist"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1429,8 +1434,8 @@
         "offline"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1458,30 +1463,30 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
       "review_id": "d2f3874f-d15d-4a2f-bb97-4f1213defa46",
       "text": "Too expensive and the free version is pretty much unusable with constant ads... Every two or three songs.. Forget it",
       "valid_prediction": true,
-      "gold_topic": "usability",
+      "gold_topic": "billing",
       "pred_topic": "usability",
-      "topic_exact": true,
-      "topic_accepted": true,
+      "topic_exact": false,
+      "topic_accepted": false,
       "gold_intent": "complaint",
       "pred_intent": "complaint",
       "intent_exact": true,
       "intent_accepted": true,
-      "gold_severity": 3,
+      "gold_severity": 2,
       "pred_severity": 3,
-      "severity_exact": true,
-      "severity_abs_err": 0,
+      "severity_exact": false,
+      "severity_abs_err": 1,
       "severity_accepted_err": 0,
-      "gold_sentiment": -0.8,
+      "gold_sentiment": -0.9,
       "pred_sentiment": -0.8,
-      "sentiment_abs_err": 0.0,
+      "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": false,
       "gold_ambiguous": true,
@@ -1490,8 +1495,8 @@
         "ads"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1516,13 +1521,13 @@
       "sentiment_abs_err": 0.1,
       "quote_is_substring": true,
       "pred_needs_review": false,
-      "gold_ambiguous": false,
+      "gold_ambiguous": true,
       "pred_entities": [
         "update"
       ],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1542,7 +1547,7 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.8,
+      "gold_sentiment": 0.9,
       "pred_sentiment": 0.85,
       "sentiment_abs_err": 0.05,
       "quote_is_substring": true,
@@ -1550,8 +1555,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     },
     {
@@ -1571,7 +1576,7 @@
       "severity_exact": true,
       "severity_abs_err": 0,
       "severity_accepted_err": 0,
-      "gold_sentiment": 0.9,
+      "gold_sentiment": 1.0,
       "pred_sentiment": 0.95,
       "sentiment_abs_err": 0.05,
       "quote_is_substring": true,
@@ -1579,8 +1584,8 @@
       "gold_ambiguous": false,
       "pred_entities": [],
       "cache_source_id": null,
-      "label_source": "assistant_draft_human_accepted",
-      "human_changed": "n",
+      "label_source": "human_pdf_worksheet",
+      "human_changed": null,
       "sentiment_within_tol": true
     }
   ]

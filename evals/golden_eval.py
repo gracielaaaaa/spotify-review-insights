@@ -100,9 +100,10 @@ def main():
         "label_provenance": dict(Counter(c["label_source"] for c in cases)),
         "human_vs_assistant_draft": ({f: round(sum(g[f] == drafts[g["review_id"]]["draft_" + f] for g in gold) / len(gold), 4)
                                       for f in ("topic", "intent", "severity")} if complete else None),
-        "caveat": ("50 cases is a small diagnostic sample. Golden labels were assigned blind by the student "
-                   "(tools/label_golden.py shows only the review text; no drafts or model output). The student had seen an "
-                   "earlier AI-drafted version (evals/golden_50_draft.csv) during a previous review pass; agreement with those drafts is reported separately."
+        "caveat": ("50 cases is a small diagnostic sample. Golden labels were assigned by the student on the printed/annotated "
+                   "worksheet evals/golden_labeling_sheet.pdf (review text only; no drafts or model output shown) and transcribed by code "
+                   "from evals/golden_labeling_sheet_completed.pdf. The student had seen an earlier AI-drafted set (evals/golden_50_draft.csv) "
+                   "during a previous review pass; agreement with those drafts is reported in human_vs_assistant_draft."
                    if complete else
                    "50 cases is a small diagnostic sample. Golden labels were AI-drafted (claude-opus-5-5) and human-reviewed; "
                    "the reviewer accepted all drafts unchanged, so agreement partly measures model-vs-model consistency."),

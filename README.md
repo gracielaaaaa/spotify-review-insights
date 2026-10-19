@@ -20,7 +20,7 @@
 | … of which completed by exact-text reuse (`cache_source_id`) | 159,843 |
 | Quarantined | 422,683: `not_in_declared_classification_scope` 422,667; `empty_review_text` 13; `label_not_allowed` 3 |
 | Model-stage failures still unresolved | 3 (model-stage quarantines + any pending in-scope rows; counted as incomplete) |
-| Golden-50 agreement (topic / intent / severity exact; severity MAE) | 90% / 96% / 88%; MAE 0.12 (accepted-label topic 98%, n=50; AI-drafted, human-reviewed labels) |
+| Golden-50 agreement (topic / intent / severity exact; severity MAE) | 86% / 94% / 86%; MAE 0.14 (accepted-label topic 96%, n=50; student labels, see provenance) |
 | Blind verifier on a seeded 1% sample | n=781: topic 83.7%, intent 88.7%, severity 82.8%, severity MAE 0.178; 256 disagreements in `verify/disagreements.csv` |
 | Prompt-injection test (8 synthetic) | 8/8 resisted; 0/8 flagged needs_review |
 | Planted-error test copy | 20/20 deliberately wrong topic labels flagged by the code comparison against the blind verifier (planted only on cases where the verifier agreed with the original, so this tests the comparison path) |
@@ -37,7 +37,7 @@
 | **D2** Architecture, shared schema, provenance | [Architecture](#architecture), [`labels/LABELS.md`](labels/LABELS.md), [`prompts/`](prompts/), `label_config` on every record and call, [`artifacts/data_manifest.json`](artifacts/data_manifest.json), [`grading/run.json`](grading/run.json) |
 | **D3** Memo numbers ↔ calculations ↔ evidence | [`grading/memo.md`](grading/memo.md), [`grading/claims.csv`](grading/claims.csv), [`runs/final_100k/memo.json`](runs/final_100k/memo.json) (code check result), [trace of one review](#one-review-traced-end-to-end) |
 | **D4** Recommendation, alternatives, limitations | memo sections "Alternatives considered" and "Risks and limitations"; [memo review](#review-of-the-ai-memo-against-saved-data); [Limitations](#limitations) |
-| **T1** 50 labels, per-field comparison, error analysis | [`evals/golden_eval.md`](evals/golden_eval.md), [`evals/golden_cases.csv`](evals/golden_cases.csv), [`evals/golden_50_labeled.csv`](evals/golden_50_labeled.csv), [error analysis](#error-analysis) |
+| **T1** 50 labels, per-field comparison, error analysis | [`evals/golden_50_human.csv`](evals/golden_50_human.csv) (student labels; [worksheet](evals/golden_labeling_sheet_completed.pdf)), [`evals/golden_eval.md`](evals/golden_eval.md), [`evals/golden_cases.csv`](evals/golden_cases.csv), [error analysis](#error-analysis), [provenance](#golden-set-provenance-disclosure) |
 | **T2** Independent verification, planted errors, injection | [`runs/final_100k/verify/`](runs/final_100k/verify/), [`evals/injection/results.json`](evals/injection/results.json), `verify/planted_errors.json` |
 | **T3** Pilot, calculator, retry/spend/recovery controls | [`cost/report.md`](cost/report.md), [`cost/calculator.py`](cost/calculator.py), [`cost/README.md`](cost/README.md), [controls](#controls-retry-spending-recovery), [`evals/controls/controls_test.json`](evals/controls/controls_test.json) |
 | **W1** Ingestion, coverage, classification | [`artifacts/ingestion_report.json`](artifacts/ingestion_report.json), [`grading/ingestion.json`](grading/ingestion.json), [self-check](#self-check-zero-api) |
@@ -98,14 +98,15 @@ Topics, intents, severity and examples: [`labels/LABELS.md`](labels/LABELS.md) (
 6. **Memo claim:** `C005` complaint_count=7370, `C006` severity_sum=21636, `C007` mean_severity=2.935685, `C008` priority_score=21636 (`grading/claims.csv`); the memo cites this review ID as evidence.
 
 ## Error analysis
-**Golden 50** ([full table](evals/golden_eval.md)): topic exact 90% (98% counting accepted alternates), intent 96%, severity exact 88% (MAE 0.12), sentiment MAE 0.128 (within ±0.3: 94%), quote substring 100%, 20 ambiguous cases. needs_review as a predictor of ambiguity: precision 0.6364, recall 0.35.
+**Golden 50** ([full table](evals/golden_eval.md)): topic exact 86% (96% counting accepted alternates), intent 94%, severity exact 86% (MAE 0.14), sentiment MAE 0.15 (within ±0.3: 88%), quote substring 100%, 24 ambiguous cases. needs_review as a predictor of ambiguity: precision 0.8182, recall 0.375.
 
 Concrete disagreements (golden → predicted):
 - `292ce26a` “Staff must be full of mentally ill kool-aid heads. Banning conservative music that speaks ”: catalog/complaint/2 → other/unclear/1
+- `991b6b3a` “Ads were okay, but limited functionality..it's just too much”: billing/complaint/3 → usability/complaint/2
 - `b5ee7834` “Spotify is awesome and and very diverse :)”: catalog/praise/1 → other/praise/1
 - `1fc8b08f` “Duo Premium .... No ads at all!”: usability/praise/1 → other/praise/1
 - `ac6cd66d` “Lhat ng song nasa spotify”: catalog/praise/1 → other/unclear/1
-- `2aa566c6` “Nice app, very less advertising”: usability/praise/1 → other/praise/1
+- `f4c8146a` “Unconditional love, Stoli Canales”: other/praise/1 → other/unclear/1
 
 **Blind verifier** (n=781): the most common disagreements are listed in [`runs/final_100k/verify/disagreements.csv`](runs/final_100k/verify/disagreements.csv).
 
@@ -193,7 +194,11 @@ Dependencies (pinned): anthropic==1.11.0, httpx2==2.13.1, pydantic==2.13.5, pyth
   - `enrich_v3` was **frozen before anyone read the golden reviews**.
 
 ## Golden-set provenance (disclosure)
-The golden 50 labels were **drafted by Claude Opus 5.5** (the coding assistant, not a pipeline model). They were then **reviewed one by one by the student** in `tools/review_golden.py`, who accepted all 50 drafts unchanged (`human_changed=n`, `label_source=assistant_draft_human_accepted` in every row). The labels were never pipeline inputs, and the enrich prompt was frozen before drafting. Because the reviewer made no corrections, golden agreement partly measures consistency between two Claude models, not independent human judgment. Treat it as a diagnostic.
+- **Final golden labels:** [`evals/golden_50_human.csv`](evals/golden_50_human.csv), assigned by the student on the worksheet [`evals/golden_labeling_sheet.pdf`](evals/golden_labeling_sheet.pdf). The worksheet shows only the review text, with no drafts and no model output.
+- **Transcription:** the completed worksheet is [`evals/golden_labeling_sheet_completed.pdf`](evals/golden_labeling_sheet_completed.pdf). Code transcribed its typed answers, including the "Amb:" alternate labels, into the CSV.
+- **Ambiguity:** 24 of 50 cases are marked ambiguous, each with its accepted alternate labels.
+- **Labels never reached the pipeline:** the enrich prompt (`enrich_v3`) was frozen before any golden review was read, and labels were never model inputs.
+- **Earlier pass, disclosed:** an earlier pass used assistant-drafted labels ([`evals/golden_50_draft.csv`](evals/golden_50_draft.csv), drafted by Claude Opus 5.5) that the student reviewed. The student saw those drafts before labeling. The final labels agree with them on topic 96%, intent 98% and severity 98% (`human_vs_assistant_draft` in [`evals/golden_eval.json`](evals/golden_eval.json)). That overlap may partly reflect familiarity with the drafts rather than fully independent judgment.
 
 ## Limitations
 - **Population:** these are self-selected public Google Play reviews (May 2022 to Nov 2023), not a customer population. There is no revenue, plan tier or confirmed churn. Cancellation language is stated intent.
